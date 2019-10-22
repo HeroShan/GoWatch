@@ -1,20 +1,21 @@
-package main
+package chant
+
 import (
 	"time"
 	"fmt"
 )
 
-var tmp int
-func big(ch chan int){
+var Tmp int
+func Big(ch chan int){
 	i := <-ch
-	j := &tmp
-	tmp = (*j+11)*i
-	// fmt.Println(i,tmp)
+	j := &Tmp
+	Tmp = (*j+11)*i
+	// fmt.Println(i,Tmp)
 	// fmt.Printf("%T",*j)
 	// fmt.Println()
 	// return j
 }
-func isPrime(value int) bool {
+func IsPrime(value int) bool {
     if value <= 3 {
         return false
     }
@@ -29,17 +30,17 @@ func isPrime(value int) bool {
     return true
 }
 
-func main(){
+func ChanPrint(){
 	sday := time.Now().Day()
 	now := time.Now()
 	ch := make(chan int,1)
     list  := make (map[int]time.Time)
 	for i:=0;i<5;i++{
-		bo:=isPrime(i)
+		bo:=IsPrime(i)
 		if i%2==1{
 			ch<-i
-			big(ch)
-			list[sday+tmp] = now
+			Big(ch)
+			list[sday+Tmp] = now
 		}else if bo == true{
 			list[sday+i] = now.AddDate(-1,0,1)
 		}else{

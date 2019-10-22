@@ -1,4 +1,4 @@
-package main
+package chant
 
 import (
 	"math/rand"
@@ -21,9 +21,10 @@ var (
 func init() {
 	startime := time.Now()
 	fmt.Println(startime)
+	ChanPrint()
 }
 
-func main() {
+func SyncPrint() {
 	defer func(){
 		stoptime := time.Now()
 		fmt.Println(stoptime)
