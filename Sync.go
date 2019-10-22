@@ -19,20 +19,21 @@ var (
 )
 
 func init() {
-	startime := time.Now().Unix()
+	startime := time.Now()
 	fmt.Println(startime)
 }
 
 func main() {
 	defer func(){
-		stoptime := time.Now().Unix()
+		stoptime := time.Now()
 		fmt.Println(stoptime)
 	}()
 	court := make(chan int)
-	wg.Add(2)
+	wg.Add(3)
 	
 	go player("Nadal", court)
 	go player("Djokovic", court)
+	go player("Wkoc", court)
 	
 	court <- 1
 	wg.Wait()
