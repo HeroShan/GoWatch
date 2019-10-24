@@ -46,13 +46,10 @@ func ChanPrint(){
 		}else{
 			list[sday+i] = now
 		}
-		 
-		
 	}
 	
 	for k,v := range list{
 		fmt.Println(v,k)
-		
 	}
 
 
