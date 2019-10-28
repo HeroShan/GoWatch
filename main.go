@@ -17,8 +17,20 @@ func te() string{
 	
 	
 }
+var snum int
 func main(){
 	s:=te()
 	fmt.Println("ess",s)
+	for i := 0; i<=6;i++{
+		snum = i
+		switch snum {
+		case 1,2,3 :
+			fmt.Println(1)
+		
+		case 4,5,6 :
+			fmt.Println(2)
+		}
+	}  
 	
+
 }
