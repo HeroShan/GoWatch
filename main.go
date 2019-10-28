@@ -21,7 +21,7 @@ var snum int
 func main(){
 	s:=te()
 	fmt.Println("ess",s)
-	for i := 0; i<=6;i++{
+	for i := 0; i<=10;i++{
 		snum = i
 		switch snum {
 		case 1,2,3 :
@@ -29,6 +29,9 @@ func main(){
 		
 		case 4,5,6 :
 			fmt.Println(2)
+		
+		case 7,8,9 :
+			fmt.Println(3)
 		}
 	}  
 	
