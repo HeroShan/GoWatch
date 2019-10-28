@@ -21,12 +21,11 @@ func (c *LoginController) Login() {
 func (c *LoginController) DoLogin() {
 	if c.IsAjax() {
 		var u  User
-		  err := json.Unmarshal(c.Ctx.Input.RequestBody, &u)
-		  if err !=nil {
+		  err := json.Unmarshal(c.Ctx.Input.RequestBody, &u); if err !=nil {
 			fmt.Println("json error QQQ",err) 
 		  }
 		  fmt.Printf("%T",c.Ctx.Input.RequestBody)
-		 pp := &User{Name:u.Name,Password:u.Password}
+		 pp := &User{ Name:u.Name, Password:u.Password }
 		 fmt.Println(u)
 		 fmt.Println(pp)
 		 
