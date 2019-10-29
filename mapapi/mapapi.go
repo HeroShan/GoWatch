@@ -10,7 +10,7 @@ var Ip string
 
 type IpJson struct{
 	Address  string			`json:"address"`
-	Content  JsContent 	`json:"content"`
+	Content  JsContent 		`json:"content"`
 	Status	 int 			`json:"status"`
 }
 
@@ -30,7 +30,7 @@ type JsAddress_detail struct{
 }
 
 type JsPoint struct{
-	X	string 	`json:"x"`
+	X	string 		`json:"x"`
 	Y	string		`json:"y"`
 }
 
