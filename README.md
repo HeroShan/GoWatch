@@ -1,2 +1,2 @@
 # GoWatch
-Don't moving should waitted Dead!
+Not to advance is to go back
