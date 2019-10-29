@@ -35,7 +35,7 @@ type JsPoint struct{
 }
 
 
-func Getpoint(Ip string)(ppoint JsPoint) {
+func Getpoint(Ip string) JsPoint {
 	
 	url := "http://api.map.baidu.com/location/ip?ip="+Ip+"&ak=vKgTlhoXlrEFFmLGBD4E04Gdv29ZYMxX&coor=bd09ll"
 	resp, err := http.Get(url); if err != nil{
@@ -49,6 +49,6 @@ func Getpoint(Ip string)(ppoint JsPoint) {
 	jserr := json.Unmarshal(body,&jsonip); if jserr != nil{
 		fmt.Println("jserr is error::",jserr)
 	}
-	ppoint = jsonip.Content.Point
-	return ppoint
+	fmt.Println(jsonip)
+	return jsonip.Content.Point
 }

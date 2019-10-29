@@ -29,8 +29,7 @@ var snum int
 var ip string
 var Point mapapi.JsPoint
 func main(){
-	ip = "125.119.244.70"
-	
+	ip = "125.121.244.70"
 	Point = mapapi.Getpoint(ip)
 	fmt.Println(Point)
 }
