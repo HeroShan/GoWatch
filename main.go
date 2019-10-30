@@ -31,7 +31,7 @@ var snum int
 var ip string
 var Point mapapi.JsPoint
 var areainfo string
-
+var path string
 func getip(w http.ResponseWriter, r *http.Request){
 	ipstring := r.RemoteAddr
 	ip1 := strings.FieldsFunc(ipstring,Splitstr)
@@ -47,13 +47,12 @@ func getip(w http.ResponseWriter, r *http.Request){
 	//Point.Y = "120.21287663"
 	area := mapapi.Getarea(Point)
 	if area != "" {
-		//fmt.Println(area)
-		w.Write([]byte(area))
+		path = area
 	}else{
-		//fmt.Println(areainfo)
-		w.Write([]byte(areainfo))
+		path = areainfo
 	}
-	//fmt.Println(Point)
+	w.Write([]byte(path))
+	mapapi.Connect(ip,path,Point)
 }
 
 func Splitstr(r rune) bool {
@@ -61,6 +60,7 @@ func Splitstr(r rune) bool {
 }
 
 func main(){
+	
 	http.HandleFunc("/getip", getip)
 	http.ListenAndServe(":8080", nil)	
 }
