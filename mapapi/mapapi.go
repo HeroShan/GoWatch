@@ -5,6 +5,7 @@ import(
 	"fmt"
 	"io/ioutil"
 	"encoding/json"
+	"regexp"
 )
 var Ip string
 
@@ -35,7 +36,7 @@ type JsPoint struct{
 }
 
 
-func Getpoint(Ip string) JsPoint {
+func Getpoint(Ip string) (JsPoint,string) {
 	
 	url := "http://api.map.baidu.com/location/ip?ip="+Ip+"&ak=vKgTlhoXlrEFFmLGBD4E04Gdv29ZYMxX&coor=bd09ll"
 	resp, err := http.Get(url); if err != nil{
@@ -49,6 +50,21 @@ func Getpoint(Ip string) JsPoint {
 	jserr := json.Unmarshal(body,&jsonip); if jserr != nil{
 		fmt.Println("jserr is error::",jserr)
 	}
-	fmt.Println(jsonip)
-	return jsonip.Content.Point
+	//fmt.Println(jsonip)
+	return jsonip.Content.Point,jsonip.Content.Address
+}
+
+func Getarea(Point JsPoint) string {
+	
+	url := "http://api.map.baidu.com/geocoder?location="+Point.X+","+Point.Y+""
+	resp, err := http.Get(url); if err != nil{
+		fmt.Println(err)
+	}
+	body , errred := ioutil.ReadAll(resp.Body); if errred != nil{
+		fmt.Println(errred)
+	}
+	reg := regexp.MustCompile(`<formatted_address>(.*?)</formatted_address>`)
+
+	result := reg.FindAllStringSubmatch(string(body), -1)
+	return result[0][1]
 }

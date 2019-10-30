@@ -5,6 +5,8 @@ import(
 	e "errors"
 	"fmt"
 	"GoWatch/mapapi"
+	"net/http"
+	"strings"
 )
 
 func te() string{
@@ -28,8 +30,37 @@ func uuid(){
 var snum int
 var ip string
 var Point mapapi.JsPoint
+var areainfo string
+
+func getip(w http.ResponseWriter, r *http.Request){
+	ipstring := r.RemoteAddr
+	ip1 := strings.FieldsFunc(ipstring,Splitstr)
+	ip = ip1[0]
+	//ip = "180.101.49.11"
+	//ip = "183.131.107.149"
+	Point,areainfo = mapapi.Getpoint(ip)
+	if Point.X == "" {
+		//fmt.Println("IP format incorrect")
+		w.Write([]byte("IP format incorrect"))
+	}
+	//Point.X = "32.05723550"
+	//Point.Y = "120.21287663"
+	area := mapapi.Getarea(Point)
+	if area != "" {
+		//fmt.Println(area)
+		w.Write([]byte(area))
+	}else{
+		//fmt.Println(areainfo)
+		w.Write([]byte(areainfo))
+	}
+	//fmt.Println(Point)
+}
+
+func Splitstr(r rune) bool {
+	return r == ':'
+}
+
 func main(){
-	ip = "125.121.244.70"
-	Point = mapapi.Getpoint(ip)
-	fmt.Println(Point)
+	http.HandleFunc("/getip", getip)
+	http.ListenAndServe(":8080", nil)	
 }
