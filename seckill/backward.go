@@ -1,4 +1,4 @@
-package main
+package seckill
 import(
 	"fmt"
 	"time"
@@ -6,7 +6,7 @@ import(
 	"os"
 	"strconv"
 )
-func backtime(){
+func Backtime(){
 	millisecond := time.Now().Unix() 
 	now :=time.Unix(millisecond,0).Format("15:04:05")
 	nowarr := strings.FieldsFunc(now,split)
@@ -32,10 +32,8 @@ func backtime(){
 	}
 	
 }
-func split(r rune)bool{
+func Split(r rune)bool{
 	return r ==':'
 }
-func main(){
-	backtime()
-}
+
 

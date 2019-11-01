@@ -5,6 +5,7 @@ import(
 	e "errors"
 	"fmt"
 	"GoWatch/mapapi"
+	"GoWatch/seckill"
 	"net/http"
 	"strings"
 )
@@ -60,7 +61,7 @@ func Splitstr(r rune) bool {
 }
 
 func main(){
-	
+	seckill.Backtime()
 	http.HandleFunc("/getip", getip)
 	http.ListenAndServe(":8080", nil)	
 }
