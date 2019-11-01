@@ -27,15 +27,7 @@ func backtime(){
 			}
 		}
 		time.Sleep(1 * time.Second)
-		if s<10 {
-			fmt.Printf("\r%d:%d:0%d",h,m,s)	
-		}else if m<10 {
-			fmt.Printf("\r%d:0%d:%d",h,m,s)
-		}else if h<10 {
-			fmt.Printf("\r0%d:%d:%d",h,m,s)
-		}else{
-			fmt.Printf("\r%d:%d:%d",h,m,s)
-		}
+		fmt.Printf("\r%02d:%02d:%02d",h,m,s)	
 		os.Stdout.Sync()
 	}
 	
