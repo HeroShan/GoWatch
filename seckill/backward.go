@@ -27,10 +27,9 @@ func backtime(){
 			}
 		}
 		time.Sleep(1 * time.Second)
-		fmt.Printf("\r%02d:%02d:%02d",h,m,s)	
+		fmt.Printf("%c[4;45;33m\r%02d:%02d:%02d%c[0m", 0x1B,h,m,s, 0x1B)
 		os.Stdout.Sync()
 	}
-	
 	
 }
 func split(r rune)bool{
