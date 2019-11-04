@@ -4,10 +4,12 @@ import(
 	"GoWatch/getuuid"
 	e "errors"
 	"fmt"
+	"mime"
 	"GoWatch/mapapi"
-	"GoWatch/seckill"
+	_ "GoWatch/seckill"
 	"net/http"
 	"strings"
+	"text/template"
 )
 
 func te() string{
@@ -52,7 +54,11 @@ func getip(w http.ResponseWriter, r *http.Request){
 	}else{
 		path = areainfo
 	}
-	w.Write([]byte(path))
+	html, err := template.ParseFiles("./css/index.html")
+	if err != nil{
+		fmt.Println(err)
+		}
+	html.Execute(w, path)
 	mapapi.Connect(ip,path,Point)
 }
 
@@ -61,7 +67,9 @@ func Splitstr(r rune) bool {
 }
 
 func main(){
-	seckill.Backtime()
-	http.HandleFunc("/getip", getip)
-	http.ListenAndServe(":8080", nil)	
+	//seckill.Backtime()
+	mime.AddExtensionType(".js", "text/javascript")
+	http.HandleFunc("/", getip)
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
+	http.ListenAndServe(":80", nil)	
 }
