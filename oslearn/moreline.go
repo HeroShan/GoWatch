@@ -3,30 +3,48 @@ package main
 import(
 	"os"
 	"fmt"
-	"bufio"
+	"time"
 )
+func main(){
 
-func OpenFile(File string) {
-	f,err := os.Open(File);	if err !=nil {
+	fileName := "../css/img/love.jpg"
+	desfileName := "../css/img/lovell.jpg"
+	sfile,err := os.Open(fileName)
+	if err != nil{
+		fmt.Println(nil)
+	}
+
+	info,_ := os.Stat(fileName)
+	size := info.Size()
+	var scount  int64 = 1
+	if size % 2 == 0{
+		scount *= 2
+	}else if size % 3 == 0 {
+		scount *= 3
+	}else{
+		scount *= 1
+	}
+
+	si := size / scount
+	fmt.Printf("文件总大小：%v, 分片数：%v,每个分片大小：%v\n",size,scount,si)
+
+	desF,err := os.OpenFile(desfileName,os.O_CREATE|os.O_RDWR,0755)
+	if err != nil{
 		fmt.Println(err)
 	}
-	data := make([]byte, 1024)
-	fcrd := bufio.NewReader(f)
-	for{
-		_,err := fcrd.Read(data);	if err !=nil {
-			fmt.Println("errrrrrr",err)
-			break
-		}
-		fmt.Println(string(data))
+
+	for i:=0;i<int(si);i++{
+		go func(vs int){
+			//申明一个byte
+			b := make([]byte,si)
+			//从指定位置开始读
+			sfile.ReadAt(b,int64(vs)*si)
+			//从指定位置开始写
+			desF.WriteAt(b,int64(vs)*si)
+
+		}(i)
 	}
-	//fmt.Println(f)
-	defer f.Close()
-}
-
-var File string
-
-func main(){
-	File = "../css/img/love.jpg"
-	OpenFile(File)
-
+	time.Sleep(time.Second*5)
+	defer desF.Close()
+	defer sfile.Close()
 }
