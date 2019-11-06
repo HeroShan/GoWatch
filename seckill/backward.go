@@ -10,8 +10,6 @@ func Backtime(){
 	millisecond := time.Now().Unix() 
 	now :=time.Unix(millisecond,0).Format("15:04:05")
 	nowarr := strings.FieldsFunc(now,Split)
-	
-	
 	h,_ := strconv.Atoi(nowarr[0]) 
 	m,_ := strconv.Atoi(nowarr[1]) 
 	s,_ := strconv.Atoi(nowarr[2]) 

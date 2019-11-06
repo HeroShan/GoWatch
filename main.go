@@ -23,7 +23,6 @@ func te() string{
 	}
 	return cr
 	
-	
 }
 func uuid(){
     ui :=	getuuid.GetV4()
@@ -35,6 +34,9 @@ var ip string
 var Point mapapi.JsPoint
 var areainfo string
 var path string
+type Iperr struct{
+	Info string 
+}
 func getip(w http.ResponseWriter, r *http.Request){
 	ipstring := r.RemoteAddr
 	ip1 := strings.FieldsFunc(ipstring,Splitstr)
@@ -42,10 +44,7 @@ func getip(w http.ResponseWriter, r *http.Request){
 	//ip = "180.101.49.11"
 	//ip = "183.131.107.149"
 	Point,areainfo = mapapi.Getpoint(ip)
-	if Point.X == "" {
-		//fmt.Println("IP format incorrect")
-		w.Write([]byte("IP format incorrect"))
-	}
+	
 	//Point.X = "32.05723550"
 	//Point.Y = "120.21287663"
 	area := mapapi.Getarea(Point)
