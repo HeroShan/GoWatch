@@ -5,7 +5,7 @@ import(
 	"fmt"
 	"time"
 )
-func main(){
+func DD(){
 	fileName := "../css/img/px.png"
 	desfileName := "../css/img/CCpx.png"
 	sfile,err := os.Open(fileName)
