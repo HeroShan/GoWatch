@@ -1,4 +1,4 @@
-package main
+package oslearn
 
 import(
 	"os"
@@ -6,9 +6,8 @@ import(
 	"time"
 )
 func main(){
-
-	fileName := "../css/img/love.jpg"
-	desfileName := "../css/img/lovell.jpg"
+	fileName := "../css/img/px.png"
+	desfileName := "../css/img/CCpx.png"
 	sfile,err := os.Open(fileName)
 	if err != nil{
 		fmt.Println(nil)
