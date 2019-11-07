@@ -42,10 +42,10 @@ func Getnetwork(url string, chanl chan int){
 
 }
 
-func main(){
-	 chanl := make(chan int, 26)
+func ex1(){
+	chanl := make(chan int, 26)
 	for four:=0;four<26;four++{
-		for three:=0;three<26;three++{
+		for three:=0;three<13;three++{
 			for two:=0;two<26;two++{
 				for one:=0;one<26;one++{
 					chanl <- one
@@ -54,7 +54,29 @@ func main(){
 				}
 			}	
 		}
-		
 	}
+}
+
+func ex2(){
+	chanl := make(chan int, 26)
+	for four:=0;four<26;four++{
+		for three:=13;three<26;three++{
+			for two:=0;two<26;two++{
+				for one:=0;one<26;one++{
+					chanl <- one
+					go Getnetwork(Word[four]+Word[three]+Word[two]+Word[one], chanl)
+					//fmt.Println(Word[four],Word[three],Word[two],Word[one])
+				}
+			}	
+		}
+	}
+}
+
+func main(){
+	for{
+
+	}
+	go ex1()
+	go ex2()
 }
 
