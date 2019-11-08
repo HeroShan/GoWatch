@@ -38,8 +38,6 @@ func Getnetwork(url string, chanl chan int){
 	}
 	fmt.Println(url)
 	<-chanl
-	
-
 }
 
 func ex1(){
@@ -73,10 +71,10 @@ func ex2(){
 }
 
 func main(){
-	for{
-
-	}
-	go ex1()
-	go ex2()
+	// go ex1()
+	// go ex2()
+	 a := []string{"asd","qdqwd"}
+	c := a[1]
+	fmt.Println(c)
 }
 
