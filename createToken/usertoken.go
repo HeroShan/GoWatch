@@ -18,7 +18,16 @@ func GetToken()string {
 	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
 		fmt.Println(connerr)
 	}
-	fmt.Println(tokenString,LoSecretKey)
 	con.Do("HMSET","loginToken",tokenString,LoSecretKey)
 	return tokenString
+}
+
+func IsLogin(Wisheart string) {
+	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+		fmt.Println(connerr)
+	}
+	r,e := con.Do("HGET","loginToken",Wisheart)
+	fmt.Println(r,e)
+	fmt.Printf("%T,%T",r,e)
+
 }

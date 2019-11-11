@@ -100,6 +100,20 @@ func login(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+func LoginMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+		if r.Method == "GET" {
+			sCookie,_ := r.Cookie("wisheart")
+			var cc string
+			fmt.Fprintln(cc, "Domain:", sCookie.Value)
+			//createToken.IsLogin(Wisheart)
+			fmt.Printf("%T",cc)
+
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
 
 
 
@@ -107,7 +121,7 @@ func main(){
 	//seckill.Backtime()
 	mime.AddExtensionType(".js", "text/javascript")
 	http.HandleFunc("/", getip)
-	http.HandleFunc("/login", login)
+	http.Handle("/login", LoginMiddleware(http.HandlerFunc(login)))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.ListenAndServe(":80", nil)	
 }
