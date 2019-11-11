@@ -5,6 +5,7 @@ import (
   "time"
   "os"
 )
+// Practice os Sycn more
 func main() {
   for i := 0; i < 50; i++ {
     time.Sleep(100 * time.Millisecond)

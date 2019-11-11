@@ -6,6 +6,9 @@ import(
 	"os"
 	"strconv"
 )
+
+//  The time is back down second bysecond 
+//  begin to Now
 func Backtime(){
 	millisecond := time.Now().Unix() 
 	now :=time.Unix(millisecond,0).Format("15:04:05")

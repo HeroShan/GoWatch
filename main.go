@@ -13,7 +13,7 @@ import(
 	"GoWatch/auth"
 	"GoWatch/createToken"
 )
-
+//	practiced Error Package
 func te() string{
 	var i int
 	var cr string
@@ -26,6 +26,8 @@ func te() string{
 	return cr
 	
 }
+
+// practiced Uuid Package
 func uuid(){
     ui :=	getuuid.GetV4()
 	fmt.Println(ui)
@@ -39,6 +41,7 @@ var path string
 type Iperr struct{
 	Info string 
 }
+// get IP interface
 func getip(w http.ResponseWriter, r *http.Request){
 	ipstring := r.RemoteAddr
 	ip1 := strings.FieldsFunc(ipstring,Splitstr)
@@ -63,10 +66,12 @@ func getip(w http.ResponseWriter, r *http.Request){
 	mapapi.Connect(ip,path,Point)
 }
 
+//split string function
 func Splitstr(r rune) bool {
 	return r == ':'
 }
 
+//User Login function
 func login(w http.ResponseWriter, r *http.Request){
 	if r.Method == "GET"{
 		html, _ := template.ParseFiles("./css/login.html")
@@ -94,6 +99,8 @@ func login(w http.ResponseWriter, r *http.Request){
 		}
 	}
 }
+
+
 
 
 func main(){

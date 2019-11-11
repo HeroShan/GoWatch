@@ -35,7 +35,7 @@ type JsPoint struct{
 	Y	string		`json:"y"`
 }
 
-
+//	Send Baidu-MAP Api revise MAP data
 func Getpoint(Ip string) (JsPoint,string) {
 	
 	url := "http://api.map.baidu.com/location/ip?ip="+Ip+"&ak=vKgTlhoXlrEFFmLGBD4E04Gdv29ZYMxX&coor=bd09ll"
@@ -54,6 +54,7 @@ func Getpoint(Ip string) (JsPoint,string) {
 	return jsonip.Content.Point,jsonip.Content.Address
 }
 
+//	Send Point for Baidu-MAP Api loadding Area info
 func Getarea(Point JsPoint) string {
 	
 	url := "http://api.map.baidu.com/geocoder?location="+Point.X+","+Point.Y+""

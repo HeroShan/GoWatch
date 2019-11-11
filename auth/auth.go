@@ -13,6 +13,8 @@ import (
 // 	}
 // }
 
+
+
 func Check(username,password string)bool {
 	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
 		fmt.Println(connerr)

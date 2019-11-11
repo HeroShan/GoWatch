@@ -1,3 +1,4 @@
+//	Play Golang Chan to practice
 package chant
 
 import (

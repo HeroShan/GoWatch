@@ -9,7 +9,7 @@ import(
 )
 
 
-
+//	GET Token for cookie     and add redis to hash Map    expire time is 7 Days
 func GetToken()string {
 	createTime := time.Now().AddDate(0,0,7).UnixNano()		//秒为单位  int64 过期时间7day
 	var LoSecretKey string = strconv.FormatInt(createTime,10)
