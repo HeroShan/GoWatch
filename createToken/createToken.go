@@ -1,4 +1,4 @@
-package main
+package createToken
 
 import (
 	"encoding/json"
