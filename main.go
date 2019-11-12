@@ -95,33 +95,54 @@ func login(w http.ResponseWriter, r *http.Request){
 				MaxAge: 7*24*60*60,
 			}
 			http.SetCookie(w, sCookie)
-
+			w.Write([]byte("<script>self.location.href='/admin'</script>"))
 		}
 	}
 }
+
 
 func LoginMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
 		if r.Method == "GET" {
 			sCookie,_ := r.Cookie("wisheart")
-			var cc string
-			fmt.Fprintln(cc, "Domain:", sCookie.Value)
-			//createToken.IsLogin(Wisheart)
-			fmt.Printf("%T",cc)
-
+			if sCookie == nil{
+				w.Write([]byte("<script>alert('请先登录'); self.location.href='/login'</script>"))
+			}else{
+				if sCookie.Value != ""  {
+					expire := createToken.IsLogin(sCookie.Value)
+					if expire <0 {
+						sCookie := &http.Cookie{
+							Name:   "wisheart",
+							Value:  "",
+							Path:   "/",
+							Domain: r.Host ,
+							MaxAge: 0,
+						}
+						http.SetCookie(w, sCookie)
+						w.Write([]byte("<script>alert('登陆已过期'); self.location.href=='/login'</script>"))
+					}
+				}
+			}
 		}
 
 		next.ServeHTTP(w, r)
 	})
 }
 
+func admin(w http.ResponseWriter, r *http.Request){
+	if r.Method == "GET"{
+		html, _ := template.ParseFiles("./css/admin.html")
+		html.Execute(w, nil)
+	}
+}
 
 
 func main(){
 	//seckill.Backtime()
-	mime.AddExtensionType(".js", "text/javascript")
+	mime.AddExtensionType(".js", "text/javascript")	//static
 	http.HandleFunc("/", getip)
-	http.Handle("/login", LoginMiddleware(http.HandlerFunc(login)))
-	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
+	http.HandleFunc("/login", login)
+	http.Handle("/admin", LoginMiddleware(http.HandlerFunc(admin)))	//	登录
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css")))) //static
 	http.ListenAndServe(":80", nil)	
 }

@@ -9,7 +9,7 @@ import(
 )
 
 
-//	GET Token for cookie     and add redis to hash Map    expire time is 7 Days
+//	Get Token for cookie     and add redis to hash Map    expire time is 7 Days
 func GetToken()string {
 	createTime := time.Now().AddDate(0,0,7).UnixNano()		//秒为单位  int64 过期时间7day
 	var LoSecretKey string = strconv.FormatInt(createTime,10)
@@ -22,12 +22,15 @@ func GetToken()string {
 	return tokenString
 }
 
-func IsLogin(Wisheart string) {
+//	Get Cookie compare Redis loginToken-Value 
+//	return false
+func IsLogin(Wisheart string) int64 {
+	createTime := time.Now().UnixNano()
 	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
 		fmt.Println(connerr)
 	}
-	r,e := con.Do("HGET","loginToken",Wisheart)
-	fmt.Println(r,e)
-	fmt.Printf("%T,%T",r,e)
-
+	r,_ := redis.Int64(con.Do("hget","loginToken",Wisheart))
+	expiretime := r-createTime
+	return expiretime
+	
 }
