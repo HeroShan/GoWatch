@@ -119,15 +119,18 @@ func LoginMiddleware(next http.Handler) http.Handler {
 							MaxAge: 0,
 						}
 						http.SetCookie(w, sCookie)
-						w.Write([]byte("<script>alert('登陆已过期'); windows.location.href=='/login'</script>"))
+						w.Write([]byte("<script>var choose = confirm('确定要退出吗？');if(choose==true){  window.location.href='/path';return false;} </script>"))
+					}
+					if expire>0{
+						next.ServeHTTP(w, r)
 					}
 				}else{
-					w.Write([]byte("<script>alert('登陆已过期'); windows.location.href=='/login'</script>"))
+					http.Redirect(w, r, "/login", http.StatusFound)
 				}
 			}
 		}
 
-		next.ServeHTTP(w, r)
+		
 	})
 }
 
