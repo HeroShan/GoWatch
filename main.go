@@ -106,7 +106,7 @@ func LoginMiddleware(next http.Handler) http.Handler {
 		if r.Method == "GET" {
 			sCookie,_ := r.Cookie("wisheart")
 			if sCookie == nil{
-				w.Write([]byte("<script>alert('请先登录'); self.location.href='/login'</script>"))
+				w.Write([]byte("<script>alert('请先登录'); self.location.href=\"/login\"</script>"))
 			}else{
 				if sCookie.Value != ""  {
 					expire := createToken.IsLogin(sCookie.Value)
@@ -119,8 +119,10 @@ func LoginMiddleware(next http.Handler) http.Handler {
 							MaxAge: 0,
 						}
 						http.SetCookie(w, sCookie)
-						w.Write([]byte("<script>alert('登陆已过期'); self.location.href=='/login'</script>"))
+						w.Write([]byte("<script>alert('登陆已过期'); windows.location.href=='/login'</script>"))
 					}
+				}else{
+					w.Write([]byte("<script>alert('登陆已过期'); windows.location.href=='/login'</script>"))
 				}
 			}
 		}
