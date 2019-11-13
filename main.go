@@ -12,6 +12,7 @@ import(
 	"text/template"
 	"GoWatch/auth"
 	"GoWatch/createToken"
+	"time"
 )
 //	practiced Error Package
 func te() string{
@@ -140,10 +141,19 @@ func admin(w http.ResponseWriter, r *http.Request){
 		html.Execute(w, nil)
 	}
 }
-
+func monitoring(){
+	for{
+		time.Sleep(24 * time.Hour)
+		wk := time.Now().Weekday().String()
+		if wk == "Sunday"{
+			createToken.DelExpireToken()
+		}
+	}
+}
 
 func main(){
-	createToken.DelExpireToken()
+	go monitoring()
+	
 	//seckill.Backtime()
 	mime.AddExtensionType(".js", "text/javascript")	//static
 	http.HandleFunc("/", getip)

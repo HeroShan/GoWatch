@@ -37,6 +37,7 @@ func IsLogin(Wisheart string) int64 {
 	
 }
 
+//	Function is  Delete expire seven days Redis login Token
 func DelExpireToken(){
 	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
 		fmt.Println(connerr)
