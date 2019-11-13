@@ -1,4 +1,4 @@
-# GoWatch\n
+# GoWatch
 Not to advance is to go back
 
 chant   通道的模拟
