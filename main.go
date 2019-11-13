@@ -143,6 +143,7 @@ func admin(w http.ResponseWriter, r *http.Request){
 
 
 func main(){
+	createToken.DelExpireToken()
 	//seckill.Backtime()
 	mime.AddExtensionType(".js", "text/javascript")	//static
 	http.HandleFunc("/", getip)

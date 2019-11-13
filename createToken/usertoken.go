@@ -19,6 +19,7 @@ func GetToken()string {
 		fmt.Println(connerr)
 	}
 	con.Do("HMSET","loginToken",tokenString,LoSecretKey)
+	con.Close()
 	return tokenString
 }
 
@@ -31,6 +32,22 @@ func IsLogin(Wisheart string) int64 {
 	}
 	r,_ := redis.Int64(con.Do("hget","loginToken",Wisheart))
 	expiretime := r-createTime
+	con.Close()
 	return expiretime
 	
+}
+
+func DelExpireToken(){
+	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+		fmt.Println(connerr)
+	}
+	createTime := time.Now().UnixNano()
+	r,_:=redis.StringMap(con.Do("hgetall","loginToken"))
+	for k,v := range r{
+		vint64,_:=strconv.ParseInt(v, 10, 64)
+		expireToken := vint64-createTime
+		if expireToken<0{
+			con.Do("hdel","loginToken",k,v)
+		}
+	}
 }
