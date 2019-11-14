@@ -44,11 +44,12 @@ func Client(iplist []string) {
     writeChan := make(chan int,chanMax)
     for {
         i++
-        writeChan<-i
-        go Send(writeChan,iplist)
         if i== 999999999{
             i = 0
         }
+        writeChan<-i
+        go Send(writeChan,iplist)
+        
     }
     
 }
