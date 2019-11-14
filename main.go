@@ -107,11 +107,11 @@ func LoginMiddleware(next http.Handler) http.Handler {
 		if r.Method == "GET" {
 			sCookie,_ := r.Cookie("wisheart")
 			if sCookie == nil{
-				w.Write([]byte("<script>alert('请先登录'); self.location.href=\"/login\"</script>"))
+				http.Redirect(w, r, "/login", http.StatusFound)
 			}else{
 				if sCookie.Value != ""  {
 					expire := createToken.IsLogin(sCookie.Value)
-					if expire <0 {
+					if expire <=0 {
 						sCookie := &http.Cookie{
 							Name:   "wisheart",
 							Value:  "",
@@ -120,9 +120,8 @@ func LoginMiddleware(next http.Handler) http.Handler {
 							MaxAge: 0,
 						}
 						http.SetCookie(w, sCookie)
-						w.Write([]byte("<script>var choose = confirm('确定要退出吗？');if(choose==true){  window.location.href='/path';return false;} </script>"))
-					}
-					if expire>0{
+						http.Redirect(w, r, "/login", http.StatusFound)
+					}else{
 						next.ServeHTTP(w, r)
 					}
 				}else{
@@ -130,8 +129,6 @@ func LoginMiddleware(next http.Handler) http.Handler {
 				}
 			}
 		}
-
-		
 	})
 }
 
@@ -141,6 +138,17 @@ func admin(w http.ResponseWriter, r *http.Request){
 		html.Execute(w, nil)
 	}
 }
+
+func simpleUpload(w http.ResponseWriter, r *http.Request){
+	if r.Method == "GET"{
+		html, _ := template.ParseFiles("./css/simpleUpload.html")
+		html.Execute(w, nil)
+	}
+	if r.Method == "POST"{
+
+	}
+}
+
 func monitoring(){
 	for{
 		time.Sleep(24 * time.Hour)
@@ -154,11 +162,11 @@ func monitoring(){
 func main(){
 	go monitoring()
 	
-	//seckill.Backtime()
 	mime.AddExtensionType(".js", "text/javascript")	//static
 	http.HandleFunc("/", getip)
 	http.HandleFunc("/login", login)
 	http.Handle("/admin", LoginMiddleware(http.HandlerFunc(admin)))	//	登录
+	http.Handle("/admin/simpleUpload", LoginMiddleware(http.HandlerFunc(simpleUpload)))	//	单文件上传
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css")))) //static
 	http.ListenAndServe(":80", nil)	
 }
