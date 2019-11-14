@@ -44,6 +44,7 @@ func Client(iplist []string) {
     writeChan := make(chan int,chanMax)
     for {
         i++
+        time.Sleep(1*time.Second)
         if i== 999999999{
             i = 0
             i++
@@ -62,7 +63,7 @@ func Send(writeChan chan int,iplist []string){
             ws, err := websocket.Dial(url, "", origin)
             if err == nil {
                 message := []byte("2019")
-                time.Sleep(1*time.Second)
+                
                 ws.Write(message)
                 fmt.Printf("Send: %s\n", message)
                 <-writeChan
