@@ -6,6 +6,7 @@ import(
     "log"
     "net/http"
     "time"
+    "strings"
 )
 
 func EchoHandler(ws *websocket.Conn) {
@@ -35,30 +36,26 @@ func Server() {
     }
 }
 
-var origin = "http://127.0.0.1:8080/"
-var url = "ws://127.0.0.1:8080/echo"
+var origin string
+var url  string
  
 func Client(iplist []string) {
+
     for {
-        time.Sleep(2*time.Second)
-        ws, err := websocket.Dial(url, "", origin)
-        if err != nil {
-            log.Fatal(err)
+        for _,v := range iplist{
+            origin = "http://"+strings.TrimSpace(v)+":8080/"
+            url = "ws://"+strings.TrimSpace(v)+":8080/echo"
+            ws, _ := websocket.Dial(url, "", origin)
+            message := []byte("asdasdasd")
+            time.Sleep(1*time.Second)
+            ws.Write(message)
+            fmt.Printf("Send: %s\n", message)
+        
+            var msg = make([]byte, 512)
+            m, _ := ws.Read(msg)
+            fmt.Printf("Receive: %s\n", msg[:m])
+        
         }
-        message := []byte("asdasdasd")
-        _, err = ws.Write(message)
-        if err != nil {
-            log.Fatal(err)
-        }
-        fmt.Printf("Send: %s\n", message)
-    
-        var msg = make([]byte, 512)
-        m, err := ws.Read(msg)
-        if err != nil {
-            log.Fatal(err)
-        }
-        fmt.Printf("Receive: %s\n", msg[:m])
-    
-        defer ws.Close()//关闭连接
+        
     }
 }

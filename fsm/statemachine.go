@@ -53,7 +53,8 @@ func HeartBeat(){
 	ip := strings.Split(filestr,"=")
 	iplist := strings.Split(ip[1],",")
 	for k,v := range iplist{
-		if strings.TrimSpace(v) == locIp {
+		v = strings.TrimSpace(v)
+		if v == locIp {
 			iplist = append(iplist[:k],iplist[k+1:]...)
 		}
 	}
@@ -63,6 +64,6 @@ func HeartBeat(){
 
 
 func main(){
-	
+	HeartBeat()
 	
 }
