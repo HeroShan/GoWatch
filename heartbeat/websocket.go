@@ -46,6 +46,7 @@ func Client(iplist []string) {
         i++
         if i== 999999999{
             i = 0
+            i++
         }
         writeChan<-i
         go Send(writeChan,iplist)
