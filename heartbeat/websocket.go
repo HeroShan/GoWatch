@@ -38,24 +38,35 @@ func Server() {
 
 var origin string
 var url  string
- 
+var i int
 func Client(iplist []string) {
-
+    chanMax := len(iplist)
+    writeChan := make(chan int,chanMax)
     for {
+        i++
+        writeChan<-i
+        go Send(writeChan,iplist)
+        if i== 999999999{
+            i = 0
+        }
+    }
+    
+}
+
+func Send(writeChan chan int,iplist []string){
         for _,v := range iplist{
             origin = "http://"+strings.TrimSpace(v)+":8080/"
             url = "ws://"+strings.TrimSpace(v)+":8080/echo"
-            ws, _ := websocket.Dial(url, "", origin)
-            message := []byte("asdasdasd")
-            time.Sleep(1*time.Second)
-            ws.Write(message)
-            fmt.Printf("Send: %s\n", message)
-        
-            var msg = make([]byte, 512)
-            m, _ := ws.Read(msg)
-            fmt.Printf("Receive: %s\n", msg[:m])
-        
+            ws, err := websocket.Dial(url, "", origin)
+            if err == nil {
+                message := []byte("2019")
+                time.Sleep(1*time.Second)
+                ws.Write(message)
+                fmt.Printf("Send: %s\n", message)
+                <-writeChan
+                var msg = make([]byte, 512)
+                m, _ := ws.Read(msg)
+                fmt.Printf("Receive: %s\n", msg[:m])
+            }
         }
-        
-    }
 }
