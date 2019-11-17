@@ -1,6 +1,5 @@
 package heartbeat
 
-<<<<<<< HEAD
 import (
 	"fmt"
 	"log"
@@ -17,39 +16,14 @@ func EchoHandler(ws *websocket.Conn) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Receive:------------------- %s%v\n", msg[:n], time.Now())
+	fmt.Printf("Receive:---------------- %s\n", msg[:n])
 
 	send_msg := "[" + string(msg[:n]) + "]"
 	m, err := ws.Write([]byte(send_msg))
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Send:------------------- %s%v\n", msg[:m], time.Now())
-=======
-import(
-    "golang.org/x/net/websocket"
-    "fmt"
-    "log"
-    "net/http"
-    "time"
-    "strings"
-)
-
-func EchoHandler(ws *websocket.Conn) {
-    msg := make([]byte, 512)
-    n, err := ws.Read(msg)
-    if err != nil {
-        log.Fatal(err)
-    }
-    fmt.Printf("Receive:---------------- %s\n", msg[:n])
- 
-    send_msg := "[" + string(msg[:n]) + "]"
-    m, err := ws.Write([]byte(send_msg))
-    if err != nil {
-        log.Fatal(err)
-    }
-    fmt.Printf("Send:------------------- %s\n", msg[:m])
->>>>>>> 9f20dff7adcf6f03709f94a3017f759a6feceb2a
+	fmt.Printf("Send:------------------- %s\n", msg[:m])
 }
 
 func Server() {
@@ -84,7 +58,6 @@ func Client(iplist []string) {
 
 }
 
-<<<<<<< HEAD
 func Send(writeChan chan int, iplist []string) {
 	for _, v := range iplist {
 		origin = "http://" + strings.TrimSpace(v) + ":8080/"
@@ -101,22 +74,4 @@ func Send(writeChan chan int, iplist []string) {
 			fmt.Printf("Receive: %s\n", msg[:m])
 		}
 	}
-=======
-func Send(writeChan chan int,iplist []string){
-        for _,v := range iplist{
-            origin = "http://"+strings.TrimSpace(v)+":8080/"
-            url = "ws://"+strings.TrimSpace(v)+":8080/echo"
-            ws, err := websocket.Dial(url, "", origin)
-            if err == nil {
-                message := []byte("2019")
-                
-                ws.Write(message)
-                fmt.Printf("Send: %s\n", message)
-                <-writeChan
-                var msg = make([]byte, 512)
-                m, _ := ws.Read(msg)
-                fmt.Printf("Receive: %s\n", msg[:m])
-            }
-        }
->>>>>>> 9f20dff7adcf6f03709f94a3017f759a6feceb2a
 }
