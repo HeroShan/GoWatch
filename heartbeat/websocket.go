@@ -1,7 +1,7 @@
 package heartbeat
 
 import(
-	"golang.org/x/net/websocket"
+    "golang.org/x/net/websocket"
     "fmt"
     "log"
     "net/http"
@@ -15,7 +15,7 @@ func EchoHandler(ws *websocket.Conn) {
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Printf("Receive:------------------- %s\n", msg[:n])
+    fmt.Printf("Receive:---------------- %s\n", msg[:n])
  
     send_msg := "[" + string(msg[:n]) + "]"
     m, err := ws.Write([]byte(send_msg))
