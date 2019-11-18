@@ -1,23 +1,22 @@
 package main
 
 import(
-	"net"
+	"net/http"
 	"fmt"
 	"os"
 	"strings" 
 	"GoWatch/heartbeat"
+	"io/ioutil"
 
 
 )
 
 
 func Getlocalip() (string) {  
-	conn, err := net.Dial("udp", "wanter.work:8080")
-    if err != nil {
-        fmt.Println(err.Error())
-    }
-    defer conn.Close()
-    return strings.Split(conn.LocalAddr().String(), ":")[0]
+	conn, _ := http.Get("http://127.0.0.1:8080/fmsgetip")
+    body, _ := ioutil.ReadAll(conn.Body)
+	defer conn.Body.Close()
+	return strings.Split(string(body), ":")[0]
 }
 
 func VoteTime(){
