@@ -149,6 +149,13 @@ func simpleUpload(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+func fmsgetip(w http.ResponseWriter, r *http.Request){
+	if r.Method == "GET"{
+		ipstring := r.RemoteAddr
+		w.Write([]byte(ipstring))
+	}
+}
+
 func monitoring(){
 	for{
 		time.Sleep(24 * time.Hour)
@@ -164,9 +171,10 @@ func main(){
 	
 	mime.AddExtensionType(".js", "text/javascript")	//static
 	http.HandleFunc("/", getip)
+	http.HandleFunc("/fmsgetip", fmsgetip)
 	http.HandleFunc("/login", login)
 	http.Handle("/admin", LoginMiddleware(http.HandlerFunc(admin)))	//	登录
 	http.Handle("/admin/simpleUpload", LoginMiddleware(http.HandlerFunc(simpleUpload)))	//	单文件上传
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css")))) //static
-	http.ListenAndServe(":80", nil)	
+	http.ListenAndServe(":8080", nil)	
 }

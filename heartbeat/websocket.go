@@ -41,6 +41,7 @@ var url string
 var i int
 
 func Client(iplist []string) {
+	fmt.Println(iplist)
 	chanMax := len(iplist)
 	writeChan := make(chan int, chanMax)
 	for {

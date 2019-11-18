@@ -6,30 +6,18 @@ import(
 	"os"
 	"strings" 
 	"GoWatch/heartbeat"
+
+
 )
 
 
-func Getlocalip() (ip string) {
-	netInterfaces, err := net.Interfaces()
+func Getlocalip() (string) {  
+	conn, err := net.Dial("udp", "wanter.work:8080")
     if err != nil {
-        fmt.Println("net.Interfaces failed, err:", err.Error())
-        return ""
-	}
- 
-    for i := 0; i < len(netInterfaces); i++ {
-        if (netInterfaces[i].Flags & net.FlagUp) != 0 {
-            addrs, _ := netInterfaces[i].Addrs()
- 
-            for _, address := range addrs {
-                if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-                    if ipnet.IP.To4() != nil {
-                        return ipnet.IP.String()
-                    }
-                }
-            }
-        }
+        fmt.Println(err.Error())
     }
- 	return ""
+    defer conn.Close()
+    return strings.Split(conn.LocalAddr().String(), ":")[0]
 }
 
 func VoteTime(){
@@ -50,6 +38,7 @@ func HeartBeat(){
 		}
 	}
 	locIp := Getlocalip()
+	fmt.Println(locIp)
 	ip := strings.Split(filestr,"=")
 	iplist := strings.Split(ip[1],",")
 	for k,v := range iplist{
@@ -58,6 +47,7 @@ func HeartBeat(){
 			iplist = append(iplist[:k],iplist[k+1:]...)
 		}
 	}
+	fmt.Println(iplist)
 	go heartbeat.Server()
 	heartbeat.Client(iplist)
 }
