@@ -34,7 +34,7 @@ func EchoHandler(ws *websocket.Conn) {
 }
 
 func Server() {
-	http.Handle("/echo", websocket.Handler(EchoHandler))
+	go http.Handle("/echo", websocket.Handler(EchoHandler))
 	err := http.ListenAndServe(":80", nil)
 	if err != nil {
 		panic("ListenAndServe: " + err.Error())
@@ -45,7 +45,7 @@ var origin string
 var url string
 var i int
 
-func Client(iplist []string) {
+func Client(iplist []string,locIp string) {
 	fmt.Println(iplist)
 	chanMax := len(iplist)
 	writeChan := make(chan int, chanMax)
@@ -57,19 +57,19 @@ func Client(iplist []string) {
 			i++
 		}
 		writeChan <- i
-		go Send(writeChan, iplist)
+		go Send(writeChan, iplist,locIp)
 
 	}
 
 }
 
-func Send(writeChan chan int, iplist []string) {
+func Send(writeChan chan int, iplist []string,locIp string) {
 	for _, v := range iplist {
 		origin = "http://" + strings.TrimSpace(v) + ":80/"
 		url = "ws://" + strings.TrimSpace(v) + ":80/echo"
 		ws, err := websocket.Dial(url, "", origin)
 		if err == nil {
-			message := []byte(base64.StdEncoding.EncodeToString([]byte(v)))
+			message := []byte(base64.StdEncoding.EncodeToString([]byte(locIp)))
 			ws.Write(message)
 			fmt.Printf("Client---Send: %s---%v--ip:--%v\n", message,time.Now(),v)
 			<-writeChan

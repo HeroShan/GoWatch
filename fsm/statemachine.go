@@ -48,7 +48,7 @@ func HeartBeat(){
 	}
 	fmt.Println(iplist)
 	go heartbeat.Server()
-	heartbeat.Client(iplist)
+	heartbeat.Client(iplist,locIp)
 }
 
 
