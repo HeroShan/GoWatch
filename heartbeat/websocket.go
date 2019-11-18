@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
 	"golang.org/x/net/websocket"
 )
 
@@ -16,21 +15,21 @@ func EchoHandler(ws *websocket.Conn) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Receive:---------------- %s\n", msg[:n])
+	fmt.Printf("Receive:----------- %s--%v\n", msg[:n],time.Now())
 
 	send_msg := "[" + string(msg[:n]) + "]"
 	m, err := ws.Write([]byte(send_msg))
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Send:------------------- %s\n", msg[:m])
+	fmt.Printf("Send:----------- %s--%v\n", msg[:m],time.Now())
 }
 
 func Server() {
 	http.Handle("/echo", websocket.Handler(EchoHandler))
 	http.Handle("/", http.FileServer(http.Dir(".")))
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":80", nil)
 
 	if err != nil {
 		panic("ListenAndServe: " + err.Error())
@@ -60,18 +59,18 @@ func Client(iplist []string) {
 
 func Send(writeChan chan int, iplist []string) {
 	for _, v := range iplist {
-		origin = "http://" + strings.TrimSpace(v) + ":8080/"
-		url = "ws://" + strings.TrimSpace(v) + ":8080/echo"
+		origin = "http://" + strings.TrimSpace(v) + ":80/"
+		url = "ws://" + strings.TrimSpace(v) + ":80/echo"
 		ws, err := websocket.Dial(url, "", origin)
 		if err == nil {
 			message := []byte("2019")
 
 			ws.Write(message)
-			fmt.Printf("Send: %s\n", message)
+			fmt.Printf("Send: %s---%v--ip:--%v\n", message,time.Now(),v)
 			<-writeChan
 			var msg = make([]byte, 512)
 			m, _ := ws.Read(msg)
-			fmt.Printf("Receive: %s\n", msg[:m])
+			fmt.Printf("Receive: %s---%v--ip:--%v\n", msg[:m],time.Now(),v)
 		}
 	}
 }
