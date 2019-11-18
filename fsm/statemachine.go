@@ -13,7 +13,7 @@ import(
 
 
 func Getlocalip() (string) {  
-	conn, _ := http.Get("http://127.0.0.1:8080/fmsgetip")
+	conn, _ := http.Get("http://wanter.work:8080/fmsgetip")
     body, _ := ioutil.ReadAll(conn.Body)
 	defer conn.Body.Close()
 	return strings.Split(string(body), ":")[0]
@@ -54,5 +54,5 @@ func HeartBeat(){
 
 func main(){
 	HeartBeat()
-	
+	//heartbeat.Auth()
 }

@@ -6,18 +6,26 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"encoding/base64" 
 	"golang.org/x/net/websocket"
 )
 
 func EchoHandler(ws *websocket.Conn) {
 	msg := make([]byte, 512)
-	n, err := ws.Read(msg)
-	if err != nil {
-		log.Fatal(err)
+	var sd,send_msg string
+	for{
+		n, err := ws.Read(msg)
+		if err != nil ||n==0 {
+			log.Fatal(err)
+			break
+		}
+		sd += string(msg[:n])
+		send_msg += "[" + string(msg[:n]) + "]"
 	}
-	fmt.Printf("Service---Receive:----------- %s--%v\n", msg[:n],time.Now())
+	cc,_ := base64.StdEncoding.DecodeString(sd)
+	fmt.Printf("Service---Receive:----------- %v--%v\n", cc,time.Now())
 
-	send_msg := "[" + string(msg[:n]) + "]"
+	
 	m, err := ws.Write([]byte(send_msg))
 	if err != nil {
 		log.Fatal(err)
@@ -27,10 +35,7 @@ func EchoHandler(ws *websocket.Conn) {
 
 func Server() {
 	http.Handle("/echo", websocket.Handler(EchoHandler))
-	http.Handle("/", http.FileServer(http.Dir(".")))
-
 	err := http.ListenAndServe(":80", nil)
-
 	if err != nil {
 		panic("ListenAndServe: " + err.Error())
 	}
@@ -64,8 +69,7 @@ func Send(writeChan chan int, iplist []string) {
 		url = "ws://" + strings.TrimSpace(v) + ":80/echo"
 		ws, err := websocket.Dial(url, "", origin)
 		if err == nil {
-			message := []byte("2019")
-
+			message := []byte(base64.StdEncoding.EncodeToString([]byte(v)))
 			ws.Write(message)
 			fmt.Printf("Client---Send: %s---%v--ip:--%v\n", message,time.Now(),v)
 			<-writeChan
