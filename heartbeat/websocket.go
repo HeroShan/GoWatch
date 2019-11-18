@@ -15,14 +15,16 @@ func EchoHandler(ws *websocket.Conn) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Receive:----------- %s--%v\n", msg[:n],time.Now())
+	//fmt.Printf("Receive:----------- %s--%v\n", msg[:n],time.Now())
+	fmt.Printf("%c[4;45;33m Receive:%02s:%02v%c\n[0m", 0x1B,msg[:n],time.Now(), 0x1B)
 
 	send_msg := "[" + string(msg[:n]) + "]"
 	m, err := ws.Write([]byte(send_msg))
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Send:----------- %s--%v\n", msg[:m],time.Now())
+	//fmt.Printf("Send:----------- %s--%v\n", msg[:m],time.Now())
+	fmt.Printf("%c[4;45;36m Send:%02s:%02v%c\n[0m", 0x1B,msg[:m],time.Now(), 0x1B)
 }
 
 func Server() {
@@ -66,11 +68,13 @@ func Send(writeChan chan int, iplist []string) {
 			message := []byte("2019")
 
 			ws.Write(message)
-			fmt.Printf("Send: %s---%v--ip:--%v\n", message,time.Now(),v)
+			//fmt.Printf("Send: %s---%v--ip:--%v\n", message,time.Now(),v)
+			fmt.Printf("%c[4;45;34m Send:%02v--%02s:%02v%c\n[0m", 0x1B,message,time.Now(),v, 0x1B)
 			<-writeChan
 			var msg = make([]byte, 512)
 			m, _ := ws.Read(msg)
-			fmt.Printf("Receive: %s---%v--ip:--%v\n", msg[:m],time.Now(),v)
+			//fmt.Printf("Receive: %s---%v--ip:--%v\n", msg[:m],time.Now(),v)
+			fmt.Printf("%c[4;45;35m Send:%02v--%02s:%02v%c\n[0m", 0x1B,msg[:m],time.Now(),v, 0x1B)
 		}
 	}
 }
