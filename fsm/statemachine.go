@@ -41,11 +41,13 @@ func HeartBeat(){
 		if v == locIp {
 			Hplist = append(Hplist[:k],Hplist[k+1:]...)
 		}
+	}
+	for k,v := range Hplist{
+		v = strings.TrimSpace(v)
 		if Hplist[k] == locIp{
 			go heartbeat.Server()
 		}
 	}
-	
 	heartbeat.Client(Hplist,locIp)
 }
 
