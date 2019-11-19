@@ -10,27 +10,20 @@ import (
 	"golang.org/x/net/websocket"
 )
 
-func EchoHandler(ws *websocket.Conn) {
-	msg := make([]byte, 512)
-	var sd,send_msg string
-	for{
-		n, err := ws.Read(msg)
-		if err != nil ||n==0 {
-			log.Fatal(err)
-			break
-		}
-		sd += string(msg[:n])
-		send_msg += "[" + string(msg[:n]) + "]"
-	}
-	cc,_ := base64.StdEncoding.DecodeString(sd)
-	fmt.Printf("Service---Receive:----------- %v--%v\n", cc,time.Now())
+func EchoHandler(ws *websocket.Conn) {	
+    msg := make([]byte, 512)	
+    n, err := ws.Read(msg)	
+    if err != nil {	
+        log.Fatal(err)	
+    }	
+    fmt.Printf("Receive:---------------- %s\n", msg[:n])	
 
-	
-	m, err := ws.Write([]byte(send_msg))
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("Service---Send:----------- %s--%v\n", msg[:m],time.Now())
+    send_msg := "[" + string(msg[:n]) + "]"	
+    m, err := ws.Write([]byte(send_msg))	
+    if err != nil {	
+        log.Fatal(err)	
+    }	
+    fmt.Printf("Send:------------------- %s\n", msg[:m])	
 }
 
 func Server() {
