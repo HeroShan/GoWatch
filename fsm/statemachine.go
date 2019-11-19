@@ -37,12 +37,12 @@ func HeartBeat(){
 	ip := strings.Split(filestr,"=")
 	Hplist := strings.Split(ip[1],",")
 	for k,v := range Hplist{
-		if Hplist[k] == locIp{
-			go heartbeat.Server()
-		}
 		v = strings.TrimSpace(v)
 		if v == locIp {
 			Hplist = append(Hplist[:k],Hplist[k+1:]...)
+		}
+		if Hplist[k] == locIp{
+			go heartbeat.Server()
 		}
 	}
 	
