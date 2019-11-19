@@ -7,10 +7,7 @@ import(
 	"strings" 
 	"GoWatch/heartbeat"
 	"io/ioutil"
-
-
 )
-
 
 func Getlocalip() (string) {  
 	conn, _ := http.Get("http://wanter.work:8080/fmsgetip")
@@ -37,20 +34,20 @@ func HeartBeat(){
 		}
 	}
 	locIp := Getlocalip()
-	fmt.Println(locIp)
 	ip := strings.Split(filestr,"=")
-	iplist := strings.Split(ip[1],",")
-	for k,v := range iplist{
+	Hplist := strings.Split(ip[1],",")
+	for k,v := range Hplist{
+		if Hplist[k] == locIp{
+			go heartbeat.Server()
+		}
 		v = strings.TrimSpace(v)
 		if v == locIp {
-			iplist = append(iplist[:k],iplist[k+1:]...)
+			Hplist = append(Hplist[:k],Hplist[k+1:]...)
 		}
 	}
-	fmt.Println(iplist)
-	go heartbeat.Server()
-	heartbeat.Client(iplist,locIp)
+	
+	heartbeat.Client(Hplist,locIp)
 }
-
 
 func main(){
 	HeartBeat()

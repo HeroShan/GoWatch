@@ -16,9 +16,8 @@ func EchoHandler(ws *websocket.Conn) {
     if err != nil {	
         log.Fatal(err)	
     }	
-    fmt.Printf("Receive:---------------- %s\n", msg[:n])	
-
-    send_msg := "[" + string(msg[:n]) + "]"	
+	fmt.Printf("Receive:---------------- %s\n", msg[:n])
+	send_msg := "[" + string(msg[:n]) + "]"	
     m, err := ws.Write([]byte(send_msg))	
     if err != nil {	
         log.Fatal(err)	
@@ -33,10 +32,6 @@ func Server() {
 		panic("ListenAndServe: " + err.Error())
 	}
 }
-
-var origin string
-var url string
-var i int
 
 func Client(iplist []string,locIp string) {
 	chanMax := len(iplist)
@@ -53,6 +48,8 @@ func Client(iplist []string,locIp string) {
 }
 
 func Send(writeChan chan string,locIp string) {
+	var origin string
+	var url string
 		v := <-writeChan
 		origin = "http://" + strings.TrimSpace(v) + ":80/"
 		url = "ws://" + strings.TrimSpace(v) + ":80/echo"
@@ -64,6 +61,5 @@ func Send(writeChan chan string,locIp string) {
 			var msg = make([]byte, 512)
 			m, _ := ws.Read(msg)
 			fmt.Printf("Client---Receive: %s---%v--ip:--%v\n", msg[:m],time.Now(),v)
-			
 		}
 }

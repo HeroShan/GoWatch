@@ -1,0 +1,25 @@
+Service1
+    receive  -> Client-Local-ip  "In fms.config Ip" true{ Token->Client  >< }  false{ refuse connect }   
+
+
+
+
+
+
+
+
+
+                                                                                                                    Local-ip  <-  2Client
+
+Service2
+    receive  -> Client-Local-ip  "In fms.config Ip" true{ Token->Client  >< }  false{ refuse connect }   
+
+
+
+
+
+
+
+
+
+                                                                                                                    Local-ip  <-  1Client
