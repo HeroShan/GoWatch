@@ -6,24 +6,51 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"os"
 	"encoding/base64" 
 	"golang.org/x/net/websocket"
 )
 
+//wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA
 func EchoHandler(ws *websocket.Conn) {	
     msg := make([]byte, 512)	
     n, err := ws.Read(msg)	
     if err != nil {	
         log.Fatal(err)	
-    }	
-	fmt.Printf("Receive:---------------- %s\n", msg[:n])
-	send_msg := "[" + string(msg[:n]) + "]"	
-    m, err := ws.Write([]byte(send_msg))	
-    if err != nil {	
-        log.Fatal(err)	
-    }	
-    fmt.Printf("Send:------------------- %s\n", msg[:m])	
+	}	
+	clientip,eer := base64.StdEncoding.DecodeString(string(msg[:n]))
+	if eer != nil {
+		fmt.Println(eer)
+		}
+	//fmt.Printf("Clientip:******* %s\n", clientip)
+	file,err := os.Open("../fsm/fsm.config"); if err != nil{
+		fmt.Println("file open fail",err)
+	}
+	data := make([]byte,512)
+	var filestr string
+	for{
+		count, _ := file.Read(data)
+		filestr += string(data[:count])
+		if count == 0{
+			break
+		}
+	}
+	ip := strings.Split(filestr,"=")
+	Hplist := strings.Split(ip[1],",")
+	for _,v := range Hplist{
+		v = strings.TrimSpace(v)
+		if v == string(clientip){
+		    send_msg := "wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA"	
+		    m, err := ws.Write([]byte(send_msg))	
+		    if err != nil {	
+		        log.Fatal(err)	
+		    }	
+		    fmt.Printf("Send:------------------- %s\n", msg[:m])
+		    }	
+	}
+	
 }
+
 
 func Server() {
 	http.Handle("/echo", websocket.Handler(EchoHandler))
