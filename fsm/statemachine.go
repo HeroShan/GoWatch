@@ -36,17 +36,21 @@ func HeartBeat(){
 	locIp := Getlocalip()
 	ip := strings.Split(filestr,"=")
 	Hplist := strings.Split(ip[1],",")
-	for k,v := range Hplist{
+	tmpMap := make(map[string]bool,len(Hplist))
+	Siplist := make([]string,0)
+	var allowSer bool
+	for _,v := range Hplist{
+		if v == locIp{
+			allowSer = true
+		}
 		v = strings.TrimSpace(v)
-		if Hplist[k] == locIp{
-			go heartbeat.Server()
+		if tmpMap[v] == false && v !=locIp{
+		   tmpMap[v] =	true
+		   Siplist = append(Siplist,v)
 		}
 	}
-	for k,v := range Hplist{
-		v = strings.TrimSpace(v)
-		if v == locIp {
-			Hplist = append(Hplist[:k],Hplist[k+1:]...)
-		}
+	if allowSer == true{
+		go heartbeat.Server()
 	}
 	heartbeat.Client(Hplist,locIp)
 }
