@@ -22,7 +22,7 @@ func EchoHandler(ws *websocket.Conn) {
 	if eer != nil {
 		fmt.Println(eer)
 		}
-	fmt.Printf("Server:******* %s\n", clientip)
+	//fmt.Printf("Server:******* %s\n", clientip)
 	file,err := os.Open("../fsm/fsm.config"); if err != nil{
 		fmt.Println("file open fail",err)
 	}
@@ -41,12 +41,12 @@ func EchoHandler(ws *websocket.Conn) {
 		v = strings.TrimSpace(v)
 		if v == string(clientip){
 			send_msg := "wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA"	
-			m, err := ws.Write([]byte(send_msg))	
+			_, err := ws.Write([]byte(send_msg))	
 		    if err != nil {	
 		        log.Fatal(err)	
 		    }	
-		    fmt.Printf("Send:******* %s\n", msg[:m])
-		    }	
+		    //fmt.Printf("Send:******* %s\n", msg[:m])
+		}	
 	}
 	
 }
@@ -86,7 +86,7 @@ func Send(writeChan chan string,locIp string) {
 		if err == nil {
 			message := []byte(base64.StdEncoding.EncodeToString([]byte(locIp)))
 			ws.Write(message)
-			fmt.Printf("Client---Send: %s---%v--ip:--%v\n", message,time.Now(),v)
+			//fmt.Printf("Client---Send: %s---%v--ip:--%v\n", message,time.Now(),v)
 			var msg = make([]byte, 512)
 			m, _ := ws.Read(msg)
 			CheckBeat(string(msg[:m]),time.Now(),v)
@@ -97,5 +97,5 @@ func Send(writeChan chan string,locIp string) {
 }
 
 func CheckBeat(receivedata string,now time.Time,ip string){
-	fmt.Printf("%s,%s,%s",receivedata,now,ip)
+	fmt.Printf("%s,%s,%s\n",receivedata,now,ip)
 }

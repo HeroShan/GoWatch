@@ -1,4 +1,4 @@
-package main
+package fsm
 
 import(
 	"net/http"
@@ -56,7 +56,4 @@ func HeartBeat(){
 	heartbeat.Client(Siplist,locIp)
 }
 
-func main(){
-	HeartBeat()
-	//heartbeat.Auth()
-}
+
