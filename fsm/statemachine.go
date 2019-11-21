@@ -52,7 +52,7 @@ func HeartBeat(){
 	if allowSer == true{
 		go heartbeat.Server()
 	}
-	fmt.Println(allowSer,Siplist,locIp)
+	//fmt.Println(allowSer,Siplist,locIp)
 	heartbeat.Client(Siplist,locIp)
 }
 

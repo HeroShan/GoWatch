@@ -40,8 +40,8 @@ func EchoHandler(ws *websocket.Conn) {
 	for _,v := range Hplist{
 		v = strings.TrimSpace(v)
 		if v == string(clientip){
-		    send_msg := "wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA"	
-		    m, err := ws.Write([]byte(send_msg))	
+			send_msg := "wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA"	
+			m, err := ws.Write([]byte(send_msg))	
 		    if err != nil {	
 		        log.Fatal(err)	
 		    }	
@@ -69,7 +69,7 @@ func Client(iplist []string,locIp string) {
 			go Send(writeChan,locIp)
 		}
 		
-		time.Sleep(1 * time.Second)
+		time.Sleep(3 * time.Second)
 	}
 
 }
@@ -78,15 +78,24 @@ func Send(writeChan chan string,locIp string) {
 	var origin string
 	var url string
 		v := <-writeChan
+		
 		origin = "http://" + strings.TrimSpace(v) + ":80/"
 		url = "ws://" + strings.TrimSpace(v) + ":80/echo"
 		ws, err := websocket.Dial(url, "", origin)
+		fmt.Println(v,err)
 		if err == nil {
 			message := []byte(base64.StdEncoding.EncodeToString([]byte(locIp)))
 			ws.Write(message)
 			fmt.Printf("Client---Send: %s---%v--ip:--%v\n", message,time.Now(),v)
 			var msg = make([]byte, 512)
 			m, _ := ws.Read(msg)
-			fmt.Printf("Client---Receive: %s---%v--ip:--%v\n", msg[:m],time.Now(),v)
+			CheckBeat(string(msg[:m]),time.Now(),v)
+			//fmt.Printf("Client---Receive: %T---%v--ip:--%v\n", msg[:m],time.Now(),v)
+		}else{
+			CheckBeat("failed",time.Now(),v)
 		}
+}
+
+func CheckBeat(receivedata string,now time.Time,ip string){
+	fmt.Printf("%s,%s,%s",receivedata,now,ip)
 }
