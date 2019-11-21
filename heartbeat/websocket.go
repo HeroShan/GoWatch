@@ -22,7 +22,7 @@ func EchoHandler(ws *websocket.Conn) {
 	if eer != nil {
 		fmt.Println(eer)
 		}
-	//fmt.Printf("Clientip:******* %s\n", clientip)
+	fmt.Printf("Server:******* %s\n", clientip)
 	file,err := os.Open("../fsm/fsm.config"); if err != nil{
 		fmt.Println("file open fail",err)
 	}
@@ -45,7 +45,7 @@ func EchoHandler(ws *websocket.Conn) {
 		    if err != nil {	
 		        log.Fatal(err)	
 		    }	
-		    fmt.Printf("Send:------------------- %s\n", msg[:m])
+		    fmt.Printf("Send:******* %s\n", msg[:m])
 		    }	
 	}
 	
