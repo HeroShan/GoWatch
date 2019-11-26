@@ -21,7 +21,6 @@ func EchoHandler(ws *websocket.Conn) {
 	if eer != nil {
 		fmt.Println(eer)
 		}
-	//fmt.Printf("Server:******* %s\n", clientip)
 	file,err := os.Open("../fsm/fsm.config"); if err != nil{
 		fmt.Println("file open fail",err)
 	}
@@ -44,7 +43,6 @@ func EchoHandler(ws *websocket.Conn) {
 		    if err != nil {	
 		        log.Fatal(err)	
 		    }	
-		    //fmt.Printf("Send:******* %s\n", msg[:m])
 		}	
 	}
 	
@@ -65,9 +63,8 @@ func Client(iplist []string,locIp string) {
 	for {
 		for _,fsmIp := range iplist{
 			select{
-			case cc:= <-failedIp :
+			case <-failedIp :
 				time.Sleep(1 * time.Second)
-				fmt.Println(cc)
 			default :
 			writeChan<-fsmIp
 			}
@@ -92,11 +89,9 @@ func Send(writeChan chan string,locIp string) {
 		if err == nil {
 			message := []byte(base64.StdEncoding.EncodeToString([]byte(locIp)))
 			ws.Write(message)
-			//fmt.Printf("Client---Send: %s---%v--ip:--%v\n", message,time.Now(),v)
 			var msg = make([]byte, 512)
 			m, _ := ws.Read(msg)
 			CheckBeat(string(msg[:m]),time.Now(),v)
-			//fmt.Printf("Client---Receive: %T---%v--ip:--%v\n", msg[:m],time.Now(),v)
 		}else{
 			failedIp <- v
 		}
