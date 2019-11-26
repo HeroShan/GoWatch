@@ -1,18 +1,38 @@
 package heartbeat
 import(
-	"github.com/dgrijalva/jwt-go"
-	"encoding/base64" 
+	"os"
+	"strings"
 
 )
-var Key string = "nR5cCI6I"
-func Auth()string{
-	token := jwt.New(jwt.SigningMethodHS256)
-	tokenString, _ := token.SignedString([]byte(Key))
-	return base64.StdEncoding.EncodeToString([]byte(tokenString))
-	// dd,_:=base64.StdEncoding.DecodeString(cc)
-	// fmt.Println(tokenString)
-	// fmt.Println(cc)
-	// fmt.Println(string(dd))
+
+type Alive struct{
+	ip 		string
+	status	*State
+}
+
+type State struct{
+	on		string
+	off		string
+	timeout string
+}
+
+func GetConfIp()[]string{
+	file,_ := os.Open("../fsm/fsm.config")
+	data := make([]byte,512)
+	var filestr string
+	for{
+		count, _ := file.Read(data)
+		filestr += string(data[:count])
+		if count == 0{
+			break
+		}
+	}
+	ip := strings.Split(filestr,"=")
+	return strings.Split(ip[1],",")
+}
+
+func CheckStatus(clientIp string){
+
 }
 
 

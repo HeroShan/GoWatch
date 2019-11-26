@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strings"
 	"time"
-	"os"
 	"encoding/base64" 
 	"golang.org/x/net/websocket"
 )
@@ -18,25 +17,11 @@ func EchoHandler(ws *websocket.Conn) {
     if err != nil {	
         log.Fatal(err)	
 	}	
-	clientip,eer := base64.StdEncoding.DecodeString(string(msg[:n]))
-	if eer != nil {
-		fmt.Println(eer)
-		}
-	//fmt.Printf("Server:******* %s\n", clientip)
-	file,err := os.Open("../fsm/fsm.config"); if err != nil{
-		fmt.Println("file open fail",err)
-	}
-	data := make([]byte,512)
-	var filestr string
-	for{
-		count, _ := file.Read(data)
-		filestr += string(data[:count])
-		if count == 0{
-			break
-		}
-	}
-	ip := strings.Split(filestr,"=")
-	Hplist := strings.Split(ip[1],",")
+	clientip,_ := base64.StdEncoding.DecodeString(string(msg[:n]))
+	fmt.Println(clientip)
+	
+	
+	Hplist := GetConfIp()
 	for _,v := range Hplist{
 		v = strings.TrimSpace(v)
 		if v == string(clientip){
