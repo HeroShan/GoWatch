@@ -66,7 +66,7 @@ func Client(iplist []string,locIp string) {
 		for _,fsmIp := range iplist{
 			select{
 			case cc:= <-failedIp :
-				time.Sleep(3 * time.Second)
+				time.Sleep(1 * time.Second)
 				fmt.Println(cc)
 			default :
 			writeChan<-fsmIp
