@@ -41,7 +41,7 @@ func Server() {
 	http.Handle("/echo", websocket.Handler(EchoHandler))
 	err := http.ListenAndServe(":80", nil)
 	if err != nil {
-		panic("ListenAndServe: " + err.Error())
+		log.Fatal("ListenAndServe: " + err.Error())
 	}
 }
 
@@ -71,10 +71,10 @@ func Send(writeChan chan string,locIp string) {
 		}else{
 			var msg = make([]byte, 512)
 			//message := []byte(base64.StdEncoding.EncodeToString([]byte(locIp)))
-			msint,err1:=ws.Read(msg)
-			if err1 != nil{
-				fmt.Println(err1,"---------------------------",msint,"-----------------",locIp)
-			}
+			//msint,err1:=ws.Read(msg)
+			// if err1 != nil{
+				fmt.Println(ws,msg,"-----------------",locIp)
+			// }
 			
 		}
 }
