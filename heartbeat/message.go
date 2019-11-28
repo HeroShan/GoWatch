@@ -3,12 +3,12 @@ import(
 	"os"
 	"strings"
 	"encoding/base64"
-	"fmt"
+
 )
 
 type Alive struct{
-	ip 		string
-	status	string
+	ip 		[]string
+	status	State
 }
 
 type State struct{
@@ -32,9 +32,9 @@ func GetConfIp()[]string{
 	return strings.Split(ip[1],",")
 }
 
-func Sendmsg(msg string){
+func Sendmsg(msg string)[]byte{
 	message := []byte(base64.StdEncoding.EncodeToString([]byte(msg)))
-	fmt.Printf("%T",message)
+	return []byte(message)
 }
 
 func CheckStatus(clientIp string){

@@ -60,7 +60,7 @@ func G2etnetwork(url string, chanl2 chan int){
 }
 func ex1(){
 	
-	chanl := make(chan int, 200)
+	chanl := make(chan int, 300)
 	for four:=0;four<26;four++{
 		for three:=0;three<13;three++{
 			for two:=0;two<26;two++{
@@ -80,7 +80,7 @@ func ex1(){
 
 func ex2(){
 	
-	chanl2 := make(chan int, 100)
+	chanl2 := make(chan int, 300)
 	for four:=0;four<26;four++{
 		for three:=13;three<26;three++{
 			for two:=0;two<26;two++{

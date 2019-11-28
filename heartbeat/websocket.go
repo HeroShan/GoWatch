@@ -17,13 +17,8 @@ func EchoHandler(ws *websocket.Conn) {
     if err != nil {	
         log.Fatal(err)	
 	}	
-	clientip,eer := base64.StdEncoding.DecodeString(string(msg[:n]))
-	if eer != nil {
-		fmt.Println(eer)
-		}
-	file,err := os.Open("../fsm/fsm.config"); if err != nil{
-		fmt.Println("file open fail",err)
-	}
+	clientip,_ := base64.StdEncoding.DecodeString(string(msg[:n]))
+	file,_ := os.Open("../fsm/fsm.config")
 	data := make([]byte,512)
 	var filestr string
 	for{
@@ -38,7 +33,8 @@ func EchoHandler(ws *websocket.Conn) {
 	for _,v := range Hplist{
 		v = strings.TrimSpace(v)
 		if v == string(clientip){
-			send_msg := "wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA"	
+			
+			send_msg := base64.StdEncoding.EncodeToString([]byte("wingman WINGMAN  ↑↑ ↓↓  ←→  ←→ BABA卒"+string(clientip)))	
 			_, err := ws.Write([]byte(send_msg))	
 		    if err != nil {	
 		        log.Fatal(err)	
@@ -71,7 +67,7 @@ func Client(iplist []string,locIp string) {
 			go Send(writeChan,locIp)
 			
 		}
-		 time.Sleep(1 * time.Second)
+		  time.Sleep(1 * time.Second)
 	}
 
 }
@@ -79,21 +75,36 @@ func Client(iplist []string,locIp string) {
 func Send(writeChan chan string,locIp string) {
 	var origin string
 	var url string
-	
-		v := <-writeChan
-		
-		origin = "http://" + strings.TrimSpace(v) + ":80/"
-		url = "ws://" + strings.TrimSpace(v) + ":80/echo"
+		sendip := <-writeChan
+		origin = "http://" + strings.TrimSpace(sendip) + ":80/"
+		url = "ws://" + strings.TrimSpace(sendip) + ":80/echo"
 		ws, err := websocket.Dial(url, "", origin)
-		fmt.Println(v,err)
 		if err == nil {
+			var msg = make([]byte, 512)
+			fmt.Println("asddddddddddddqqqqqqqqqqqqqqqqqq")
+			m, err1 := ws.Read(msg); if err1 !=nil{
+				fmt.Println("ccccccccccccccccccccc",err1)
+			}else{
+				fmt.Println("ccccccccccccccccccccasdasdasdadc",m)
+			}
+			fmt.Println("asdddddddddddd",m)
+			if m == 0{
+				fmt.Println("11111")
 			message := []byte(base64.StdEncoding.EncodeToString([]byte(locIp)))
 			ws.Write(message)
-			var msg = make([]byte, 512)
-			m, _ := ws.Read(msg)
-			CheckBeat(string(msg[:m]),time.Now(),v)
+			}
+			clientip,_ := base64.StdEncoding.DecodeString(string(msg[:m]))
+			if len(clientip)<54{
+				failedIp <- sendip
+			}
+			ipDe := strings.Split(string(clientip),"卒")
+			message := []byte(base64.StdEncoding.EncodeToString([]byte(ipDe[1])))
+			ws.Write(message)
+			CheckBeat(string(msg[:m]),time.Now(),sendip)
 		}else{
-			failedIp <- v
+			failedIp <- sendip
+			fmt.Println(err)
+		
 		}
 }
 
