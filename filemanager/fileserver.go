@@ -7,31 +7,38 @@ import(
     "os"
 )
 
-func SaveFile(fileName string,udpConn *net.UDPConn) {
-    file,ferr := os.Create("./File/"+fileName); if ferr != nil{
-        fmt.Println("file----",ferr)
-    }
-    fmt.Println(udpConn)
+func SaveFile(fileName string,udpConn net.Conn) {
+    file,_ := os.Create("./File/"+fileName)
+    
     // 读取数据
     buf := make([]byte, 512)
-    len, err := udpConn.Read(buf)
-    file.Write(buf[:len])
-    if err != nil{
-        if err == io.EOF{
-            fmt.Println("UDP read err:",err)  
-            file.Close()
-        }else{
-            fmt.Println("UDP read err:",err)  
+    for {
+        n, err := udpConn.Read(buf)
+        if err != nil {
+           if err == io.EOF {
+              fmt.Println("文件接收完毕")
+           } else {
+              fmt.Println("Read err:", err)
+           }
+           return
         }
+        fmt.Println("fiel-----------------",string(buf[:n]))
+        file.Write(buf[:n])   // 写入文件，读多少写多少
     }
     
     
 }
 
 func main(){
-	udpAddr,_ := net.ResolveUDPAddr("udp","127.0.0.1:1997")
+	listener, err := net.Listen("tcp", "127.0.0.1:8005")
+    if err != nil {
+        fmt.Println("Listen err:", err)
+        return
+    }
+    defer listener.Close()
 
-	udpConn, err := net.ListenUDP("udp", udpAddr)
+    // 阻塞等待客户端连接
+    udpConn, err := listener.Accept()
 	if err != nil {
         fmt.Println(err)
     }
@@ -43,7 +50,10 @@ func main(){
         fmt.Println("Read err:", err)
         return
     }
-    _, err = udpConn.WriteToUDP([]byte("ok"), udpAddr)
+    _, err = udpConn.Write([]byte("ok"))
+    if err != nil{
+        fmt.Println("write-------",err)
+    }
     fileName := string(buf[:n]) 
     SaveFile(fileName,udpConn)
 

@@ -20,12 +20,12 @@ func Fileread(str string){
 			_,filename := filepath.Split(Furl)
 			ok,conn := Client([]byte(filename))
 			fmt.Println(ok)
-			if ok == " ok"{
+			if ok == "ok"{
 				for{
 					count,_ := file.Read(data); if count == 0{
 						break
 					}
-					n,e := conn.Read(data[:count]);if e != nil{
+					n,e := conn.Write(data[:count]);if e != nil{
 						fmt.Println(n,e)
 					}
 					fmt.Println(n)
@@ -59,7 +59,7 @@ func Cmdput(){
 }
 
 
-func Client(data []byte)(buf string,udpConn *net.UDPConn){
+func Client(filename []byte)(buf string,udpConn *net.UDPConn){
 	udpAddr, _ := net.ResolveUDPAddr("udp", ":1997")
 
     //连接udpAddr，返回 udpConn
@@ -68,15 +68,14 @@ func Client(data []byte)(buf string,udpConn *net.UDPConn){
         fmt.Println(err)
         os.Exit(2)
     }
-
+	fmt.Println(filename)
     // 发送数据
-    udpConn.Write(data)
-
-
-    //读取数据
+	udpConn.Write(filename)
+	//读取数据
     buff := make([]byte, 512)
 	udpConn.Read(buff)
 	buf = string(buff)
+	fmt.Println(buf)
     return buf,udpConn
 }
 
