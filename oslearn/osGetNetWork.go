@@ -56,7 +56,6 @@ func G2etnetwork(url string, chanl2 chan int){
 	fmt.Println(url)
 	<-chanl2
 	
-	
 }
 func ex1(){
 	
