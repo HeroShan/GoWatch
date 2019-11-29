@@ -6,12 +6,28 @@ import(
 	"os"
 	"bufio"
 	"strings"
+	"path/filepath"
 )
 
 func Fileread(str string){
+	data := make([]byte,512)
 	fstr:=strings.Fields(str)
-	for k,v := range fstr{
-		fmt.Println(k,v)
+	for _,Furl := range fstr{
+		file ,operr := os.Open(Furl); if operr != nil{
+			fmt.Println(Furl,"文件路径错误")
+		}
+		_,filename := filepath.Split(Furl)
+		newfile,crerr := os.Create("./"+filename); if crerr != nil{
+			fmt.Println("文件名重复")
+		}
+		for{
+			count,_ := file.Read(data); if count == 0{
+				break
+			}
+			newfile.Write(data[:count])
+			
+		}
+		file.Close()
 	}
 }
 
