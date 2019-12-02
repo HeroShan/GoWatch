@@ -9,7 +9,7 @@ import (
 
 func RecvFile(fileName string, conn net.Conn)  {
    // 创建新文件
-   f, err := os.Create(fileName)
+   f, err := os.Create("./File/"+fileName)
    if err != nil {
       fmt.Println("Create err:", err)
       return
