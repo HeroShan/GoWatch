@@ -22,7 +22,8 @@ func RecvFile(fileName string, conn net.Conn)  {
       n, err := conn.Read(buf)
       if err != nil {
          if err == io.EOF {
-            fmt.Println("文件接收完毕")
+            return
+            //fmt.Println("文件接收完毕")
          } else {
             fmt.Println("Read err:", err)
          }
@@ -31,8 +32,7 @@ func RecvFile(fileName string, conn net.Conn)  {
       f.Write(buf[:n])   // 写入文件，读多少写多少
    }
 }
-
-func main()  {
+func serve(){
    // 创建监听
    listener, err := net.Listen("tcp", ":1997")
    if err != nil {
@@ -47,7 +47,6 @@ func main()  {
       fmt.Println("Accept err:", err)
       return
    }
-   defer conn.Close()
 
    // 读取客户端发送的文件名
    buf := make([]byte, 1024)
@@ -63,4 +62,10 @@ func main()  {
 
    // 接收文件内容
    RecvFile(fileName, conn)      // 封装函数接收文件内容， 传fileName 和 conn
+}
+func main()  {
+   for{
+      serve()
+   }
+   
 }
