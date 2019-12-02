@@ -1,85 +1,75 @@
 package main
 
-import(
-	_"io"
-	"fmt"
-	"os"
-	"bufio"
-	"strings"
-	"path/filepath"
-	"net"
+import (
+   "fmt"
+   "os"
+   "net"
+   "io"
 )
 
-func Fileread(str string){
-	data := make([]byte,512)
-	fstr:=strings.Fields(str)
-	for _,Furl := range fstr{
-		file ,operr := os.Open(Furl); if operr != nil{
-			fmt.Println(Furl,"文件路径错误")
-		}else{
-			_,filename := filepath.Split(Furl)
-			ok,conn := Client([]byte(filename))
-			fmt.Println(ok)
-			if ok == "ok"{
-				for{
-					count,_ := file.Read(data); if count == 0{
-						break
-					}
-					n,e := conn.Write(data[:count]);if e != nil{
-						fmt.Println(n,e)
-					}
-					fmt.Println(n)
-				}
-			}
-			
-			file.Close()
-		}
-	}
+func SendFile(path string, conn net.Conn)  {
+   // 以只读方式打开文件
+   f, err := os.Open(path)
+   if err != nil {
+      fmt.Println("os.Open err:", err)
+      return
+   }
+   defer f.Close()                   // 发送结束关闭文件。
+
+   // 循环读取文件，原封不动的写给服务器
+   buf := make([]byte, 4096)
+   for {
+      n, err := f.Read(buf)        // 读取文件内容到切片缓冲中
+      if err != nil {
+         if err == io.EOF {
+            fmt.Println("文件发送完毕")
+         } else {
+            fmt.Println("f.Read err:", err)
+         }
+         return
+      }
+      conn.Write(buf[:n])  // 原封不动写给服务器
+   }
 }
 
-func Cmdput(){
-	var command string
-	for{
-		fmt.Printf("请输入命令：")
-		fmt.Scanf("%v\n",&command)
-		switch command {
-		case "upload":
-			fmt.Printf("请输入文件路径，用空格隔开：")
-			inputReader := bufio.NewReader(os.Stdin)
-			str,_ := inputReader.ReadString('\n')
-			Fileread(str)
-		
-		case "download":
-			fmt.Println(command)	
-		
-		case "exit":
-			os.Exit(0)	
-		}
-	}
-}
+func main()  {
+   // 提示输入文件名
+   fmt.Println("请输入需要传输的文件：")
+   var path string
+   fmt.Scan(&path)
 
+   // 获取文件名   fileInfo.Name()
+   fileInfo, err := os.Stat(path)
+   if err != nil {
+      fmt.Println("os.Stat err:", err)
+      return
+   }
 
-func Client(filename []byte)(buf string,udpConn *net.UDPConn){
-	udpAddr, _ := net.ResolveUDPAddr("udp", ":8005")
+   // 主动连接服务器
+   conn, err := net.Dial("tcp", ":1997")
+   if err != nil {
+      fmt.Println("net.Dial err:", err)
+      return
+   }
+   defer conn.Close()
 
-    //连接udpAddr，返回 udpConn
-	udpConn, err := net.DialUDP("udp", nil, udpAddr)
-	if err != nil {
-        fmt.Println(err)
-        os.Exit(2)
-    }
-	fmt.Println(filename)
-    // 发送数据
-	udpConn.Write(filename)
-	//读取数据
-    buff := make([]byte, 512)
-	udpConn.Read(buff)
-	buf = string(buff)
-	fmt.Println("buff:",buf)
-    return buf,udpConn
-}
+   // 给接收端，先发送文件名
+   _, err = conn.Write([]byte(fileInfo.Name()))
+   if err != nil {
+      fmt.Println("conn.Write err:", err)
+      return
+   }
 
-func main(){
-	Cmdput()
-	
+   // 读取接收端回发确认数据 —— ok
+   buf := make([]byte, 1024)
+   n, err := conn.Read(buf)
+   if err != nil {
+      fmt.Println("conn.Read err:", err)
+      return
+   }
+
+   // 判断如果是ok，则发送文件内容
+   if "ok" == string(buf[:n]) {
+      SendFile(path, conn)   // 封装函数读文件，发送给服务器，需要path、conn
+   }
 }
