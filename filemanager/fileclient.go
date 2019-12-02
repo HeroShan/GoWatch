@@ -60,7 +60,7 @@ func Cmdput(){
 
 
 func Client(filename []byte)(buf string,udpConn *net.UDPConn){
-	udpAddr, _ := net.ResolveUDPAddr("udp", ":1997")
+	udpAddr, _ := net.ResolveUDPAddr("udp", ":8005")
 
     //连接udpAddr，返回 udpConn
 	udpConn, err := net.DialUDP("udp", nil, udpAddr)
@@ -75,7 +75,7 @@ func Client(filename []byte)(buf string,udpConn *net.UDPConn){
     buff := make([]byte, 512)
 	udpConn.Read(buff)
 	buf = string(buff)
-	fmt.Println(buf)
+	fmt.Println("buff:",buf)
     return buf,udpConn
 }
 

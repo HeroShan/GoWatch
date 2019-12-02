@@ -30,7 +30,7 @@ func SaveFile(fileName string,udpConn net.Conn) {
 }
 
 func main(){
-	listener, err := net.Listen("tcp", "127.0.0.1:8005")
+	listener, err := net.Listen("udp", "127.0.0.1:8005")
     if err != nil {
         fmt.Println("Listen err:", err)
         return
@@ -55,6 +55,7 @@ func main(){
         fmt.Println("write-------",err)
     }
     fileName := string(buf[:n]) 
+    fmt.Println(fileName)
     SaveFile(fileName,udpConn)
 
 
