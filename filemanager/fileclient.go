@@ -46,7 +46,7 @@ func main()  {
    }
 
    // 主动连接服务器
-   conn, err := net.Dial("tcp", "47.104.225.152:1997")
+   conn, err := net.Dial("tcp", ":1997")
    if err != nil {
       fmt.Println("net.Dial err:", err)
       return
