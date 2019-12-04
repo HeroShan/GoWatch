@@ -5,6 +5,8 @@ import (
    "os"
    "net"
    "io"
+   "strings"
+   "sync"
 )
 
 func SendFile(path string, conn net.Conn)  {
@@ -14,7 +16,9 @@ func SendFile(path string, conn net.Conn)  {
       fmt.Println("os.Open err:", err)
       return
    }
-   defer f.Close()                   // 发送结束关闭文件。
+   defer func(){
+      f.Close()
+   }()                   // 发送结束关闭文件。
 
    // 循环读取文件，原封不动的写给服务器
    buf := make([]byte, 4096)
@@ -22,22 +26,21 @@ func SendFile(path string, conn net.Conn)  {
       n, err := f.Read(buf)        // 读取文件内容到切片缓冲中
       if err != nil {
          if err == io.EOF {
-            fmt.Println("文件发送完毕")
+            fmt.Println(path,"文件发送完毕")
+            return 
          } else {
-            fmt.Println("f.Read err:", err)
+            fmt.Println(path,":发送失败")
+            return 
          }
          return
       }
       conn.Write(buf[:n])  // 原封不动写给服务器
    }
+
 }
 
-func main()  {
-   // 提示输入文件名
-   fmt.Println("请输入需要传输的文件：")
-   var path string
-   fmt.Scan(&path)
 
+func FielCh(path string,conn net.Conn){
    // 获取文件名   fileInfo.Name()
    fileInfo, err := os.Stat(path)
    if err != nil {
@@ -46,12 +49,7 @@ func main()  {
    }
 
    // 主动连接服务器
-   conn, err := net.Dial("tcp", ":1997")
-   if err != nil {
-      fmt.Println("net.Dial err:", err)
-      return
-   }
-   defer conn.Close()
+   
 
    // 给接收端，先发送文件名
    _, err = conn.Write([]byte(fileInfo.Name()))
@@ -72,4 +70,25 @@ func main()  {
    if "ok" == string(buf[:n]) {
       SendFile(path, conn)   // 封装函数读文件，发送给服务器，需要path、conn
    }
+}
+
+func main()  {
+   // 提示输入文件名
+      var lock  sync.Mutex
+
+      conn, err := net.Dial("tcp", "47.104.225.152:1997")
+      if err != nil {
+         fmt.Println("net.Dial err:", err)
+         return
+      }
+      fmt.Println("请输入需要传输的文件(多文件用“，”隔开)：")
+      var path string
+      fmt.Scan(&path)
+      file := strings.Split(path,",");
+      for _,fpath := range file{
+         lock.Lock()
+         FielCh(fpath,conn)
+         lock.Unlock()
+      }
+
 }
