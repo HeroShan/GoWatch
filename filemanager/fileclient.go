@@ -6,7 +6,6 @@ import (
    "net"
    "io"
    "strings"
-   "sync"
 )
 
 func SendFile(path string, conn net.Conn)  {
@@ -32,7 +31,6 @@ func SendFile(path string, conn net.Conn)  {
             fmt.Println(path,":发送失败")
             return 
          }
-         return
       }
       conn.Write(buf[:n])  // 原封不动写给服务器
    }
@@ -74,7 +72,6 @@ func FielCh(path string,conn net.Conn){
 
 func main()  {
    // 提示输入文件名
-      var lock  sync.Mutex
 
       conn, err := net.Dial("tcp", "47.104.225.152:1997")
       if err != nil {
@@ -86,9 +83,7 @@ func main()  {
       fmt.Scan(&path)
       file := strings.Split(path,",");
       for _,fpath := range file{
-         lock.Lock()
          FielCh(fpath,conn)
-         lock.Unlock()
       }
 
 }

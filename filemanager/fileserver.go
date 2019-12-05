@@ -63,7 +63,7 @@ func serve(){
    // 接收文件内容
    RecvFile(fileName, conn)      // 封装函数接收文件内容， 传fileName 和 conn
 }
-func main()  {
+func run()  {
    for{
       serve()
    }
