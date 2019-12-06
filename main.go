@@ -158,7 +158,6 @@ func fmsgetip(w http.ResponseWriter, r *http.Request){
 
 func monitoring(){
 	for{
-		
 		time.Sleep(24 * time.Hour)
 		wk := time.Now().Weekday().String()
 		if wk == "Sunday" || wk == "Wednesday"{
