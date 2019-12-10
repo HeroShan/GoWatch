@@ -10,7 +10,7 @@ type Astruct struct{
 	auther		string
 	title		string
 	describe	string
-	content_id	int
+	content_id	string
 	date		int
 	issue		int
 	counts		int

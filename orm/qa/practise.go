@@ -13,8 +13,8 @@ var(
 
 func init(){
 	db, _ = gorm.Open("mysql", "admin:admin@(47.104.225.152:3306)/qasystem?charset=utf8&parseTime=True&loc=Local")
-	db.LogMode(true)
 	db.SingularTable(true)
+	db.LogMode(true)
 	//defer db.Close()
 }
 func GetAnwser(){
@@ -25,13 +25,18 @@ func GetAnwser(){
 	defer db.Close()
 }
 
-func (tru *Astruct)GetContent(sid int){
-	tru.struct_id = sid
-	err := db.Table("astruct").Select("auther, title, `describe`, content_id, date, counts").Where("struct_id=? ",tru.struct_id).Scan(&tru).GetErrors(); if err != nil{
-		fmt.Println("db find-",err)
-	}
-	fmt.Println(tru)
+func (tru Astruct)GetContent(sid int){
 	defer db.Close()
+	rows,err := db.Table("astruct").Where("struct_id = ?",sid).Select("auther,title,`describe`").Rows(); if err != nil {
+		fmt.Println("rows err :",err)
+	}
+	for rows.Next(){
+		err := rows.Scan(&tru.auther,&tru.title,&tru.describe); if err != nil{
+			fmt.Println("scan err :",err)
+		}
+	}
+	return
+	
 }
 
 
