@@ -8,8 +8,8 @@ type Astruct struct{
 	gorm.Model
 	struct_id	int 	`gorm:"primary_key"`
 	auther		string
-	title		string
-	describe	string
+	qtitle		string
+	qdescribe	string
 	content_id	string
 	date		int
 	issue		int

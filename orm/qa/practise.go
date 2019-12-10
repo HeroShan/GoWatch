@@ -27,11 +27,11 @@ func GetAnwser(){
 
 func (tru Astruct)GetContent(sid int){
 	defer db.Close()
-	rows,err := db.Table("astruct").Where("struct_id = ?",sid).Select("auther,title,`describe`").Rows(); if err != nil {
+	rows,err := db.Table("astruct").Where("struct_id = ?",sid).Select("auther, qtitle, qdescribe").Rows(); if err != nil {
 		fmt.Println("rows err :",err)
 	}
 	for rows.Next(){
-		err := rows.Scan(&tru.auther,&tru.title,&tru.describe); if err != nil{
+		err := rows.Scan(&tru.auther,&tru.qtitle,&tru.qdescribe); if err != nil{
 			fmt.Println("scan err :",err)
 		}
 	}
