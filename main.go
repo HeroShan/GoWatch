@@ -1,7 +1,6 @@
 package main
 import(
 	"github.com/juju/errors"
-	"GoWatch/getuuid"
 	e "errors"
 	"fmt"
 	"mime"
@@ -28,11 +27,7 @@ func te() string{
 	
 }
 
-// practiced Uuid Package
-func uuid(){
-    ui :=	getuuid.GetV4()
-	fmt.Println(ui)
-}
+
 
 var snum int
 var ip string
