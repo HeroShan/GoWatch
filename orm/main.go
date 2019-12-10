@@ -10,8 +10,8 @@ import(
 
 
 func main(){
-	tru := qa.Astruct{}
-	tru.GetContent(2)
+	tru := qa.Content{}
+	tru.GetContent(3)
 	// tru.GetContent(15)
 	fmt.Println(tru)
 }

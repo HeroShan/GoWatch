@@ -25,7 +25,6 @@ type Element	struct{
 }
 
 type Content	struct{
-	gorm.Model
 	content_id	int
 	question	string
 	anwser		string

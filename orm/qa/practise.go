@@ -25,9 +25,9 @@ func GetAnwser(){
 	defer db.Close()
 }
 
-func (tru Astruct)GetContent(sid int){
+func (tru Astruct)GetStruct(sid int){
 	defer db.Close()
-	rows,err := db.Table("astruct").Where("struct_id = ?",sid).Select("auther, qtitle, qdescribe").Rows(); if err != nil {
+	rows,err := db.Table("astruct").Select("auther, qtitle, qdescribe").Rows(); if err != nil {
 		fmt.Println("rows err :",err)
 	}
 	for rows.Next(){
@@ -38,5 +38,16 @@ func (tru Astruct)GetContent(sid int){
 	return
 	
 }
+
+func (cnt  Content)GetContent(cid int){
+	var bb Content
+	db.Table("content").Select("question ,anwser ,qe_id ,sort_id ").Scan(&bb)
+	fmt.Println(bb)
+	db.Raw("SELECT question ,anwser ,qe_id ,sort_id from content").Scan(&bb)
+	fmt.Println(bb)
+	return
+
+}
+
 
 
