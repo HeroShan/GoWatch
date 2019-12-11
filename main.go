@@ -163,7 +163,6 @@ func monitoring(){
 
 func main(){
 	go monitoring()
-	
 	mime.AddExtensionType(".js", "text/javascript")	//static
 	http.HandleFunc("/", getip)
 	http.HandleFunc("/fmsgetip", fmsgetip)

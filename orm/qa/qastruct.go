@@ -1,12 +1,8 @@
 package qa
 
-import(
-	"github.com/jinzhu/gorm"
-)
 
 type Astruct struct{
-	gorm.Model
-	struct_id	int 	`gorm:"primary_key"`
+	struct_id	int 	
 	auther		string
 	qtitle		string
 	qdescribe	string
@@ -17,7 +13,6 @@ type Astruct struct{
 }
 
 type Element	struct{
-	gorm.Model
 	qe_id		int
 	name		string
 	field		string
@@ -25,16 +20,15 @@ type Element	struct{
 }
 
 type Content	struct{
-	content_id	int
-	question	string
-	anwser		string
-	qe_id		int
-	sort_id		int
-	required	int
+	Content_id	int
+	Question	string
+	Anwser		string
+	Qe_id		int
+	Sort_id		int
+	Required	int
 }
 
 type Anwser	struct{
-	gorm.Model
 	anwser_id		int
 	content_id		int
 	anwser_content	string
