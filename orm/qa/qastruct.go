@@ -1,22 +1,23 @@
 package qa
 
 
+
 type Astruct struct{
-	struct_id	int 	
-	auther		string
-	qtitle		string
-	qdescribe	string
-	content_id	string
-	date		int
-	issue		int
-	counts		int
+	Struct_id	int 	
+	Auther		string
+	Qtitle		string
+	Qdescribe	string
+	Content_id	string
+	Date		int
+	Issue		int
+	Counts		int
 }
 
 type Element	struct{
-	qe_id		int
-	name		string
-	field		string
-	extra		string
+	Qe_id		int
+	Name		string
+	Field		string
+	Extra		string
 }
 
 type Content	struct{
@@ -29,10 +30,15 @@ type Content	struct{
 }
 
 type Anwser	struct{
-	anwser_id		int
-	content_id		int
-	anwser_content	string
-	struct_id		int
-	user_ip			int
-	create_time		string
+	Anwser_id		int
+	Content_id		int
+	Anwser_content	string
+	Struct_id		int
+	User_ip			string
+	Create_time		string
+}
+
+type ContentAnwser struct{
+	Content `xorm:"extends"`
+    Anwser 	`xorm:"extends"`
 }
