@@ -27,6 +27,7 @@ func init(){
 
 
 func (tru *Astruct)Getqa(cid int) *[]ContentAnwser{
+	defer engine.Close()
 	var con []ContentAnwser
 	engine.Where("Struct_id = "+strconv.Itoa(cid)).Get(tru)
 	fmt.Println(tru.Content_id)
@@ -39,7 +40,6 @@ func (tru *Astruct)Getqa(cid int) *[]ContentAnwser{
 	// 	rows.Scan(&con)
 	// 	fmt.Println(&con)
 	// }
-	
 	
 }
 
