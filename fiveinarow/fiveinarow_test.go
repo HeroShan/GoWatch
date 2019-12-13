@@ -2,7 +2,9 @@ package fiveinarow
 
 import(
 	"testing"
-	_"fmt"
+	"fmt"
+	"math/rand"
+	"time"
 )
 
 func TestAddAllinat(t *testing.T){
@@ -11,14 +13,15 @@ func TestAddAllinat(t *testing.T){
 	 chess.x = 10
 	 chess.y = 15
 	 c.AddCoordinat(chess)
-	 chess.x = 0
-	 for i:=0; i<100; i ++{
-		chess.y = i
+	 
+	 for i:=0; i<10000; i++{
+		rand.Seed(time.Now().UnixNano())
+		chess.x = rand.Intn(50)
+		chess.y = rand.Intn(50)
 		c.AddCoordinat(chess)
+		
 	 }
-	 chess.y = 11
-	 for i:=0; i<100; i ++{
-		chess.x = i
-		c.AddCoordinat(chess)
+	 for k,v := range c.key{
+		 fmt.Println(k,v)
 	 }
 }
