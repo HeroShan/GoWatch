@@ -14,10 +14,14 @@ type Allinat struct{
 
 
 
-func AddCoordinat(coor Coordinat){
-	var inat =  Allinat{}
+func (inat *Allinat)AddCoordinat(coor Coordinat){
+	for _,coslice := range inat.key{
+		if coslice == coor {
+			fmt.Println(coslice)
+			return 
+		}
+	}
 	inat.key = append(inat.key,coor)
-	 fmt.Println(inat)
 
 }
 
