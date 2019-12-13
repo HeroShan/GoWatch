@@ -11,14 +11,10 @@ func TestAddAllinat(t *testing.T){
 	 chess.x = 10
 	 chess.y = 15
 	 c.AddCoordinat(chess)
-	 chess.x = 10
-	 chess.y = 12
-	 c.AddCoordinat(chess)
-	 chess.x = 18
-	 chess.y = 12
-	 c.AddCoordinat(chess)
-	 chess.x = 18
-	 chess.y = 12
-	 c.AddCoordinat(chess)
+	 chess.x = 0
+	 for i:=0; i<10; i ++{
+		chess.y = i
+		c.AddCoordinat(chess)
+	 }
 	 fmt.Println(c)
 }
