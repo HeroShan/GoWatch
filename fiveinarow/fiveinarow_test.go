@@ -2,7 +2,7 @@ package fiveinarow
 
 import(
 	"testing"
-	"fmt"
+	_"fmt"
 )
 
 func TestAddAllinat(t *testing.T){
@@ -12,9 +12,13 @@ func TestAddAllinat(t *testing.T){
 	 chess.y = 15
 	 c.AddCoordinat(chess)
 	 chess.x = 0
-	 for i:=0; i<10; i ++{
+	 for i:=0; i<100; i ++{
 		chess.y = i
 		c.AddCoordinat(chess)
 	 }
-	 fmt.Println(c)
+	 chess.y = 11
+	 for i:=0; i<100; i ++{
+		chess.x = i
+		c.AddCoordinat(chess)
+	 }
 }
