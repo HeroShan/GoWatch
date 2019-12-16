@@ -17,16 +17,6 @@ type Allinat struct{
 	key		[]Coordinat
 }
 
-// func slope(inat *Allinat){
-// 	sucfice := make([][]int,matrix)
-// 	tmp := Coordinat{}
-// 	var sulen int
-// 	for _,coslice := range inat.key{
-		
-// 	}
-// 	//fmt.Println(cap(sucfice))
-// }
-
 func InArray(need Coordinat, needArr []Coordinat) bool {
 	for _,v := range needArr{
 	   if need == v{
@@ -71,6 +61,21 @@ func postive(tmp []int) bool {		//正序检查
 	}
 	return false
 }
+
+// func slope(inat *Allinat,coor Coordinat) bool {
+// 	var (
+// 		Xmax,Xmin int = coor.x+4,coor.x-4
+// 		Ymax,Ymin int = coor.y+4,coor.y-4
+// 		tmp []int
+// 	)
+// 	if Xmin < 0 {
+// 		Xmin = 0
+// 	}
+// 	if Ymin < 0 {
+// 		Ymin = 0
+// 	}
+	
+// }
 
 func lengthways(inat *Allinat,coor Coordinat) bool {
 	var (
