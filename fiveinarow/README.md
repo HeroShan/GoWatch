@@ -61,6 +61,7 @@ true ***** {0 3}
 8 {3 3}
 9 {2 2}
 10 {4 4}
---- PASS: TestAddAllinat (0.00s)
-PASS
-ok      GoWatch/fiveinarow      0.008s
+
+    --- PASS: TestAddAllinat (0.00s)    
+    PASS    
+    ok      GoWatch/fiveinarow      0.008s    
