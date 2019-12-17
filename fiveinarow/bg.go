@@ -169,7 +169,7 @@ func (inat *Allinat)AddCoordinat(coor Coordinat){
 		}
 	}
 	c := IsFive(inat,coor)
-	//fmt.Println(c,"*****",coor)
+	fmt.Println(c,"*****",coor)
 	if c == false{		//not finish five
 		inat.key = append(inat.key,coor)
 		fmt.Println("没有连成")

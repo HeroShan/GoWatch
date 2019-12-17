@@ -213,3 +213,5 @@ net/http.(*conn).serve(0xc00019cfa0, 0x916100, 0xc0001ee540)
 	/usr/local/go/src/net/http/server.go:1890 +0x875
 created by net/http.(*Server).Serve
 	/usr/local/go/src/net/http/server.go:2928 +0x384
+2019/12/17 07:37:57 net/http: invalid Cookie.Domain "wanter.work:8080"; dropping domain attribute
+2019/12/17 08:42:05 net/http: invalid Cookie.Domain "wanter.work:8080"; dropping domain attribute
