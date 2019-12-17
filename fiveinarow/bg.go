@@ -26,15 +26,15 @@ func InArray(need Coordinat, needArr []Coordinat) bool {
    return false
 }
 
-func inverted(tmp []int) bool {		//倒序检查
+func inverted(tmp []int) bool {  			//倒序检查
 	var i int
-	for k := len(tmp)-1; k>=0;k--{
-		if k == 0{					//最后一个下标说明无法对比
+	for k := len(tmp)-1; k>=0;k--{  
+		if k == 0{  						//最后一个下标说明无法对比
 			return false
 		}
-		if tmp[k]-1 == tmp[k]{		//说明值是连续数字
+		if tmp[k]-1 == tmp[k]{  			//说明值是连续数字
 			i++
-			if i == point{			//如果达到连续数就返回
+			if i == point{  				//如果达到连续数就返回
 				return true
 			}
 		}else{
@@ -44,15 +44,15 @@ func inverted(tmp []int) bool {		//倒序检查
 	return false
 }
 
-func postive(tmp []int) bool {		//正序检查
+func postive(tmp []int) bool {  			//正序检查
 	var i int
 	for ck, cv := range tmp {
-		if ck == len(tmp)-1{		//最后一个下标说明无法对比
+		if ck == len(tmp)-1{  				//最后一个下标说明无法对比
 			return false
 		}
-		if cv+1 == tmp[ck+1] {		//说明值是连续数字
+		if cv+1 == tmp[ck+1] {  			//说明值是连续数字
 			i++
-			if i == point{			//如果达到连续数就返回
+			if i == point{  				//如果达到连续数就返回
 				return true
 			}
 		}else{
@@ -141,11 +141,7 @@ func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
 }
 
 func IsFive(inat *Allinat,coor Coordinat) bool {
-	ok 	:= lengthwaysORcrosswise(inat,coor,"l")
-	ok2 := lengthwaysORcrosswise(inat,coor,"c")
-	ok3 := Slope(inat,coor)
-	//slope(inat)
-	if ok == true || ok2 == true || ok3 == true{
+	if lengthwaysORcrosswise(inat,coor,"l") == true || lengthwaysORcrosswise(inat,coor,"c") == true || Slope(inat,coor) == true{
 		return true
 	}
 	return false
@@ -159,12 +155,12 @@ func (inat *Allinat)AddCoordinat(coor Coordinat){
 	}
 	c := IsFive(inat,coor)
 	fmt.Println(c,"*****",coor)
-	if c == false{		//not finish five
+	if c == false{								//not finish five
 		inat.key = append(inat.key,coor)
 		fmt.Println("没有连成")
 		return 
 	}
-	fmt.Println("连成point颗")
+	fmt.Println("连成",point+2,"颗")
 	return 
 	
 }
