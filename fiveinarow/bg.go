@@ -62,11 +62,12 @@ func postive(tmp []int) bool {		//正序检查
 	return false
 }
 
-func Slope(inat *Allinat,coor Coordinat)  {
+func Slope(inat *Allinat,coor Coordinat) bool {
 	var (
 		Xmax,Xmin int = coor.x+4,coor.x-4
 		Ymax,Ymin int = coor.y+4,coor.y-4
-		j	int
+		j,p		int
+		lrise,lfall  Coordinat
 		//tmp []int
 	)
 	if Xmin < 0 {
@@ -75,29 +76,41 @@ func Slope(inat *Allinat,coor Coordinat)  {
 	if Ymin < 0 {
 		Ymin = 0
 	}
-	lmin := &Coordinat{
-		x : Xmin,
-		y : Ymin,
-	}
-	lmax := &Coordinat{
-		x : Xmin,
-		y : Ymax,
-	}
-	rmin := &Coordinat{
-		x : Xmax,
-		y : Ymin,
-	}
-	rmax := &Coordinat{
-		x : Xmax,
-		y : Ymax,
-	}
-	for i:=Xmin; i<Xmax; i++{
+	for i:=Xmin; i<=Xmax; i++{
+		Xmin = Xmin+1
+		Ymin = Ymin+1
+		lrise.x = Xmin
+		lrise.y = Ymin
+		if InArray(lrise,inat.key) {
+			j++
+			fmt.Println(lrise,j)
+			if j == point{
+				return true
+			}
+		}
 		
+		if Ymin == Ymax {
+			break
+		}
 	}
-	fmt.Println(lmin,lmax,rmin,rmax)
-	// for _,c := range inat.key{
+	for ii := Xmax; ii>=Xmin; ii--{
+		Xmax = Xmax-1
+		Ymin = Ymin+1
+		lfall.x = Xmax
+		lfall.y = Ymin
 		
-	// }
+		if InArray(lfall,inat.key) {
+			p++
+			fmt.Println(lfall,p)
+			if p == point{
+				return true
+			}
+		}
+		if Ymin == Ymax {
+			return false
+		}
+	}
+	return false
 	
 }
 
@@ -141,8 +154,9 @@ func crosswise(inat *Allinat,coor Coordinat) bool {
 func IsFive(inat *Allinat,coor Coordinat) bool {
 	ok := crosswise(inat,coor)
 	ok2 := lengthways(inat,coor)
+	ok3 := Slope(inat,coor)
 	//slope(inat)
-	if ok == true || ok2 == true{
+	if ok == true || ok2 == true || ok3{
 		return true
 	}
 	return false
