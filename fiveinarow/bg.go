@@ -83,7 +83,7 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		lrise.y = Ymin
 		if InArray(lrise,inat.key) {
 			j++
-			fmt.Println(lrise,j)
+			//fmt.Println(lrise,j)
 			if j == point{
 				return true
 			}
@@ -101,7 +101,7 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		
 		if InArray(lfall,inat.key) {
 			p++
-			fmt.Println(lfall,p)
+			//fmt.Println(lfall,p)
 			if p == point{
 				return true
 			}
@@ -156,7 +156,7 @@ func IsFive(inat *Allinat,coor Coordinat) bool {
 	ok2 := lengthways(inat,coor)
 	ok3 := Slope(inat,coor)
 	//slope(inat)
-	if ok == true || ok2 == true || ok3{
+	if ok == true || ok2 == true || ok3 == true{
 		return true
 	}
 	return false
@@ -169,10 +169,13 @@ func (inat *Allinat)AddCoordinat(coor Coordinat){
 		}
 	}
 	c := IsFive(inat,coor)
+	//fmt.Println(c,"*****",coor)
 	if c == false{		//not finish five
 		inat.key = append(inat.key,coor)
+		fmt.Println("没有连成")
 		return 
 	}
+	fmt.Println("连成point颗")
 	return 
 	
 }
