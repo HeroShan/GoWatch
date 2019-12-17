@@ -2,7 +2,7 @@ package fiveinarow
 
 import(
 	"testing"
-	"fmt"
+	_"fmt"
 	"math/rand"
 	"time"
 )
@@ -14,10 +14,10 @@ func TestAddAllinat(t *testing.T){
 	 chess.y = 15
 	 c.AddCoordinat(chess)
 	 
-	 for i:=0; i<115000; i++{
+	 for i:=0; i<1150000; i++{
 		rand.Seed(time.Now().UnixNano())
-		chess.x = rand.Intn(20)
-		chess.y = rand.Intn(20)
+		chess.x = rand.Intn(50)
+		chess.y = rand.Intn(50)
 		c.AddCoordinat(chess)
 	 }
 	// for i:=0; i<=13;i=i+2{
@@ -27,7 +27,12 @@ func TestAddAllinat(t *testing.T){
 	// 		c.AddCoordinat(chess)
 	// 	}
 	// }
-	 for k,v := range c.key{
-		 fmt.Println(k,v)
-	 }
+	//  for k,v := range c.key{
+	// 	 fmt.Println(k,v)
+	//  }
+}
+
+func TestSlope(t *testing.T){
+	chess := Coordinat{3,1}
+	Slope(nil,chess)	
 }

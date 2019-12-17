@@ -1,7 +1,7 @@
 package fiveinarow
 
 import(
-	 _"fmt"
+	 "fmt"
 	 "sort"
 )
 const(
@@ -62,20 +62,44 @@ func postive(tmp []int) bool {		//正序检查
 	return false
 }
 
-// func slope(inat *Allinat,coor Coordinat) bool {
-// 	var (
-// 		Xmax,Xmin int = coor.x+4,coor.x-4
-// 		Ymax,Ymin int = coor.y+4,coor.y-4
-// 		tmp []int
-// 	)
-// 	if Xmin < 0 {
-// 		Xmin = 0
-// 	}
-// 	if Ymin < 0 {
-// 		Ymin = 0
-// 	}
+func Slope(inat *Allinat,coor Coordinat)  {
+	var (
+		Xmax,Xmin int = coor.x+4,coor.x-4
+		Ymax,Ymin int = coor.y+4,coor.y-4
+		j	int
+		//tmp []int
+	)
+	if Xmin < 0 {
+		Xmin = 0
+	}
+	if Ymin < 0 {
+		Ymin = 0
+	}
+	lmin := &Coordinat{
+		x : Xmin,
+		y : Ymin,
+	}
+	lmax := &Coordinat{
+		x : Xmin,
+		y : Ymax,
+	}
+	rmin := &Coordinat{
+		x : Xmax,
+		y : Ymin,
+	}
+	rmax := &Coordinat{
+		x : Xmax,
+		y : Ymax,
+	}
+	for i:=Xmin; i<Xmax; i++{
+		
+	}
+	fmt.Println(lmin,lmax,rmin,rmax)
+	// for _,c := range inat.key{
+		
+	// }
 	
-// }
+}
 
 func lengthways(inat *Allinat,coor Coordinat) bool {
 	var (
