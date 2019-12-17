@@ -114,7 +114,7 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	
 }
 
-func lengthways(inat *Allinat,coor Coordinat) bool {
+func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
 	var (
 		max,min int = coor.x+4,coor.x-4
 		tmp []int
@@ -123,25 +123,14 @@ func lengthways(inat *Allinat,coor Coordinat) bool {
 		min = 0
 	}
 	for _,c := range inat.key{
-		if (max >= c.x && c.y == coor.y) || (min >= c.x  && c.y == coor.y){
-			tmp = append(tmp,c.x)
-		}
-	}
-	sort.Ints(tmp)
-	if (inverted(tmp) == true) || (postive(tmp) == true) {
-		return true
-	}
-	return false
-}
-
-func crosswise(inat *Allinat,coor Coordinat) bool {
-	var (
-		max,min int = coor.y+4,coor.y-4
-		tmp []int
-	)
-	for _,c := range inat.key{
-		if (max >= c.y && c.x == coor.x) || (min >= c.y  && c.x == coor.x){
-			tmp = append(tmp,c.y)
+		if S == "l" {
+			if (max >= c.x && c.y == coor.y) || (min >= c.x  && c.y == coor.y){
+				tmp = append(tmp,c.x)
+			}
+		}else{
+			if (max >= c.y && c.x == coor.x) || (min >= c.y  && c.x == coor.x){
+				tmp = append(tmp,c.y)
+			}
 		}
 	}
 	sort.Ints(tmp)
@@ -152,8 +141,8 @@ func crosswise(inat *Allinat,coor Coordinat) bool {
 }
 
 func IsFive(inat *Allinat,coor Coordinat) bool {
-	ok := crosswise(inat,coor)
-	ok2 := lengthways(inat,coor)
+	ok 	:= lengthwaysORcrosswise(inat,coor,"l")
+	ok2 := lengthwaysORcrosswise(inat,coor,"c")
 	ok3 := Slope(inat,coor)
 	//slope(inat)
 	if ok == true || ok2 == true || ok3 == true{
