@@ -1,6 +1,6 @@
-five in a row(五子棋成功预测)
-从横、纵、 左斜升、 左斜降 四个角度判断 
-== RUN   TestAddAllinat
+five in a row(五子棋成功预测)  
+从横、纵、 左斜升、 左斜降 四个角度判断   
+##  == RUN   TestAddAllinat
 false ***** {0 1}   
 没有连成  
 false ***** {1 2}   
