@@ -85,12 +85,12 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		lrise.x,lrise.y = coor.x,coor.y
 		lrise.x = lrise.x+i
 		lrise.y = lrise.y+i
-		if lrise.x == Xmax || lrise.y == Ymax{
+		if lrise.x > Xmax || lrise.y > Ymax{
 			lrise.x,lrise.y = coor.x,coor.y
 			lrise.x = lrise.x-i
 			lrise.y = lrise.y-i
-			if lrise.x == Xmin || lrise.y == Ymin {
-				break
+			if lrise.x < Xmin || lrise.y < Ymin {
+				continue
 			}
 		} 
 		if InArray(lrise,inat.key) {
@@ -105,11 +105,11 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		lfall.x,lfall.y = coor.x,coor.y
 		lfall.x = lfall.x+ii
 		lfall.y = lfall.y-ii
-		if lfall.x == Xmax || lfall.y == Ymin {
+		if lfall.x > Xmax || lfall.y < Ymin {
 			lfall.x,lfall.y = coor.x,coor.y
 			lfall.x = lfall.x-ii
 			lfall.y = lfall.y+ii
-			if lfall.x == Xmin || lfall.y == Ymax {
+			if lfall.x < Xmin || lfall.y > Ymax {
 				continue
 			}
 		}
