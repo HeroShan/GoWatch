@@ -90,7 +90,6 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		} 
 		if InArray(lrise,inat.key) {
 			j++
-			fmt.Println("rise第",i,"次",j,lrise,coor)
 			if j == (point+1){
 				return true
 			}
@@ -111,8 +110,6 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		}
 		if InArray(lfall,inat.key) {
 			p++
-			//fmt.Println(lfall,p)
-			fmt.Println("fall第",ii,"次",p,lfall,coor)
 			if p == (point+1){
 				return true
 			}
