@@ -71,10 +71,10 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		//tmp []int
 	)
 	if Xmin < 0 {
-		Xmin = -1
+		Xmin = 0
 	}
 	if Ymin < 0 {
-		Ymin = -1
+		Ymin = 0
 	}
 	
 	// fmt.Println("Ymin",Ymin)
@@ -82,41 +82,47 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	// fmt.Println("Ymax",Ymax)
 	// fmt.Println("Ymin",Ymin)
 	for i:=Xmin; i<=Xmax; i++{
-		Xmin = Xmin+1
-		Ymin = Ymin+1
-		lrise.x = Xmin
-		lrise.y = Ymin
+		lrise.x,lrise.y = coor.x,coor.y
+		lrise.x++
+		lrise.y++
+		if lrise.x == Xmax || lrise.y == Ymax{
+			lrise.x,lrise.y = coor.x,coor.y
+			lrise.x--
+			lrise.y--
+			if lrise.x == Xmin || lrise.y == Ymin {
+				break
+			}
+		} 
 		if InArray(lrise,inat.key) {
 			j++
-			//fmt.Println(lrise,j)
-			if j == point{
+			fmt.Println("rise第",i,"次",j,lrise,coor)
+			if j == (point+2){
 				return true
 			}
-		}
-		
-		if Ymin == Ymax {
-			break
 		}
 	}
 	for ii := Xmax; ii>=Xmin; ii--{
-		Xmax = Xmax-1
-		Ymin = Ymin+1
-		lfall.x = Xmax
-		lfall.y = Ymin
-		
+		lfall.x,lfall.y = coor.x,coor.y
+		lfall.x++
+		lfall.y--
+		if lfall.x == Xmax || lfall.y == Ymin {
+			lfall.x,lfall.y = coor.x,coor.y
+			lfall.x--
+			lfall.y++
+			if lfall.x == Xmin || lfall.y == Ymax {
+				continue
+			}
+		}
 		if InArray(lfall,inat.key) {
 			p++
 			//fmt.Println(lfall,p)
-			if p == point{
+			fmt.Println("fall第",ii,"次",p,lfall,coor)
+			if p == (point+2){
 				return true
 			}
 		}
-		if Ymin == Ymax {
-			return false
-		}
 	}
 	return false
-	
 }
 
 func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
