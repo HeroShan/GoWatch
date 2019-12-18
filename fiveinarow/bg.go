@@ -76,21 +76,16 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	if Ymin < 0 {
 		Ymin = 0
 	}
-	
-	// fmt.Println("Ymin",Ymin)
-	// fmt.Println("Xmin",Xmin)
-	// fmt.Println("Ymax",Ymax)
-	// fmt.Println("Ymin",Ymin)
-	for i:=Xmin; i<=Xmax; i++{
-		lrise.x,lrise.y = coor.x,coor.y
-		lrise.x = lrise.x+i
-		lrise.y = lrise.y+i
+	for i:=1; i<=Xmax-Xmin; i++{
+			lrise.x,lrise.y = coor.x,coor.y
+			lrise.x = lrise.x+i
+			lrise.y = lrise.y+i
 		if lrise.x > Xmax || lrise.y > Ymax{
 			lrise.x,lrise.y = coor.x,coor.y
-			lrise.x = lrise.x-i
-			lrise.y = lrise.y-i
-			if lrise.x < Xmin || lrise.y < Ymin {
-				continue
+			lrise.x = lrise.x-(Xmax-Xmin-i)
+			lrise.y = lrise.y-(Xmax-Xmin-i)
+			if lrise.x > Xmax || lrise.y < Ymin {
+				break
 			}
 		} 
 		if InArray(lrise,inat.key) {
@@ -101,16 +96,17 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 			}
 		}
 	}
-	for ii := Xmax; ii>=Xmin; ii--{
-		lfall.x,lfall.y = coor.x,coor.y
-		lfall.x = lfall.x+ii
-		lfall.y = lfall.y-ii
-		if lfall.x > Xmax || lfall.y < Ymin {
+	
+	for ii:=1; ii<=Xmax-Xmin; ii++{
 			lfall.x,lfall.y = coor.x,coor.y
-			lfall.x = lfall.x-ii
-			lfall.y = lfall.y+ii
-			if lfall.x < Xmin || lfall.y > Ymax {
-				continue
+			lfall.x = lfall.x+ii
+			lfall.y = lfall.y-ii
+		if lfall.x < Xmin || lfall.y > Ymax {
+			lfall.x,lfall.y = coor.x,coor.y
+			lfall.x = lfall.x+(Xmax-Xmin-ii)
+			lfall.y = lfall.y-(Xmax-Xmin-ii)
+			if lfall.x < Xmin || lfall.y < Ymin {
+				break
 			}
 		}
 		if InArray(lfall,inat.key) {
