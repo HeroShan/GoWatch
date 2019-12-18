@@ -83,12 +83,12 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	// fmt.Println("Ymin",Ymin)
 	for i:=Xmin; i<=Xmax; i++{
 		lrise.x,lrise.y = coor.x,coor.y
-		lrise.x++
-		lrise.y++
+		lrise.x = lrise.x+i
+		lrise.y = lrise.y+i
 		if lrise.x == Xmax || lrise.y == Ymax{
 			lrise.x,lrise.y = coor.x,coor.y
-			lrise.x--
-			lrise.y--
+			lrise.x = lrise.x-i
+			lrise.y = lrise.y-i
 			if lrise.x == Xmin || lrise.y == Ymin {
 				break
 			}
@@ -103,12 +103,12 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	}
 	for ii := Xmax; ii>=Xmin; ii--{
 		lfall.x,lfall.y = coor.x,coor.y
-		lfall.x++
-		lfall.y--
+		lfall.x = lfall.x+ii
+		lfall.y = lfall.y-ii
 		if lfall.x == Xmax || lfall.y == Ymin {
 			lfall.x,lfall.y = coor.x,coor.y
-			lfall.x--
-			lfall.y++
+			lfall.x = lfall.x-ii
+			lfall.y = lfall.y+ii
 			if lfall.x == Xmin || lfall.y == Ymax {
 				continue
 			}
