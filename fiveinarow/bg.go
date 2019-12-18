@@ -71,11 +71,16 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		//tmp []int
 	)
 	if Xmin < 0 {
-		Xmin = 0
+		Xmin = -1
 	}
 	if Ymin < 0 {
-		Ymin = 0
+		Ymin = -1
 	}
+	
+	// fmt.Println("Ymin",Ymin)
+	// fmt.Println("Xmin",Xmin)
+	// fmt.Println("Ymax",Ymax)
+	// fmt.Println("Ymin",Ymin)
 	for i:=Xmin; i<=Xmax; i++{
 		Xmin = Xmin+1
 		Ymin = Ymin+1
@@ -141,6 +146,9 @@ func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
 }
 
 func IsFive(inat *Allinat,coor Coordinat) bool {
+	fmt.Println("l:",lengthwaysORcrosswise(inat,coor,"l"))
+	fmt.Println("C:",lengthwaysORcrosswise(inat,coor,"C"))
+	fmt.Println("Sl",Slope(inat,coor))
 	if lengthwaysORcrosswise(inat,coor,"l") == true || lengthwaysORcrosswise(inat,coor,"c") == true || Slope(inat,coor) == true{
 		return true
 	}

@@ -37,7 +37,7 @@ var t1,t2 int64 =  1,1
 
 func Getnetwork(url string, chanl chan int){
 	
-	url = "http://www."+url+".com"
+	url = "https://learnku.com/articles/38210"
 	_, err := http.Get(url); if err != nil{
 		fmt.Println("errrrrrrrrrrr:",url)
 	}
@@ -49,7 +49,7 @@ func Getnetwork(url string, chanl chan int){
 
 func G2etnetwork(url string, chanl2 chan int){
 	
-	url = "http://www."+url+".com"
+	url = "https://learnku.com/articles/38210"
 	_, err := http.Get(url); if err != nil{
 		fmt.Println("errrrrrrrrrrr:",url)
 	}
