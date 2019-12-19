@@ -5,8 +5,8 @@ import(
 	 "sort"
 )
 const(
-	matrix = 50*50
-	point  =  3
+	matrix = 100*100
+	point  =  2
 )
 type Coordinat struct{
 	x	int
