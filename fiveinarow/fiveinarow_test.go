@@ -10,19 +10,11 @@ import(
 func TestAddAllinat(t *testing.T){
 	 c := Allinat{}
 	 chess := Coordinat{}
-	 for i:=0; i<80; i++{
+	 for i:=0; i<800000; i++{
 		rand.Seed(time.Now().UnixNano())
 		chess.x = rand.Intn(6)
 		chess.y = rand.Intn(6)
 		c.AddCoordinat(chess)
-	 }
-	 b := Allinat{}
-	 bchess := Coordinat{}
-	 for i:=0; i<80; i++{
-		rand.Seed(time.Now().UnixNano())
-		bchess.x = rand.Intn(6)
-		bchess.y = rand.Intn(6)
-		b.AddCoordinat(bchess)
 	 }
 	//  chess.x = 10
 	//  chess.y = 7
@@ -37,9 +29,6 @@ func TestAddAllinat(t *testing.T){
 	 for k,v := range c.key{
 		 fmt.Println(k,v)
 	 }
-	 for k,v := range b.key{
-		fmt.Println(k,v)
-	}
 }
 
 // func TestSlope(t *testing.T){
