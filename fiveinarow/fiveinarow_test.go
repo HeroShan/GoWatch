@@ -10,23 +10,23 @@ import(
 func TestAddAllinat(t *testing.T){
 	 c := Allinat{}
 	 chess := Coordinat{}
-	 for i:=0; i<800000; i++{
+	 for i:=0; i<8000; i++{
 		rand.Seed(time.Now().UnixNano())
-		chess.x = rand.Intn(50)
-		chess.y = rand.Intn(50)
+		chess.X = rand.Intn(10)
+		chess.Y = rand.Intn(10)
 		c.AddCoordinat(chess)
 	 }
-	//  chess.x = 10
-	//  chess.y = 7
+	//  chess.X = 10
+	//  chess.Y = 7
 	//  c.AddCoordinat(chess)
 	// for i:=3; i<=13;i++{
 	// 	for j:=6;j>=0;j--{
-	// 		chess.x = i
-	// 		chess.y = j
+	// 		chess.X = i
+	// 		chess.Y = j
 	// 		c.AddCoordinat(chess)
 	// 	}
 	// }
-	 for k,v := range c.key{
+	 for k,v := range c.Key{
 		 fmt.Println(k,v)
 	 }
 }

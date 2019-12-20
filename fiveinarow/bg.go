@@ -9,12 +9,12 @@ const(
 	point  =  2
 )
 type Coordinat struct{
-	x	int
-	y	int
+	X	int
+	Y	int
 }
 
 type Allinat struct{
-	key		[]Coordinat
+	Key		[]Coordinat
 }
 
 func InArray(need Coordinat, needArr []Coordinat) bool {
@@ -64,8 +64,8 @@ func postive(tmp []int) bool {  			//正序检查
 
 func Slope(inat *Allinat,coor Coordinat) bool {
 	var (
-		Xmax,Xmin int = coor.x+4,coor.x-4
-		Ymax,Ymin int = coor.y+4,coor.y-4
+		Xmax,Xmin int = coor.X+4,coor.X-4
+		Ymax,Ymin int = coor.Y+4,coor.Y-4
 		j,p		int
 		lrise,lfall  Coordinat
 		//tmp []int
@@ -77,18 +77,18 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		Ymin = 0
 	}
 	for i:=1; i<=Xmax-Xmin; i++{
-			lrise.x,lrise.y = coor.x,coor.y
-			lrise.x = lrise.x+i
-			lrise.y = lrise.y+i
-		if lrise.x > Xmax || lrise.y > Ymax{
-			lrise.x,lrise.y = coor.x,coor.y
-			lrise.x = lrise.x-(Xmax-Xmin-i)
-			lrise.y = lrise.y-(Xmax-Xmin-i)
-			if lrise.x > Xmax || lrise.y < Ymin {
+			lrise.X,lrise.Y = coor.X,coor.Y
+			lrise.X = lrise.X+i
+			lrise.Y = lrise.Y+i
+		if lrise.X > Xmax || lrise.Y > Ymax{
+			lrise.X,lrise.Y = coor.X,coor.Y
+			lrise.X = lrise.X-(Xmax-Xmin-i)
+			lrise.Y = lrise.Y-(Xmax-Xmin-i)
+			if lrise.X > Xmax || lrise.Y < Ymin {
 				break
 			}
 		} 
-		if InArray(lrise,inat.key) {
+		if InArray(lrise,inat.Key) {
 			j++
 			if j == (point+1){
 				return true
@@ -97,18 +97,18 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	}
 	
 	for ii:=1; ii<=Xmax-Xmin; ii++{
-			lfall.x,lfall.y = coor.x,coor.y
-			lfall.x = lfall.x+ii
-			lfall.y = lfall.y-ii
-		if lfall.x < Xmin || lfall.y > Ymax {
-			lfall.x,lfall.y = coor.x,coor.y
-			lfall.x = lfall.x+(Xmax-Xmin-ii)
-			lfall.y = lfall.y-(Xmax-Xmin-ii)
-			if lfall.x < Xmin || lfall.y < Ymin {
+			lfall.X,lfall.Y = coor.X,coor.Y
+			lfall.X = lfall.X+ii
+			lfall.Y = lfall.Y-ii
+		if lfall.X < Xmin || lfall.Y > Ymax {
+			lfall.X,lfall.Y = coor.X,coor.Y
+			lfall.X = lfall.X+(Xmax-Xmin-ii)
+			lfall.Y = lfall.Y-(Xmax-Xmin-ii)
+			if lfall.X < Xmin || lfall.Y < Ymin {
 				break
 			}
 		}
-		if InArray(lfall,inat.key) {
+		if InArray(lfall,inat.Key) {
 			p++
 			if p == (point+1){
 				return true
@@ -120,20 +120,20 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 
 func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
 	var (
-		max,min int = coor.x+4,coor.x-4
+		max,min int = coor.X+4,coor.X-4
 		tmp []int
 	)
 	if min < 0 {
 		min = 0
 	}
-	for _,c := range inat.key{
+	for _,c := range inat.Key{
 		if S == "l" {
-			if (max >= c.x && c.y == coor.y) || (min >= c.x  && c.y == coor.y){
-				tmp = append(tmp,c.x)
+			if (max >= c.X && c.Y == coor.Y) || (min >= c.X  && c.Y == coor.Y){
+				tmp = append(tmp,c.X)
 			}
 		}else{
-			if (max >= c.y && c.x == coor.x) || (min >= c.y  && c.x == coor.x){
-				tmp = append(tmp,c.y)
+			if (max >= c.Y && c.X == coor.X) || (min >= c.Y  && c.X == coor.X){
+				tmp = append(tmp,c.Y)
 			}
 		}
 	}
@@ -145,9 +145,6 @@ func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
 }
 
 func IsFive(inat *Allinat,coor Coordinat) bool {
-	fmt.Println("l:",lengthwaysORcrosswise(inat,coor,"l"))
-	fmt.Println("C:",lengthwaysORcrosswise(inat,coor,"C"))
-	fmt.Println("Sl",Slope(inat,coor))
 	if lengthwaysORcrosswise(inat,coor,"l") == true || lengthwaysORcrosswise(inat,coor,"c") == true || Slope(inat,coor) == true{
 		return true
 	}
@@ -155,7 +152,7 @@ func IsFive(inat *Allinat,coor Coordinat) bool {
 }
 
 func (inat *Allinat)AddCoordinat(coor Coordinat){
-	for _,coslice := range inat.key{
+	for _,coslice := range inat.Key{
 		if coslice == coor {
 			return 
 		}
@@ -163,7 +160,7 @@ func (inat *Allinat)AddCoordinat(coor Coordinat){
 	c := IsFive(inat,coor)
 	fmt.Println(c,"*****",coor)
 	if c == false{								//not finish five
-		inat.key = append(inat.key,coor)
+		inat.Key = append(inat.Key,coor)
 		fmt.Println("**************没有连成")
 		return 
 	}
