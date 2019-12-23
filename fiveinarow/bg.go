@@ -20,6 +20,7 @@ type Allinat struct{
 	Key		[]Coordinat
 }
 
+
 func InArray(need Coordinat, needArr []Coordinat) bool {
 	for _,v := range needArr{
 	   if need == v{
@@ -156,7 +157,7 @@ func IsFive(inat *Allinat,coor Coordinat) bool {
 
 func (inat *Allinat)AddCoordinat(coor Coordinat){
 	for _,coslice := range inat.Key{
-		if coslice == coor {
+		if coslice.X == coor.X && coslice.Y == coor.Y{
 			return 
 		}
 	}

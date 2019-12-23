@@ -10,7 +10,7 @@ import(
 func TestAddAllinat(t *testing.T){
 	 c := Allinat{}
 	 chess := Coordinat{}
-	 for i:=0; i<8000; i++{
+	 for i:=0; i<10000; i++{
 		if i % 2 == 0{
 			chess.Color = "white"
 		}else{
