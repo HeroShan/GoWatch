@@ -28,7 +28,7 @@ func (s *SpinLock) Unlock() {
 // go run -race
 func main() {
 	var wg sync.WaitGroup
-	wg.Add(6)
+	wg.Add(2)
 	var spin SpinLock
 	x := 0
 	inc := func() {
