@@ -28,19 +28,19 @@ func (s *SpinLock) Unlock() {
 // go run -race
 func main() {
 	var wg sync.WaitGroup
-	wg.Add(6)
+	wg.Add(5)
 	var spin SpinLock
 	x := 0
 	inc := func() {
 	defer wg.Done()
 		spin.Lock()
 		defer spin.Unlock()
-			for i := 0; i < 10; i++ {
+			for i := 0; i < 5; i++ {
 			x++
 			fmt.Println(x)
 			}
 	}
-	for n := 0; n < 4; n++ {
+	for n := 0; n < 5; n++ {
 		go inc()
 		fmt.Println("inc======",n)
 	}

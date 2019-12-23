@@ -5,12 +5,15 @@ import(
 	 "sort"
 )
 const(
-	matrix = 100*100
-	point  =  2
+	Vertical = 100
+	Level = 100
+	matrix = Vertical * Level
+	point  =  3
 )
 type Coordinat struct{
-	X	int
-	Y	int
+	X		int
+	Y		int
+	Color	string
 }
 
 type Allinat struct{
@@ -77,11 +80,11 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 		Ymin = 0
 	}
 	for i:=1; i<=Xmax-Xmin; i++{
-			lrise.X,lrise.Y = coor.X,coor.Y
+			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
 			lrise.X = lrise.X+i
 			lrise.Y = lrise.Y+i
 		if lrise.X > Xmax || lrise.Y > Ymax{
-			lrise.X,lrise.Y = coor.X,coor.Y
+			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
 			lrise.X = lrise.X-(Xmax-Xmin-i)
 			lrise.Y = lrise.Y-(Xmax-Xmin-i)
 			if lrise.X > Xmax || lrise.Y < Ymin {
@@ -97,11 +100,11 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 	}
 	
 	for ii:=1; ii<=Xmax-Xmin; ii++{
-			lfall.X,lfall.Y = coor.X,coor.Y
+			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = lfall.X+ii
 			lfall.Y = lfall.Y-ii
 		if lfall.X < Xmin || lfall.Y > Ymax {
-			lfall.X,lfall.Y = coor.X,coor.Y
+			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = lfall.X+(Xmax-Xmin-ii)
 			lfall.Y = lfall.Y-(Xmax-Xmin-ii)
 			if lfall.X < Xmin || lfall.Y < Ymin {
@@ -128,11 +131,11 @@ func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) bool {
 	}
 	for _,c := range inat.Key{
 		if S == "l" {
-			if (max >= c.X && c.Y == coor.Y) || (min >= c.X  && c.Y == coor.Y){
+			if (max >= c.X && c.Y == coor.Y && c.Color == coor.Color) || (min >= c.X  && c.Y == coor.Y && c.Color == coor.Color){
 				tmp = append(tmp,c.X)
 			}
 		}else{
-			if (max >= c.Y && c.X == coor.X) || (min >= c.Y  && c.X == coor.X){
+			if (max >= c.Y && c.X == coor.X && c.Color == coor.Color) || (min >= c.Y  && c.X == coor.X && c.Color == coor.Color){
 				tmp = append(tmp,c.Y)
 			}
 		}
