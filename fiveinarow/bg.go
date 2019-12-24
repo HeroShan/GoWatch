@@ -66,13 +66,13 @@ func postive(tmp []int) (bool,int) {  			//正序检查
 	return false,-1
 }
 
-func Slope(inat *Allinat,coor Coordinat) bool {
+func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 	var (
 		Xmax,Xmin int = coor.X+4,coor.X-4
 		Ymax,Ymin int = coor.Y+4,coor.Y-4
 		j,p		int
 		lrise,lfall  Coordinat
-		//tmp []int
+		lrtmp,lftmp []Coordinat
 	)
 	if Xmin < 0 {
 		Xmin = 0
@@ -93,9 +93,11 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 			}
 		} 
 		if InArray(lrise,inat.Key) {
+			lrtmp = append(lrtmp,lrise)
 			j++
 			if j == point{
-				return true
+				lrtmp = append(lrtmp,coor)
+				return true,lrtmp
 			}
 		}
 	}
@@ -113,13 +115,15 @@ func Slope(inat *Allinat,coor Coordinat) bool {
 			}
 		}
 		if InArray(lfall,inat.Key) {
+			lftmp = append(lftmp,lrise)
 			p++
 			if p == point{
-				return true
+				lftmp = append(lftmp,coor)
+				return true,lftmp
 			}
 		}
 	}
-	return false
+	return false,[]Coordinat{}
 }
 
 func lengthwaysORcrosswise(inat *Allinat,coor Coordinat,S string) (bool,[]Coordinat) {
@@ -170,14 +174,18 @@ func IsFive(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 	// 	return true
 	// }
 	// return false
-	lis,larr := lengthwaysORcrosswise(inat,coor,"l"); if lis == true{
-		return true,larr
-	}
-	cis,carr := lengthwaysORcrosswise(inat,coor,"c"); if cis == true{
-		return true,carr
+	sis,sarr := Slope(inat,coor);if sis == true{
+		return true,sarr
 	}else{
 		return false, []Coordinat{}
 	}
+	// lis,larr := lengthwaysORcrosswise(inat,coor,"l"); if lis == true{
+	// 	return true,larr
+	// }
+	// cis,carr := lengthwaysORcrosswise(inat,coor,"c"); if cis == true{
+	// 	return true,carr
+	// }
+	
 }
 
 func (inat *Allinat)AddCoordinat(coor Coordinat) (bool,[]Coordinat) {
