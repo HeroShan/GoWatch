@@ -84,7 +84,7 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
 			lrise.X = lrise.X+i
 			lrise.Y = lrise.Y+i
-		if lrise.X > Xmax || lrise.Y > Ymax{
+		if lrise.X >= Xmax || lrise.Y >= Ymax{
 			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
 			lrise.X = Xmax-lrise.X-i
 			lrise.Y = Ymax-lrise.Y-i
@@ -112,7 +112,7 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = lfall.X+ii
 			lfall.Y = lfall.Y-ii
-		if lfall.X < Xmin || lfall.Y > Ymax {
+		if lfall.X <= Xmin || lfall.Y >= Ymax {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = Xmax-lfall.X-ii
 			lfall.Y = lfall.Y+ii-Ymax-Ymin
