@@ -6,8 +6,8 @@ import(
 	"GoWatch/fiveinarow"
 )
 func main(){
-	c := Allinat{}
-	chess := Coordinat{}
+	c := fiveinarow.Allinat{}
+	chess := fiveinarow.Coordinat{}
 	for i:=0; i<88888; i++{
 	   if i % 2 == 0{
 		   chess.Color = "white"
@@ -18,9 +18,9 @@ func main(){
 	   chess.X = rand.Intn(8)
 	   chess.Y = rand.Intn(9)
 	   x,xarr := c.AddCoordinat(chess)
-	   if x == true {
-		   fmt.Println("true",xarr)
-	   }
+	//    if x == true {
+	// 	   fmt.Println("true",xarr)
+	//    }
 	}
    //  chess.X = 10
    //  chess.Y = 7

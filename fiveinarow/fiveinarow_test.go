@@ -19,10 +19,10 @@ func TestAddAllinat(t *testing.T){
 		rand.Seed(time.Now().UnixNano())
 		chess.X = rand.Intn(8)
 		chess.Y = rand.Intn(9)
-		x,xarr := c.AddCoordinat(chess)
-		if x == true {
-			fmt.Println("true",xarr)
-		}
+		c.AddCoordinat(chess)
+		// if x == true {
+		// 	fmt.Println("true",xarr)
+		// }
 	 }
 	//  chess.X = 10
 	//  chess.Y = 7
