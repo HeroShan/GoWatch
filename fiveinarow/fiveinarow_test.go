@@ -34,9 +34,9 @@ func TestAddAllinat(t *testing.T){
 	// 		c.AddCoordinat(chess)
 	// 	}
 	// }
-	//  for k,v := range c.Key{
-	// 	 fmt.Println(k,v)
-	//  }
+	 for k,v := range c.Key{
+		 fmt.Println(k,v)
+	 }
 }
 
 // func TestSlope(t *testing.T){
