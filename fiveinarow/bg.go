@@ -23,7 +23,7 @@ type Allinat struct{
 
 func InArray(need Coordinat, needArr []Coordinat) bool {
 	for _,v := range needArr{
-	   if need == v{
+	   if v == need {
 		   return true
 	   }
    }
@@ -86,19 +86,25 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lrise.Y = lrise.Y+i
 		if lrise.X > Xmax || lrise.Y > Ymax{
 			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
-			lrise.X = lrise.X-(Xmax-Xmin-i)
-			lrise.Y = lrise.Y-(Xmax-Xmin-i)
+			lrise.X = Xmax-lrise.X-i
+			lrise.Y = Ymax-lrise.Y-i
 			if lrise.X > Xmax || lrise.Y < Ymin {
 				break
 			}
 		} 
 		if InArray(lrise,inat.Key) {
+			if InArray(lrise,lrtmp) {
+				j = 0
+				break
+			}
 			lrtmp = append(lrtmp,lrise)
 			j++
 			if j == point{
 				lrtmp = append(lrtmp,coor)
 				return true,lrtmp
 			}
+		}else{
+			j = 0
 		}
 	}
 	
@@ -108,19 +114,25 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lfall.Y = lfall.Y-ii
 		if lfall.X < Xmin || lfall.Y > Ymax {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
-			lfall.X = lfall.X+(Xmax-Xmin-ii)
-			lfall.Y = lfall.Y-(Xmax-Xmin-ii)
+			lfall.X = Xmax-lfall.X-ii
+			lfall.Y = lfall.Y+ii-Ymax-Ymin
 			if lfall.X < Xmin || lfall.Y < Ymin {
 				break
 			}
 		}
 		if InArray(lfall,inat.Key) {
-			lftmp = append(lftmp,lrise)
+			if InArray(lfall,lrtmp) {
+				j = 0
+				break
+			}
+			lftmp = append(lftmp,lfall)
 			p++
 			if p == point{
 				lftmp = append(lftmp,coor)
 				return true,lftmp
 			}
+		}else{
+			j = 0
 		}
 	}
 	return false,[]Coordinat{}
