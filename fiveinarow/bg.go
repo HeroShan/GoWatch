@@ -84,10 +84,10 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
 			lrise.X = lrise.X+i
 			lrise.Y = lrise.Y+i
-		if lrise.X >= Xmax || lrise.Y >= Ymax{
+		if lrise.X > Xmax || lrise.Y > Ymax{
 			lrise.X,lrise.Y,lrise.Color = coor.X,coor.Y,coor.Color
-			lrise.X = Xmax-lrise.X-i
-			lrise.Y = Ymax-lrise.Y-i
+			lrise.X = Xmax-i
+			lrise.Y = Ymax-i
 			if lrise.X > Xmax || lrise.Y < Ymin {
 				break
 			}
@@ -105,6 +105,7 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			}
 		}else{
 			j = 0
+			lrtmp = []Coordinat{}
 		}
 	}
 	
@@ -112,10 +113,10 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = lfall.X+ii
 			lfall.Y = lfall.Y-ii
-		if lfall.X <= Xmin || lfall.Y >= Ymax {
+		if lfall.X < Xmin || lfall.Y > Ymax {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
-			lfall.X = Xmax-lfall.X-ii
-			lfall.Y = lfall.Y+ii-Ymax-Ymin
+			lfall.X = Xmax-ii
+			lfall.Y = Ymax-Ymin+ii
 			if lfall.X < Xmin || lfall.Y < Ymin {
 				break
 			}
@@ -133,6 +134,7 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			}
 		}else{
 			j = 0
+			lftmp = []Coordinat{}
 		}
 	}
 	return false,[]Coordinat{}
