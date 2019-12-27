@@ -201,18 +201,18 @@ func IsFive(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 	
 }
 
-func (inat *Allinat)AddCoordinat(coor Coordinat) (bool,[]Coordinat) {
+func (inat *Allinat)AddCoordinat(coor Coordinat) (bool,[]Coordinat,Coordinat) {
 	for _,coslice := range inat.Key{
 		if coslice.X == coor.X && coslice.Y == coor.Y{
-			return false, []Coordinat{}
+			return false, []Coordinat{},coor
 		}
 	}
 	c,allfive := IsFive(inat,coor)
 	if c == false{								//not finish five
 		inat.Key = append(inat.Key,coor)
-		return false, []Coordinat{}
+		return false, []Coordinat{},coor
 	}
-	return true,allfive
+	return true,allfive,coor
 	
 }
 

@@ -10,7 +10,7 @@ import(
 func TestAddAllinat(t *testing.T){
 	 c := Allinat{}
 	 chess := Coordinat{}
-	 for i:=0; i<88888; i++{
+	 for i:=0; i<90000; i++{
 		if i % 2 == 0{
 			chess.Color = "white"
 		}else{
@@ -18,11 +18,11 @@ func TestAddAllinat(t *testing.T){
 		}
 		rand.Seed(time.Now().UnixNano())
 		chess.X = rand.Intn(8)
-		chess.Y = rand.Intn(9)
-		c.AddCoordinat(chess)
-		// if x == true {
-		// 	fmt.Println("true",xarr)
-		// }
+		chess.Y = rand.Intn(8)
+		x,xarr,co := c.AddCoordinat(chess)
+		if x == true {
+			fmt.Println("true",xarr,"coor===:",co)
+		}
 	 }
 	//  chess.X = 10
 	//  chess.Y = 7
@@ -34,9 +34,9 @@ func TestAddAllinat(t *testing.T){
 	// 		c.AddCoordinat(chess)
 	// 	}
 	// }
-	 for k,v := range c.Key{
-		 fmt.Println(k,v)
-	 }
+	//  for k,v := range c.Key{
+	// 	 fmt.Println(k,v)
+	//  }
 }
 
 // func TestSlope(t *testing.T){

@@ -29,11 +29,14 @@ func te() string{
 
 
 
-var snum int
-var ip string
-var Point mapapi.JsPoint
-var areainfo string
-var path string
+var(
+	snum int
+	ip string
+	Point mapapi.JsPoint
+	areainfo string
+	path string
+) 
+ 
 type Iperr struct{
 	Info string 
 }
