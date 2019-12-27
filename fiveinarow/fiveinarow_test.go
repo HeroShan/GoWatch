@@ -10,18 +10,18 @@ import(
 func TestAddAllinat(t *testing.T){
 	 c := Allinat{}
 	 chess := Coordinat{}
-	 for i:=0; i<90000; i++{
+	 for i:=0; i<9000000; i++{
 		if i % 2 == 0{
 			chess.Color = "white"
 		}else{
 			chess.Color = "black"
 		}
 		rand.Seed(time.Now().UnixNano())
-		chess.X = rand.Intn(8)
-		chess.Y = rand.Intn(8)
-		x,xarr,co := c.AddCoordinat(chess)
+		chess.X = rand.Intn(15)
+		chess.Y = rand.Intn(15)
+		x,xarr := c.AddCoordinat(chess)
 		if x == true {
-			fmt.Println("true",xarr,"coor===:",co)
+			fmt.Println("true",xarr)
 		}
 	 }
 	//  chess.X = 10

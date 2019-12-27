@@ -88,14 +88,10 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lrise.X = Xmax-i
 			lrise.Y = Ymax-i
 			if lrise.X > Xmax || lrise.Y < Ymin {
-				break
+				continue
 			}
 		} 
 		if InArray(lrise,inat.Key) {
-			if InArray(lrise,lrtmp) {
-				j = 0
-				break
-			}
 			lrtmp = append(lrtmp,lrise)
 			j++
 			if j == point{
@@ -112,19 +108,15 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = lfall.X+ii
 			lfall.Y = lfall.Y-ii
-		if lfall.X < Xmin || lfall.Y > Ymax {
+		if lfall.X > Xmax || lfall.Y < Ymin {
 			lfall.X,lfall.Y,lfall.Color = coor.X,coor.Y,coor.Color
 			lfall.X = Xmax-ii
 			lfall.Y = Ymax-Ymin+ii
-			if lfall.X < Xmin || lfall.Y < Ymin {
-				break
+			if lfall.X > Xmin || lfall.Y > Ymax {
+				continue
 			}
 		}
 		if InArray(lfall,inat.Key) {
-			if InArray(lfall,lrtmp) {
-				j = 0
-				break
-			}
 			lftmp = append(lftmp,lfall)
 			p++
 			if p == point{
@@ -132,7 +124,7 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 				return true,lftmp
 			}
 		}else{
-			j = 0
+			p = 0
 			lftmp = []Coordinat{}
 		}
 	}
@@ -199,20 +191,22 @@ func IsFive(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 		return false, []Coordinat{}
 	}
 	
+	
+	
 }
 
-func (inat *Allinat)AddCoordinat(coor Coordinat) (bool,[]Coordinat,Coordinat) {
+func (inat *Allinat)AddCoordinat(coor Coordinat) (bool,[]Coordinat) {
 	for _,coslice := range inat.Key{
 		if coslice.X == coor.X && coslice.Y == coor.Y{
-			return false, []Coordinat{},coor
+			return false, []Coordinat{}
 		}
 	}
 	c,allfive := IsFive(inat,coor)
 	if c == false{								//not finish five
 		inat.Key = append(inat.Key,coor)
-		return false, []Coordinat{},coor
+		return false, []Coordinat{}
 	}
-	return true,allfive,coor
+	return true,allfive
 	
 }
 
