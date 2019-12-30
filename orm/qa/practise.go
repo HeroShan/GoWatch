@@ -7,6 +7,7 @@ import(
 	"fmt"
 	"strconv"
 	"strings"
+	"errors"
 )
 
 var(
@@ -41,6 +42,15 @@ func (tru *Astruct)Getqa(cid int) *[]ContentAnwser{
 	// 	fmt.Println(&con)
 	// }
 	
+}
+
+
+func (C *User)Add()(err error){
+	if C == nil{
+		return errors.New("User is nil")
+	}
+	_,cc := engine.Insert(C)
+	return cc
 }
 
 

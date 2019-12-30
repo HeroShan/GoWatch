@@ -42,3 +42,10 @@ type ContentAnwser struct{
 	Content `xorm:"extends"`
     Anwser 	`xorm:"extends"`
 }
+
+type User struct{
+	Id 			int
+	Username	string
+	Password	string
+	Lastime		int
+}
