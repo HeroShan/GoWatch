@@ -1,7 +1,5 @@
 package qa
 
-
-
 type Astruct struct{
 	Struct_id	int 	
 	Auther		string
