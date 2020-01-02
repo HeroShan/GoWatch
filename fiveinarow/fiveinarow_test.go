@@ -34,7 +34,7 @@ func TestAddAllinat(t *testing.T){
 	 c := Allinat{}
 	 chess := Coordinat{}
 	 cch := make(chan int,4)
-	 for i:=0; i<900000; i++{
+	 for i:=0; i<50000; i++{
 		if i % 2 == 0{
 			chess.Color = "white"
 		}else{
@@ -43,8 +43,8 @@ func TestAddAllinat(t *testing.T){
 		cch <- i
 		go func(ccs chan int){
 			rand.Seed(time.Now().UnixNano())
-			chess.X = rand.Intn(25)
-			chess.Y = rand.Intn(15)
+			chess.X = rand.Intn(13)
+			chess.Y = rand.Intn(13)
 			xx,x := c.AddCoordinat(chess)
 			if xx == true{
 				fmt.Printf("%#v\n\n",x)

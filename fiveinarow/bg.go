@@ -91,6 +91,12 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 				continue
 			}
 		} 
+		if lrise.X == Xmax || lrise.Y==Ymax {
+			if j > 0 && j != point {
+				j = 0
+				lrtmp = []Coordinat{}
+			}
+		}
 		if InArray(lrise,inat.Key) {
 			lrtmp = append(lrtmp,lrise)
 			j++
