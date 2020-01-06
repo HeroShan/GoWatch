@@ -2,6 +2,7 @@ package fiveinarow
 
 import(
 	"sort"
+	"math"
 )
 const(
 	Vertical = 100
@@ -105,6 +106,24 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 				return true,lrtmp
 			}
 		}else{
+			if i>=1 && i<= (Xmax-Xmin)/2 {
+				if Xmax < 5{
+					continue
+				}
+				if coor.X+i>=Xmax && j<point{
+					j = 0
+					lrtmp = []Coordinat{}
+					continue
+				}
+					i = int(math.Ceil(float64((Xmax-Xmin)/2)))
+					lrise.X = coor.X-1
+					lrise.Y = coor.Y-1
+					if !InArray(lrise,inat.Key){
+						j = 0
+						lrtmp = []Coordinat{}
+					}
+					continue
+			}
 			j = 0
 			lrtmp = []Coordinat{}
 		}
@@ -130,6 +149,24 @@ func Slope(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 				return true,lftmp
 			}
 		}else{
+			if ii>=1 && ii<= (Xmax-Xmin)/2 {
+				if Xmax < 5{
+					continue
+				}
+					ii = int(math.Ceil(float64((Xmax-Xmin)/2)))
+					lfall.X = coor.X+1
+					lfall.Y = coor.Y-1
+					if !InArray(lfall,inat.Key){
+						p = 0
+						lftmp = []Coordinat{}
+						continue
+					}
+				if (coor.X+ii)>=Xmax && p<point{
+					p = 0
+					lftmp = []Coordinat{}
+				}
+				continue
+			}
 			p = 0
 			lftmp = []Coordinat{}
 		}
@@ -187,15 +224,16 @@ func IsFive(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 	// return false
 	sis,sarr := Slope(inat,coor);if sis == true{
 		return true,sarr
-	}
-	lis,larr := lengthwaysORcrosswise(inat,coor,"l"); if lis == true{
-		return true,larr
-	}
-	cis,carr := lengthwaysORcrosswise(inat,coor,"c"); if cis == true{
-		return true,carr
 	}else{
 		return false, []Coordinat{}
 	}
+	
+	// lis,larr := lengthwaysORcrosswise(inat,coor,"l"); if lis == true{
+	// 	return true,larr
+	// }
+	// cis,carr := lengthwaysORcrosswise(inat,coor,"c"); if cis == true{
+	// 	return true,carr
+	// }
 	
 	
 	
