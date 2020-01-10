@@ -224,16 +224,17 @@ func IsFive(inat *Allinat,coor Coordinat) (bool,[]Coordinat) {
 	// return false
 	sis,sarr := Slope(inat,coor);if sis == true{
 		return true,sarr
+	}
+	lis,larr := lengthwaysORcrosswise(inat,coor,"l"); if lis == true{
+		return true,larr
+	}
+	cis,carr := lengthwaysORcrosswise(inat,coor,"c"); if cis == true{
+		return true,carr
 	}else{
 		return false, []Coordinat{}
 	}
 	
-	// lis,larr := lengthwaysORcrosswise(inat,coor,"l"); if lis == true{
-	// 	return true,larr
-	// }
-	// cis,carr := lengthwaysORcrosswise(inat,coor,"c"); if cis == true{
-	// 	return true,carr
-	// }
+	
 	
 	
 	
