@@ -15,7 +15,7 @@ func GetToken()string {
 	var LoSecretKey string = strconv.FormatInt(createTime,10)
 	token := jwt.New(jwt.SigningMethodHS256)
 	tokenString, _ := token.SignedString([]byte(LoSecretKey))
-	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+	con,connerr := redis.Dial("tcp","127.0.0.1:6379"); if connerr !=nil {
 		fmt.Println(connerr)
 	}
 	con.Do("HMSET","loginToken",tokenString,LoSecretKey)
@@ -27,7 +27,7 @@ func GetToken()string {
 //	return false
 func IsLogin(Wisheart string) int64 {
 	createTime := time.Now().UnixNano()
-	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+	con,connerr := redis.Dial("tcp","127.0.0.1:6379"); if connerr !=nil {
 		fmt.Println(connerr)
 	}
 	r,_ := redis.Int64(con.Do("hget","loginToken",Wisheart))
@@ -39,7 +39,7 @@ func IsLogin(Wisheart string) int64 {
 
 //	Function is  Delete expire seven days Redis login Token
 func DelExpireToken(){
-	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+	con,connerr := redis.Dial("tcp","127.0.0.1:6379"); if connerr !=nil {
 		fmt.Println(connerr)
 	}
 	createTime := time.Now().UnixNano()

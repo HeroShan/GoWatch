@@ -14,7 +14,7 @@ var(
 )
 func init(){
 	
-	con,connerr = redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+	con,connerr = redis.Dial("tcp","127.0.0.1:6379"); if connerr !=nil {
 		fmt.Printf("redis连接错误：%v !\n",connerr)
 	}
 }
@@ -24,6 +24,11 @@ func Serlock(ip string){
 	//con.Do("HSET","limitime",ip,time.Now().Unix())
 	val,_ := redis.Values(con.Do("HMGET","limitime",ip))
 	redis.Scan(val,&visitime)
+	if nowtime-limiter<visitime{
+		con.Do("HMGET","limitime",ip)
+		con.Send("MULTI")
+		con.Do("ZINCRBY",)
+	}
 	ct := time.Unix(visitime,0)
 	fmt.Println("visitime",ct.Format("2006-01-02 15:04:05"))
 	bt := time.Unix(nowtime,0)
