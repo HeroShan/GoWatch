@@ -44,6 +44,7 @@ func Serlock(ip string) bool {		//根据IP进行限流
 			return false
 		}
 	}
+	con.Do("HMSET","limitime",ip,nowtime)
 	return true
 }
 

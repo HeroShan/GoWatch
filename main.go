@@ -12,6 +12,7 @@ import(
 	"GoWatch/auth"
 	"GoWatch/createToken"
 	"time"
+	cl "GoWatch/current_limiter"
 )
 //	practiced Error Package
 func te() string{
@@ -102,32 +103,46 @@ func login(w http.ResponseWriter, r *http.Request){
 
 func LoginMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
-		if r.Method == "GET" {
-			sCookie,_ := r.Cookie("wisheart")
-			if sCookie == nil{
-				http.Redirect(w, r, "/login", http.StatusFound)
-			}else{
-				if sCookie.Value != ""  {
-					expire := createToken.IsLogin(sCookie.Value)
-					if expire <=0 {
-						sCookie := &http.Cookie{
-							Name:   "wisheart",
-							Value:  "",
-							Path:   "/",
-							Domain: r.Host ,
-							MaxAge: 0,
-						}
-						http.SetCookie(w, sCookie)
-						http.Redirect(w, r, "/login", http.StatusFound)
-					}else{
-						next.ServeHTTP(w, r)
-					}
+		ipstr := strings.Split(r.RemoteAddr,":")
+		if !cl.Serlock(ipstr[0]) {
+			w.Write([]byte("<script>self.location.href='/error'</script>"))
+		}else{
+			if r.Method == "GET" {
+				sCookie,_ := r.Cookie("wisheart")
+				if sCookie == nil{
+					http.Redirect(w, r, "/login", http.StatusOK)
 				}else{
-					http.Redirect(w, r, "/login", http.StatusFound)
+					if sCookie.Value != ""  {
+						expire := createToken.IsLogin(sCookie.Value)
+						if expire <=0 {
+							sCookie := &http.Cookie{
+								Name:   "wisheart",
+								Value:  "",
+								Path:   "/",
+								Domain: r.Host ,
+								MaxAge: 0,
+							}
+							http.SetCookie(w, sCookie)
+							http.Redirect(w, r, "/login", http.StatusOK)
+						}else{
+							next.ServeHTTP(w, r)
+						}
+					}else{
+						http.Redirect(w, r, "/login", http.StatusOK)
+					}
 				}
 			}
 		}
+			
 	})
+	
+}
+
+func errorfn(w http.ResponseWriter, r *http.Request){
+	if r.Method == "GET"{
+		html, _ := template.ParseFiles("./css/error.html")
+		html.Execute(w, nil)
+	}
 }
 
 func admin(w http.ResponseWriter, r *http.Request){
@@ -170,6 +185,7 @@ func main(){
 	http.HandleFunc("/", getip)
 	http.HandleFunc("/fmsgetip", fmsgetip)
 	http.HandleFunc("/login", login)
+	http.HandleFunc("/error", errorfn)
 	http.Handle("/admin", LoginMiddleware(http.HandlerFunc(admin)))	//	登录
 	http.Handle("/admin/simpleUpload", LoginMiddleware(http.HandlerFunc(simpleUpload)))	//	单文件上传
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css")))) //static
