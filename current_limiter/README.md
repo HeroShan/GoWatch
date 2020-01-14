@@ -1,8 +1,8 @@
-redis IP限流插件
-timeMax 访问时间最大值
-limiter 限制次数
-每timeMax秒访问limiter次，超过返回false
-每次记录访问的ip
+    redis IP限流插件
+    timeMax 访问时间最大值
+    limiter 限制次数
+    每timeMax秒访问limiter次，超过返回false
+    每次记录访问的ip
 ## ==基准测试
     goos: windows
     goarch: amd64
