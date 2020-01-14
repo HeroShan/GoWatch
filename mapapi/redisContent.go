@@ -8,7 +8,7 @@ import(
 )
 var isset int64 = 0
 func Connect(Ip string, Path string, Point JsPoint) {
-	con,connerr := redis.Dial("tcp","47.104.225.152:6379"); if connerr !=nil {
+	con,connerr := redis.Dial("tcp","127.0.0.1:6379"); if connerr !=nil {
 		fmt.Println(connerr)
 	}
 	timeUnix:=time.Now().Unix()   //已知的时间戳
