@@ -6,7 +6,7 @@ import(
 	"time"
 )
 const(
-	timeMax = 5			//time is second
+	timeMax = 1			//time is second
 	limiter = 5			//limit count
 )
 var(
@@ -46,6 +46,10 @@ func Serlock(ip string) bool {		//根据IP进行限流
 	}
 	con.Do("HMSET","limitime",ip,nowtime)
 	return true
+}
+
+func SerUnlock(){
+		con.Do("ZREMRANGEBYSCORE","limitimescore",0,limiter)
 }
 
 

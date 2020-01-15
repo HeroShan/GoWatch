@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body data-rsssl=1>
+    <canvas id="myCanvas" width="578" height="500"></canvas>
+    <canvas id="myCanvas2" width="578" height="500"></canvas>
+    <canvas id="myCanvaspath" width="578" height="200"></canvas>
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+
+      context.beginPath();
+      context.moveTo(150, 250);
+      context.lineTo(450, 250);
+      context.lineWidth = 15;
+      context.lineCap = 'round';
+      context.stroke();
+
+      var canvas2 = document.getElementById('myCanvas2');
+      var context2 = canvas2.getContext('2d');
+
+      context2.beginPath();
+      context2.moveTo(150, 50);
+      context2.lineTo(450, 250);
+      context2.strokeStyle = '#ff7008';
+      context2.stroke();
+
+      var myCanvaspath = document.getElementById('myCanvaspath');
+      var mycontext = myCanvaspath.getContext('2d');
+
+      mycontext.beginPath();
+      mycontext.moveTo(100, 20);
+
+      // line 1
+      mycontext.lineTo(200, 160);
+
+      // quadratic curve
+      mycontext.quadraticCurveTo(230, 200, 250, 120);
+
+      // bezier curve
+      mycontext.bezierCurveTo(290, -40, 300, 200, 400, 150);
+
+      // line 2
+      mycontext.lineTo(500, 90);
+
+      mycontext.lineWidth = 5;
+      mycontext.strokeStyle = 'blue';
+      mycontext.stroke();
+    </script>
+  </body>
+</html>
