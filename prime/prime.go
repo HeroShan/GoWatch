@@ -1,7 +1,7 @@
 package prime
 
 import(
-	"fmt"
+	_ "fmt"
 )
 
 func Isprime(P int) (bool) {
@@ -12,19 +12,13 @@ func Isprime(P int) (bool) {
 		return false
 	}
 	for {
-		if i == P{
-			fmt.Println("i=",i,"i=p")
-			break
-		}
-		if P % i != 0{
-			fmt.Println("i=",i,"P % i != 0")
+		if P % i == 0 && P == i{
 			break
 		}else{
-			i++
-			if i == P-1{
-				fmt.Println("i=",i,"else P % i != 0")
+			if P % i == 0 || i>= P{
 				return false
 			}
+			i++
 		}
 	}
 	return true
