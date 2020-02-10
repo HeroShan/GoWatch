@@ -1,7 +1,7 @@
 package prime
 
 import(
-	_ "fmt"
+	_"fmt"
 )
 
 func Isprime(P int) (bool) {
@@ -22,4 +22,13 @@ func Isprime(P int) (bool) {
 		}
 	}
 	return true
+}
+
+func Nprime(N int)(nsclice []int){
+	for i := 0; i <= N; i++{
+		if Isprime(i) {
+			nsclice = append(nsclice,i)
+		}
+	}
+	return nsclice
 }
