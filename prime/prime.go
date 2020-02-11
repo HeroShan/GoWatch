@@ -12,10 +12,10 @@ func Isprime(P int) (bool) {
 		return false
 	}
 	for {
-		if P % i == 0 && P == i{
+		if  P == i{
 			break
 		}else{
-			if P % i == 0 || i>= P{
+			if P % i == 0 {
 				return false
 			}
 			i++

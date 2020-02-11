@@ -14,6 +14,6 @@ func TestIsprime(t *testing.T){
 } 
 
 func TestNprime(t *testing.T){
-		n := Nprime(9999)
+		n := Nprime(1231212)
 		fmt.Println(n)
 }
