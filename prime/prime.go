@@ -1,7 +1,7 @@
 package prime
 
 import(
-	_"fmt"
+	_ "fmt"
 )
 
 func Isprime(P int) (bool) {
@@ -25,51 +25,17 @@ func Isprime(P int) (bool) {
 }
 
 func Nprime(N int)(nsclice []int){
-	var(
-		nsclice1 []int
-		nsclice2 []int
-		ich chan int
-		jch chan int
-	)
-	go func(N2,N int){
-		for j := N2; j <= N; j++{
-			if Isprime(j) {
-				nsclice2 = append(nsclice2,j)
-			}
-			if j == N {
-				jch <- 11
-			}
-		}
-	}(N/2,N)
-	go func(N int){
-		for i := 0; i <= (N/2-1); i++{
+	gcc := make(chan int,8)
+	for i := 0; i <= N; i++{
+		gcc <- i
+		go func(i int){
 			if Isprime(i) {
-				nsclice1 = append(nsclice1,i)
+				nsclice = append(nsclice,i)
 			}
-			if i == (N/2-1) {
-				ich <- 7
-			}
-		}
-	}(N/2)
-	
-	for{
-		var ic,jc int
-		select{
-			case <-ich :
-					nsclice = append(nsclice,nsclice1...)
-					ic = 2
-			case <-jch :
-					nsclice = append(nsclice,nsclice2...)
-					jc = 2
-			if ic + jc == 4{
-				goto LOOP
-			}
-		}
-
+			<-gcc
+		}(i)
 	}
 	
-	
-	
-	LOOP: return nsclice
+	return nsclice
 	
 }
