@@ -1,4 +1,4 @@
-package main
+package oslearn
 
 import (
  "runtime"
@@ -26,7 +26,7 @@ func (s *SpinLock) Unlock() {
 	}
 }
 // go run -race
-func main() {
+func cc() {
 	var wg sync.WaitGroup
 	wg.Add(5)
 	var spin SpinLock
