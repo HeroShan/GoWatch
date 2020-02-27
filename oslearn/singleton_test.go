@@ -7,12 +7,13 @@ import(
 
 
 func TestGetInstance(t *testing.T){
-	var Single Singleton
 
-	Single.Name = "F"
-	Single.Age 	= 25
 
-	c := GetInstance(Single)
-	
+	c := GetInstance()
+	c.Name = "F"
+	c.Age  = 25
+	b := GetInstance()
+	b.Name = "S"
 	fmt.Printf("%#v \n",c)
+	fmt.Printf("%#v \n",b)
 }
