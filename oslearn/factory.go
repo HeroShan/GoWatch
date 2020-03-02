@@ -13,7 +13,7 @@ type Operator interface {
 	Sub() int
 }
 
-//OperatorFactory 是工厂接口
+//OperatorFactory 是工厂接口	*操作
 type OperatorFactory interface {
 	Create() Operator
 }
