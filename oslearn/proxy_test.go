@@ -13,5 +13,4 @@ func TestProxy(t *testing.T){
 	fmt.Printf("2%#v\n ",sub)
 	res := sub.Do()
 	fmt.Printf("3%#v\n %#v\n",sub,res)
-
 }

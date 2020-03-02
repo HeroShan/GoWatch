@@ -5,14 +5,14 @@ type Subject interface {
 	Do() string
 }
 
-type RealSubject struct{}
+type realSubject struct{}
 
-func (RealSubject) Do() string {
+func (realSubject) Do() string {
 	return "real"
 }
 
 type Proxy struct {
-	real RealSubject
+	real realSubject
 }
 
 func (p Proxy) Do() string {
