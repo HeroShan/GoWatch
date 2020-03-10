@@ -12,8 +12,11 @@ type PSOParam struct{
 	ParticleNum		int			//粒子数量
 	Matrix			int			//探索矩阵大小
 }
-var ParticleSwarm []string{}
-type Particle interface{}		//粒子
+
+type Particle struct{
+	 name		string
+	 index		int
+}		//粒子
 
 	
 
@@ -29,18 +32,22 @@ func (Pso PSOParam)CreateMap() []int{		//创建地图
 
 }
 
-func (Pso PSOParam)CreateParticle() ParticleSwarm {		//创建粒子群
-	 var(
-		blob 	  int
-		i 		  int
+func (Pso PSOParam)CreateParticle()(int , []Particle){		//创建粒子群
+	var(
+		i 		  			int
+		ParticleSwarm  	=   make([]Particle,Pso.ParticleNum)
+		step				int
 	 )
-	 blob = Pso.Large / Pso.ParticleNum
-	 for i = 1; i < blob; i++{
-		ParticleSwarm[i]["part"+strconv.Itoa(i)] = Particle
+	 step = Pso.Large / Pso.ParticleNum
+	 for i = 1 ; i <= Pso.ParticleNum; i++{
+		ParticleSwarm[i-1].name 	= "part"+strconv.Itoa(i)
+		if i == 1{
+			ParticleSwarm[i-1].index	= step 
+		}
+		ParticleSwarm[i-1].index	= step * (i-1)
 	 }
-	return ParticleSwarm
-
-
+	  
+	return (Pso.Large % Pso.ParticleNum) , ParticleSwarm
 }
 
 func (Pso PSOParam)GetRound(){
@@ -51,10 +58,13 @@ func (Pso PSOParam)GetRound(){
 func main(){
 	var p PSOParam
 	p.Large = 2000
-	p.ParticleNum = 3
+	p.ParticleNum = 15
 	p.Matrix = 3
 
 		//map := p.CreateMap()
-		particle := CreateParticle()
-		fmt.Println(particle)
+		mod,particle := p.CreateParticle()
+		fmt.Println("mod :",mod)
+		for k,v := range particle{
+			fmt.Printf("%d , %#v \n",k,v)
+		}
 }
