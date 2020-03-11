@@ -65,5 +65,5 @@ func (Pso PSOParam)SearchNum(Smap []int,Sparticle *[]Particle,targetNum int) (in
 					}
 				}
 			}
-		return 2,2
+		return -1,0
 }
