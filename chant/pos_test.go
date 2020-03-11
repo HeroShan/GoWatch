@@ -8,17 +8,18 @@ import(
 )
 
 func TestSearchNum(t *testing.T){
-	var p PSOParam
-	p.Large = 15
+	 p  := &PSOParam{}
+	p.Large = 150
 	p.ParticleNum = 2
 	p.Matrix = 3
 	p.Step   = p.Large / p.ParticleNum
+	fmt.Printf("%#v \n",p)
 	var i int
 	
 		particle := p.CreateParticle()
 		fmt.Println("particle :",particle)
 		mapp := p.CreateMap()
-		fmt.Println("map :",mapp)
+		fmt.Printf("map : %#v\n",&mapp)
 		rand.Seed(time.Now().Unix())
 		for{	
 			i++

@@ -23,7 +23,7 @@ var(
 )
 	
 
-func (Pso PSOParam)CreateMap()([]int){		//创建地图
+func (Pso *PSOParam)CreateMap()([]int){		//创建地图
 	
 	rand.Seed(time.Now().Unix())
 	for i = 0;i < Pso.Large; i++{
@@ -33,7 +33,7 @@ func (Pso PSOParam)CreateMap()([]int){		//创建地图
 
 }
 
-func (Pso PSOParam)CreateParticle()([]Particle){		//创建粒子群
+func (Pso *PSOParam)CreateParticle()([]Particle){		//创建粒子群
 	var(
 		i 		  			int
 		ParticleSwarm  	=   make([]Particle,Pso.ParticleNum)
@@ -49,7 +49,7 @@ func (Pso PSOParam)CreateParticle()([]Particle){		//创建粒子群
 	return  ParticleSwarm
 }
 
-func (Pso PSOParam)SearchNum(Smap []int,Sparticle *[]Particle,targetNum int) (int,int){
+func (Pso *PSOParam)SearchNum(Smap []int,Sparticle *[]Particle,targetNum int) (int,int){
 			for key , particleNum := range *Sparticle{
 				
 		 		for i = particleNum.index; i< particleNum.index+Pso.Step;i++{
