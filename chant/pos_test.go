@@ -8,8 +8,8 @@ import(
 )
 
 func TestSearchNum(t *testing.T){
-	 p  := &PSOParam{}
-	p.Large = 150
+	p  := &PSOParam{}
+	p.Large = 15
 	p.ParticleNum = 2
 	p.Matrix = 3
 	p.Step   = p.Large / p.ParticleNum
@@ -27,10 +27,30 @@ func TestSearchNum(t *testing.T){
 			// fmt.Scanf("%d\n",&targetNum)
 			
 			q:=rand.Intn(10)
-			c,cc := p.SearchNum(mapp,&particle,q)
+			c,cc := p.SearchNum(mapp[:],&particle,q)
 			fmt.Printf("Num is %d ,Search is : %d,index is %d\n",q,c,cc)
 			if i== 10{
 				break
 			}
 		}
+}
+
+func TestCountNum(t *testing.T){
+	p  := &PSOParam{}
+	p.Large = 15
+	p.ParticleNum = 2
+	p.Matrix = 3
+	p.Step   = p.Large / p.ParticleNum
+	fmt.Printf("%#v \n",p)
+	var q int
+	
+		particle := p.CreateParticle()
+		fmt.Println("particle :",particle)
+		mapp := p.CreateMap()
+		fmt.Printf("map : %#v\n",&mapp)
+		rand.Seed(time.Now().Unix())
+		q = 5
+		c := p.CountNum(mapp[:],&particle,q)
+		fmt.Printf("Num is %d ,Numcount is : %d\n",q,c)
+
 }

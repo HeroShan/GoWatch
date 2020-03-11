@@ -4,6 +4,7 @@ import(
 	"time"
 	"math/rand"
 	"strconv"
+	"fmt"
 )
 
 type PSOParam struct{
@@ -20,6 +21,7 @@ type Particle struct{
 var(
 	Map  []int
 	i	int
+	Numcount = make(chan int)
 )
 	
 
@@ -66,4 +68,40 @@ func (Pso *PSOParam)SearchNum(Smap []int,Sparticle *[]Particle,targetNum int) (i
 				}
 			}
 		return -1,0
+}
+
+func (Pso *PSOParam)FindNum(P chan int,S []int, T int){
+		
+		c := <-P
+		i = 0
+		for{
+			if i < Pso.Step+1{
+				break
+			}
+			if S[c] == T{
+				Numcount <- 1
+			}else{
+				Numcount <- 0
+			}
+			fmt.Println(i)
+			c++
+		}
+
+}
+
+func (Pso *PSOParam)CountNum(Smap []int,Sparticle *[]Particle,targetNum int) (int){
+			Partchan := make(chan int)
+			var sum,stp int
+			for _, particleNum := range *Sparticle{
+				Partchan <- particleNum.index
+				if particleNum.index+Pso.Step+1 > len(Smap){
+					stp = Pso.Large % Pso.ParticleNum
+				}
+				stp = Pso.Step+1
+				go Pso.FindNum(Partchan,Smap[particleNum.index:stp],targetNum)
+				count := <-Numcount
+				sum += count 
+				fmt.Println(sum)
+			}
+		return sum
 }
