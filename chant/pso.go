@@ -4,7 +4,6 @@ import(
 	"time"
 	"math/rand"
 	"strconv"
-	"fmt"
 )
 
 type PSOParam struct{
