@@ -35,22 +35,3 @@ func TestSearchNum(t *testing.T){
 		}
 }
 
-func TestCountNum(t *testing.T){
-	p  := &PSOParam{}
-	p.Large = 15
-	p.ParticleNum = 2
-	p.Matrix = 3
-	p.Step   = p.Large / p.ParticleNum
-	fmt.Printf("%#v \n",p)
-	var q int
-	
-		particle := p.CreateParticle()
-		fmt.Println("particle :",particle)
-		mapp := p.CreateMap()
-		fmt.Printf("map : %#v\n",&mapp)
-		rand.Seed(time.Now().Unix())
-		q = 5
-		c := p.CountNum(mapp[:],&particle,q)
-		fmt.Printf("Num is %d ,Numcount is : %d\n",q,c)
-
-}
