@@ -6,6 +6,6 @@ import(
 )
 
 func TestGcdOfStrings(t *testing.T){
-	c := GcdOfStrings("ABCDEF","ABAB")
+	c := GcdOfStrings("abcdabcd","abcdabc")
 	fmt.Printf("c:%s \n",c)
 }

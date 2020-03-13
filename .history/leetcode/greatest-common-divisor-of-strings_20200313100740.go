@@ -3,6 +3,7 @@ package leetcode
 import(
 	"strings"
 	"math"
+	"fmt"
 )
 
 func GcdOfStrings(str1 string, str2 string) string {
@@ -15,12 +16,14 @@ func GcdOfStrings(str1 string, str2 string) string {
 		vernier = len(tmpstr1)-len(tmpstr2)
 		vernierstr2 = len(tmpstr2)
 		newstr2,str2len := getVicestr(tmpstr2,vernierstr2)
-		if newstr2 != ""{
+		if str2len != 0{
 			str2 		= newstr2
 			vernierstr2 = str2len
 		}
+		fmt.Printf("newstr2:%s ,%d\n",newstr2,str2len)
 		for i:=0;i<=vernier;i++{
 			newstr := getCommonNum(tmpstr1,i,vernierstr2+i)
+			fmt.Printf("newstr:%s ,%d,%d\n",newstr,vernierstr2,i)
 			if vernierstr2 == 1{
 				break
 			}else{
@@ -28,7 +31,7 @@ func GcdOfStrings(str1 string, str2 string) string {
 					return newstr
 				}else if i==vernier {
 					vernierstr2--
-					i = 0
+					i = -1
 				}else if i==vernier {
 					break
 				}

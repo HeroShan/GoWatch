@@ -3,6 +3,7 @@ package leetcode
 import(
 	"strings"
 	"math"
+	"fmt"
 )
 
 func GcdOfStrings(str1 string, str2 string) string {

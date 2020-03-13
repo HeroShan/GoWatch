@@ -3,6 +3,7 @@ package leetcode
 import(
 	"strings"
 	"math"
+	"fmt"
 )
 
 func GcdOfStrings(str1 string, str2 string) string {
@@ -14,11 +15,12 @@ func GcdOfStrings(str1 string, str2 string) string {
 		)
 		vernier = len(tmpstr1)-len(tmpstr2)
 		vernierstr2 = len(tmpstr2)
-		newstr2,str2len := getVicestr(tmpstr2,vernierstr2)
+		newstr2 := getVicestr(tmpstr2,vernierstr2)
+		fmt.Println(newstr2)
 		if newstr2 != ""{
-			str2 		= newstr2
-			vernierstr2 = str2len
+			str2 = newstr2
 		}
+		
 		for i:=0;i<=vernier;i++{
 			newstr := getCommonNum(tmpstr1,i,vernierstr2+i)
 			if vernierstr2 == 1{
@@ -38,7 +40,7 @@ func GcdOfStrings(str1 string, str2 string) string {
 
 }
 
-func getVicestr(str2 []string ,len int) (string,int){
+func getVicestr(str2 []string ,len int) string{
 	var vernierstr2 int
 	tmp := math.Floor(float64(len/2))
 	vernierstr2 = int(tmp)
@@ -47,15 +49,15 @@ func getVicestr(str2 []string ,len int) (string,int){
 		   break
 	   }
 	   newstr1 := getCommonNum(str2,i,vernierstr2)
-	   newstr2 := getCommonNum(str2,i+vernierstr2,i+vernierstr2+vernierstr2) 
+	   newstr2 := getCommonNum(str2,i+vernierstr2,vernierstr2) 
 	   if newstr1 == newstr2 {
-		   return newstr1,vernierstr2
+		   return newstr1
 	   }else{
 		   i = 0
 		   vernierstr2--
 	   }
 	}
-	return "",0
+	return ""
 }
 
 func getCommonNum(str []string, strIndex int, join int)string{

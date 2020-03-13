@@ -5,7 +5,7 @@ import(
 	"math"
 )
 
-func GcdOfStrings(str1 string, str2 string) string {
+func gcdOfStrings(str1 string, str2 string) string {
 		tmpstr1 := strings.Split(str1,"")
 		tmpstr2 := strings.Split(str2,"")
 		var(

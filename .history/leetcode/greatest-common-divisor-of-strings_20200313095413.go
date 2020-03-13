@@ -3,6 +3,7 @@ package leetcode
 import(
 	"strings"
 	"math"
+	"fmt"
 )
 
 func GcdOfStrings(str1 string, str2 string) string {
@@ -19,6 +20,7 @@ func GcdOfStrings(str1 string, str2 string) string {
 			str2 		= newstr2
 			vernierstr2 = str2len
 		}
+		fmt.Println(str2,vernierstr2)
 		for i:=0;i<=vernier;i++{
 			newstr := getCommonNum(tmpstr1,i,vernierstr2+i)
 			if vernierstr2 == 1{
