@@ -12,11 +12,40 @@ type ListNode struct {
     
 // }
 
-func (this ListNode)AddList(n int) ListNode {
-		temp := this
+func (this *ListNode)AddTailList(n int) {
+	var temp ListNode
+	
+		for this.Next != nil{
+			this = this.Next
+		}
 		temp.Val = n
-		fmt.Printf("temp: = %#v\n",temp)
-		temp.Next = &this
-		return temp 
+		temp.Next = nil
+		this.Next = &temp	
+			
+}
 
+func (this *ListNode)AddHeadList(n int) {
+	var temp ListNode
+	temp.Val = n
+	temp.Next = nil
+	this.Next = &temp
+	
+	
+}
+
+
+func PrintList(list *ListNode) {
+	p := list
+	var i int
+	for  {
+		fmt.Printf("%d-%v-%p \n", p.Val, i, p.Next)
+		p = p.Next
+		if p.Next == nil{
+			fmt.Printf("%d-%v-%p \n", p.Val, i, p.Next)
+			break
+		}
+		
+		i++
+	}
+	fmt.Println()
 }

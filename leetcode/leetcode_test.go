@@ -23,7 +23,18 @@ func TestIsPowerOfThree(t *testing.T){
 }
 
 func TestAddList(t *testing.T){
-	var l	ListNode
-	c:= l.AddList(10)
-	fmt.Printf("funcouit:=%#v\n",c)
+	 l := new(ListNode)
+	 l.Next = nil
+	var i int
+		for i= 10;i<15;i++{
+			l.AddHeadList(i)
+			fmt.Printf("TestAddList:%#v,  %#v %d\n",  l,l.Next,i)
+		}
+		PrintList(l)
+		fmt.Printf("TestAddList:%#v   ,%#v \n",  l,l.Next)
+		
+		 
+	
+	 
+	
 }
