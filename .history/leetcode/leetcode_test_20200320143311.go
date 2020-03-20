@@ -6,8 +6,7 @@ import(
 )
 
 func TestScientificToFloat(t *testing.T){
-	c:=ScientificToFloat("1.21123E+06")
-	fmt.Println(c)
+	ScientificToFloat("1.21E-03")
 }
 
 

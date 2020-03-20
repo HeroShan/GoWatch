@@ -5,12 +5,6 @@ import(
 	"fmt"
 )
 
-func TestScientificToFloat(t *testing.T){
-	c:=ScientificToFloat("1.21123E+06")
-	fmt.Println(c)
-}
-
-
 func TestGcdOfStrings(t *testing.T){
 	c := GcdOfStrings("ABCABC","ABC")
 	fmt.Printf("c:%s \n",c)
