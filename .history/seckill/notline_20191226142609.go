@@ -6,7 +6,7 @@ import (
   "os"
 )
 // Practice os Sycn more
-func Practice() {
+func main() {
   for i := 0; i < 50; i++ {
     time.Sleep(100 * time.Millisecond)
     h := strings.Repeat("=", i) + strings.Repeat(" ", 49-i)
