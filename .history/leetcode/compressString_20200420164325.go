@@ -1,0 +1,32 @@
+package leetcode
+
+import(
+	"strconv"
+	"fmt"
+)
+
+func CompressString(S string) string {
+    var(
+        strlen      int
+        tmp         string
+        compress    string 
+        strCount    int
+    )
+    strlen = len(S)-1
+    for i:=0; i<strlen; i++{
+        if string(S[i]) == tmp{
+            strCount++
+        }else{
+            if compress != ""{
+				compress = compress+tmp+strconv.Itoa(strCount)
+			}
+				
+			
+            
+            strCount = 1
+            tmp = string(S[i])
+        }
+	}
+	return compress
+    
+}

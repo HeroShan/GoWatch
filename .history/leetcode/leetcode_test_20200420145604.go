@@ -5,11 +5,6 @@ import (
 	"testing"
 )
 
-func TestCompressString(t *testing.T){
-	c:=CompressString("aabcccccaaa")
-	fmt.Println(c)
-}
-
 func TestRomanToInt(t *testing.T) {
 	num := RomanToInt("MMMCCCLX")
 	fmt.Println(num)
