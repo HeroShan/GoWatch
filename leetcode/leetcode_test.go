@@ -5,6 +5,13 @@ import (
 	"testing"
 )
 
+func TestNumIslands(t *testing.T){
+	var grid [][]byte
+	grid = [][]byte{{1,0,1,1},{0,0,0,0},{1,0,1,1},{0,0,1,0}}
+	c := NumIslands(grid)
+	fmt.Printf("%d\n",c)
+}
+
 func TestCompressString(t *testing.T){
 	c:=CompressString("aabcccccaaa")
 	fmt.Println(c)
