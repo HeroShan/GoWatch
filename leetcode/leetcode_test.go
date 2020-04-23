@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+func TestSearchMatrix(t *testing.T){
+	var matrix [][]int
+	matrix = [][]int{{1,4,7,11,15},{2,5,9,10,19},{3,6,9,12,22},{22,26,28,29,35},{31,35,41,46,49,53}}
+	target := 5
+	result := SearchMatrix(matrix,target)
+	fmt.Println(result)
+}
+
 func TestNumIslands(t *testing.T){
 	var grid [][]byte
 	grid = [][]byte{{1,0,1,1},{0,0,0,0},{1,0,1,1},{0,0,1,0}}
