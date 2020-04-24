@@ -5,13 +5,6 @@ import (
 	"testing"
 )
 
-func TestFindMinHeightTrees(t *testing.T){
-	var edges [][]int
-	edges = [][]int{{0,3},{1,3},{2,3},{4,3},{5,3}}
-	c := FindMinHeightTrees(6,edges)
-	fmt.Println(c)
-}
-
 func TestSearchMatrix(t *testing.T){
 	var matrix [][]int
 	matrix = [][]int{{1,4,7,11,15},{2,5,9,10,19},{3,6,9,12,22},{22,26,28,29,35},{31,35,41,46,49,53}}
