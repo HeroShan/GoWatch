@@ -7,8 +7,8 @@ import (
 
 func TestFindMinHeightTrees(t *testing.T){
 	var edges [][]int
-	edges = [][]int{{0,3},{1,3},{2,3},{4,3},{5,3}}
-	c := FindMinHeightTrees(6,edges)
+	edges = [][]int{{0,3},{1,3},{2,1},{4,3},{5,3}}
+	c:=FindMinHeightTrees(6,edges)
 	fmt.Println(c)
 }
 
