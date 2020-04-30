@@ -5,6 +5,13 @@ import (
 	"testing"
 )
 
+func TestKConcatenationMaxSum(t *testing.T){
+	 var arr []int
+	 arr = append(arr,1)
+	 arr = append(arr,6)
+	 KConcatenationMaxSum(arr,2)
+}
+
 func TestFindMinHeightTrees(t *testing.T){
 	var edges [][]int
 	edges = [][]int{{0,3},{1,3},{2,1},{4,3},{5,3}}
