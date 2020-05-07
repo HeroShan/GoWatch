@@ -7,9 +7,11 @@ import (
 
 func TestKConcatenationMaxSum(t *testing.T){
 	 var arr []int
+	 arr = append(arr,-1)
 	 arr = append(arr,1)
 	 arr = append(arr,6)
-	 KConcatenationMaxSum(arr,2)
+	 
+	 KConcatenationMaxSum(arr,1)
 }
 
 func TestFindMinHeightTrees(t *testing.T){

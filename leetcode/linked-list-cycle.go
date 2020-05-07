@@ -1,7 +1,4 @@
 package leetcode
-import(
-	"fmt"
-)
 
 type ListNode struct {
     Val 	int
@@ -38,14 +35,11 @@ func PrintList(list *ListNode) {
 	p := list
 	var i int
 	for  {
-		fmt.Printf("%d-%v-%p \n", p.Val, i, p.Next)
 		p = p.Next
 		if p.Next == nil{
-			fmt.Printf("%d-%v-%p \n", p.Val, i, p.Next)
 			break
 		}
 		
 		i++
 	}
-	fmt.Println()
 }
