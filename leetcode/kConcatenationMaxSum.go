@@ -39,6 +39,6 @@ func KConcatenationMaxSum(arr []int, k int) int {
 	
 }
 
-func getMax(arr []int) int{
+func getMax(arr []int) {
 
 }

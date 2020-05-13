@@ -5,10 +5,6 @@ type ListNode struct {
   	Next 	*ListNode
 }
 
-// func hasCycle(head *ListNode) bool {
-    
-// }
-
 func (this *ListNode)AddTailList(n int) {
 	var temp ListNode
 	
