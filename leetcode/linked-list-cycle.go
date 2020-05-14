@@ -1,5 +1,7 @@
 package leetcode
-
+import(
+	"fmt"
+)
 type ListNode struct {
     Val 	int
   	Next 	*ListNode
@@ -19,23 +21,32 @@ func (this *ListNode)AddTailList(n int) {
 
 func (this *ListNode)AddHeadList(n int) {
 	var temp ListNode
-	temp.Val = n
 	temp.Next = nil
-	this.Next = &temp
-	
+	temp.Val = n
+	for{
+		if this.Next ==nil {
+			this.Next = &temp
+			break
+		}else{
+			this = this.Next
+		}
+	}
 	
 }
 
 
 func PrintList(list *ListNode) {
 	p := list
-	var i int
-	for  {
-		p = p.Next
-		if p.Next == nil{
+	for{
+		
+		if p.Next != nil {
+			fmt.Println(p.Val)
+			p = p.Next
+		}else{
+			fmt.Println(p.Val)
 			break
 		}
 		
-		i++
+		
 	}
 }
