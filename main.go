@@ -109,16 +109,7 @@ func monitoring(){
 }
 
 func main(){
-	// go monitoring()
-	// mime.AddExtensionType(".js", "text/javascript")	//static
-	// http.HandleFunc("/", getip)
-	// http.HandleFunc("/fmsgetip", fmsgetip)
-	// http.HandleFunc("/login", login)
-	// http.HandleFunc("/error", errorfn)
-	// http.Handle("/admin", LoginMiddleware(http.HandlerFunc(admin)))	//	登录
-	// http.Handle("/admin/simpleUpload", LoginMiddleware(http.HandlerFunc(simpleUpload)))	//	单文件上传
-	// http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css")))) //static
-	// http.ListenAndServe(":8080", nil)
+	go monitoring()
 	router := gin.Default()
 	router.Static("/css","./css")
 	router.LoadHTMLGlob("css/html/*")
