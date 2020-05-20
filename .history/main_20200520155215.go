@@ -1,13 +1,17 @@
 package main
 import(
+	// "mime"
 	"github.com/gin-gonic/gin"
 	"GoWatch/mapapi"
+	_ "GoWatch/seckill"
 	"net/http"
 	"strings"
-	"time"
-	"GoWatch/auth"
-	"GoWatch/createToken"
-	cl "GoWatch/current_limiter"	
+	// "text/template"
+	 "GoWatch/auth"
+	 "GoWatch/createToken"
+	// "time"
+	 cl "GoWatch/current_limiter"
+	
 )
 
 
@@ -28,18 +32,18 @@ func logintpl(c *gin.Context){
 		c.HTML(http.StatusOK,"login.html",gin.H{})
 }
 
-func loginc(c *gin.Context){
+func login(c *gin.Context){
 		username := c.PostForm("username")
 		password := c.PostForm("password")
 		Cauth := auth.Check(username,password)
 		if Cauth == false {
-			c.Redirect(302,"http://"+c.Request.Host+"/login")
+			c.Redirect(301,"http://"+c.Request.Host+"/login")
 		}
 		if Cauth == true {
 			host := strings.Split(c.Request.Host,":")
 			sToken := createToken.GetToken()
 			c.SetCookie("wisheart",sToken,7*24*60*60,"/",host[0],false,true)
-			c.Redirect(302,"http://"+c.Request.Host+"/admin")
+			c.Redirect(200,"http://"+c.Request.Host+"/admin")
 		}
 }
 
@@ -68,7 +72,7 @@ func LoginMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context){
 		host := strings.Split(c.Request.Host,":")
 		if !cl.Serlock(host[0]) {
-			c.Redirect(302,"http://"+c.Request.Host+"/error")
+			c.Redirect(200,"http://"+c.Request.Host+"/error")
 		}else{
 			cookie,_ := c.Cookie("wisheart")
 			if cookie != ""{
@@ -76,12 +80,12 @@ func LoginMiddleware() gin.HandlerFunc {
 						if expire <=0 {
 							sToken := createToken.GetToken()
 							c.SetCookie("wisheart",sToken,0,"/",host[0],false,true)
-							c.Redirect(302,"http://"+c.Request.Host+"/login")
+							c.Redirect(200,"http://"+c.Request.Host+"/login")
 						}else{
 							c.Next()
 						}
 			}else{
-				c.Redirect(302,"http://"+c.Request.Host+"/login")
+				c.Redirect(200,"http://"+c.Request.Host+"/login")
 			}
 		}
 
@@ -95,17 +99,6 @@ func error(c *gin.Context){
 
 func adminPage(c *gin.Context){
 	c.HTML(http.StatusOK,"admin.html",gin.H{})
-}
-
-func monitoring(){
-	for{
-		time.Sleep(24 * time.Hour)
-		cl.SerUnlock()
-		wk := time.Now().Weekday().String()
-		if wk == "Sunday" || wk == "Wednesday"{
-			createToken.DelExpireToken()
-		}
-	}
 }
 
 func main(){
@@ -126,7 +119,7 @@ func main(){
 	{
 		login.GET("/",getip)
 		login.GET("/login",logintpl)
-		login.POST("/login",loginc)
+		login.POST("/login",login)
 		login.GET("/fmsgetip",fmsgetip)
 		login.GET("/error",error)
 		// v1.Post("/login",login)

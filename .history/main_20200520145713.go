@@ -1,13 +1,18 @@
 package main
 import(
+	"fmt"
+	// "mime"
 	"github.com/gin-gonic/gin"
 	"GoWatch/mapapi"
+	_ "GoWatch/seckill"
 	"net/http"
 	"strings"
-	"time"
-	"GoWatch/auth"
-	"GoWatch/createToken"
-	cl "GoWatch/current_limiter"	
+	// "text/template"
+	 "GoWatch/auth"
+	 "GoWatch/createToken"
+	// "time"
+	// cl "GoWatch/current_limiter"
+	
 )
 
 
@@ -28,24 +33,24 @@ func logintpl(c *gin.Context){
 		c.HTML(http.StatusOK,"login.html",gin.H{})
 }
 
-func loginc(c *gin.Context){
+func login(c *gin.Context){
 		username := c.PostForm("username")
 		password := c.PostForm("password")
 		Cauth := auth.Check(username,password)
 		if Cauth == false {
-			c.Redirect(302,"http://"+c.Request.Host+"/login")
+			c.Redirect(301,"http://"+c.Request.Host+"/login")
 		}
 		if Cauth == true {
 			host := strings.Split(c.Request.Host,":")
 			sToken := createToken.GetToken()
 			c.SetCookie("wisheart",sToken,7*24*60*60,"/",host[0],false,true)
-			c.Redirect(302,"http://"+c.Request.Host+"/admin")
+			c.Redirect(200,"http://"+c.Request.Host+"/admin")
 		}
 }
 
 func fmsgetip(c *gin.Context){
-	//ip := strings.Split(c.Request.RemoteAddr,":")
-	area := getiarea("180.101.49.11")
+	ip := strings.Split(c.Request.RemoteAddr,":")
+	area := getiarea(ip[0])
 	c.String(200,area)
 }
 
@@ -55,6 +60,8 @@ func getiarea(ip string) (path string) {
 		areainfo  string
 	)
 	Point,areainfo = mapapi.Getpoint(ip)
+	fmt.Println(Point)
+	fmt.Println(areainfo)
 	area := mapapi.Getarea(Point)
 	if area != "" {
 		path = area
@@ -62,50 +69,6 @@ func getiarea(ip string) (path string) {
 		path = areainfo
 	}
 	return path
-}
-
-func LoginMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context){
-		host := strings.Split(c.Request.Host,":")
-		if !cl.Serlock(host[0]) {
-			c.Redirect(302,"http://"+c.Request.Host+"/error")
-		}else{
-			cookie,_ := c.Cookie("wisheart")
-			if cookie != ""{
-				expire := createToken.IsLogin(cookie)
-						if expire <=0 {
-							sToken := createToken.GetToken()
-							c.SetCookie("wisheart",sToken,0,"/",host[0],false,true)
-							c.Redirect(302,"http://"+c.Request.Host+"/login")
-						}else{
-							c.Next()
-						}
-			}else{
-				c.Redirect(302,"http://"+c.Request.Host+"/login")
-			}
-		}
-
-	}
-
-}
-
-func error(c *gin.Context){
-	c.HTML(http.StatusOK,"error.html",gin.H{})
-}
-
-func adminPage(c *gin.Context){
-	c.HTML(http.StatusOK,"admin.html",gin.H{})
-}
-
-func monitoring(){
-	for{
-		time.Sleep(24 * time.Hour)
-		cl.SerUnlock()
-		wk := time.Now().Weekday().String()
-		if wk == "Sunday" || wk == "Wednesday"{
-			createToken.DelExpireToken()
-		}
-	}
 }
 
 func main(){
@@ -122,23 +85,14 @@ func main(){
 	router := gin.Default()
 	router.Static("/css","./css")
 	router.LoadHTMLGlob("css/html/*")
-	login := router.Group("")
+	v1 := router.Group("")
 	{
-		login.GET("/",getip)
-		login.GET("/login",logintpl)
-		login.POST("/login",loginc)
-		login.GET("/fmsgetip",fmsgetip)
-		login.GET("/error",error)
+		v1.GET("/",getip)
+		v1.GET("/login",logintpl)
+		v1.POST("login",login)
+		v1.GET("/fmsgetip",fmsgetip)
 		// v1.Post("/login",login)
 	}
-
-	admin := router.Group("admin")
-	{
-		admin.Use(LoginMiddleware())
-		admin.GET("/",adminPage)
-
-	}
-
 	
 
 	

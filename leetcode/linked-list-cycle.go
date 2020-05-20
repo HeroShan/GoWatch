@@ -24,7 +24,7 @@ func (this *ListNode)AddHeadList(n int) {
 	temp.Next = nil
 	temp.Val = n
 	for{
-		if this.Next ==nil {
+		if this.Next == nil {
 			this.Next = &temp
 			break
 		}else{

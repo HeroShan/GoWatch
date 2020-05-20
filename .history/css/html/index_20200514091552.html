@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="css/css/index.css">
+  
+  
+</head>
+<body>    
+    <canvas id="canvas" width="1080" height="100" ></canvas>
+	       <div id="page_begin_html">
+			        <!-- 背景动画 -->
+			<canvas id="c_n9" width="1920" height="990" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.5;"></canvas>
+			<script src="https://files.cnblogs.com/files/jingmoxukong/canvas-nest.min.js"></script>
+		  </div>
+        <div id="app">
+                <el-container>
+                        <el-header></el-header>
+                        <el-container>
+                          <el-aside width="200px"></el-aside>
+                          <el-container>
+                            <el-main><div class="grid-content bg-purple-dark">
+                              <img src="css/img/timg.gif" alt="">
+                                  <!-- //画布 -->
+                                  
+                                    <!-- <span id="top-font">北方</span>  </br>
+                                    <span id="top-font">冬夜的拂晓</span>  </br>
+                                    <span id="top-font">早来的西风</span>  </br>
+                                    <span id="top-font">和你绵长的余光</span>  </br> -->
+                                </div></el-main>
+                            <el-footer></el-footer>
+                          </el-container>
+                        </el-container>
+                      </el-container>
+                      
+                      <el-container>
+                        <el-aside width="200px"></el-aside>
+                        <el-container>
+                          <el-header></el-header>
+                          <el-main><div class="full-content-bottom">
+                                <div class="full-content-bottom-sp">
+                                    <h1>srcoll-down</h1>
+                                </div>
+                            </div></el-main>
+                        </el-container>
+                      </el-container>
+                      
+                      <el-container>
+                        <el-aside width="200px"></el-aside>
+                        <el-container>
+                          <el-header></el-header>
+                          <!-- <el-main><div class="pop-grid-content bg-purple"><span id="top-font">灰度</span> <img src="css/img/love.jpg" alt="" class="grayscale"></div> -->
+                            <div class="pop-grid-content bg-purple"><span id="top-font">模糊</span> <img src="css/img/love.jpg" alt="" class="blur"></div></el-main>
+                          <el-footer></el-footer>
+                        </el-container>
+                      </el-container>
+              </div>
+  
+</body>
+   <!-- import Vue before Element -->
+   <script src="https://unpkg.com/vue/dist/vue.js"></script>
+   <!-- import JavaScript -->
+   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+   <script>
+                var canvas=document.getElementById('canvas');
+                var context=canvas.getContext('2d');
+                
+                var circle={                         //创建一个圆形对象
+                    x:350,
+                    y:50,
+                    radius:8,
+                    direction:'right',
+                    
+                    move:function(){
+                        if(this.direction==='right'){
+                            if(this.y<=60)
+                            {
+                               this.y+=1;	
+                            }
+                            else
+                            {
+                                this.direction='left';
+                            }
+                        }else{
+                            if(this.y>=50)
+                            {
+                                this.y-=1;
+                            }
+                            else
+                            {
+                                this.direction='right';
+                            }
+                        }
+                    },
+                    
+                    draw:function(){
+                        context.beginPath();
+                        context.arc(this.x,this.y,this.radius,0,2*Math.PI,false);
+                        context.arc(this.x+30,this.y,this.radius,0,2*Math.PI,false);
+                        context.arc(this.x+60,this.y,this.radius,0,2*Math.PI,false);
+                        context.closePath();
+                        context.fillStyle='orange';
+                        context.font = "32px serif";
+                        context.fillText("Loading", 200, 65,180);
+                        context.fill();
+                    }
+                };
+                
+                function animation()
+                {
+                   circle.move();    //更新
+                   context.clearRect(0,0,canvas.width,canvas.height);  //清除
+                   circle.draw();   //绘制
+                   requestAnimationFrame(animation);  //循环
+                }
+                circle.draw();
+                animation();
+     new Vue({
+       el: '#app',
+       data: function() {
+         return { visible: false }
+       }
+     })
+   </script>
+  <script src="css/js/index.js"></script>
+</html>

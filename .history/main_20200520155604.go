@@ -4,7 +4,6 @@ import(
 	"GoWatch/mapapi"
 	"net/http"
 	"strings"
-	"time"
 	"GoWatch/auth"
 	"GoWatch/createToken"
 	cl "GoWatch/current_limiter"	
@@ -33,13 +32,13 @@ func loginc(c *gin.Context){
 		password := c.PostForm("password")
 		Cauth := auth.Check(username,password)
 		if Cauth == false {
-			c.Redirect(302,"http://"+c.Request.Host+"/login")
+			c.Redirect(301,"http://"+c.Request.Host+"/login")
 		}
 		if Cauth == true {
 			host := strings.Split(c.Request.Host,":")
 			sToken := createToken.GetToken()
 			c.SetCookie("wisheart",sToken,7*24*60*60,"/",host[0],false,true)
-			c.Redirect(302,"http://"+c.Request.Host+"/admin")
+			c.Redirect(200,"http://"+c.Request.Host+"/admin")
 		}
 }
 
@@ -68,7 +67,7 @@ func LoginMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context){
 		host := strings.Split(c.Request.Host,":")
 		if !cl.Serlock(host[0]) {
-			c.Redirect(302,"http://"+c.Request.Host+"/error")
+			c.Redirect(200,"http://"+c.Request.Host+"/error")
 		}else{
 			cookie,_ := c.Cookie("wisheart")
 			if cookie != ""{
@@ -76,7 +75,7 @@ func LoginMiddleware() gin.HandlerFunc {
 						if expire <=0 {
 							sToken := createToken.GetToken()
 							c.SetCookie("wisheart",sToken,0,"/",host[0],false,true)
-							c.Redirect(302,"http://"+c.Request.Host+"/login")
+							c.Redirect(200,"http://"+c.Request.Host+"/login")
 						}else{
 							c.Next()
 						}
