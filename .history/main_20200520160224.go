@@ -10,6 +10,14 @@ import(
 	cl "GoWatch/current_limiter"	
 )
 
+
+
+ 
+type Iperr struct{
+	Info string 
+}
+
+
 func getip(c *gin.Context){
 		c.HTML(http.StatusOK,"index.html",gin.H{
 			"title" : "King",
@@ -121,6 +129,10 @@ func main(){
 		admin.GET("/",adminPage)
 
 	}
+
+	
+
+	
 	router.Run(":8080")
 	
 }
