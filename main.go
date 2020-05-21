@@ -89,6 +89,10 @@ func adminPage(c *gin.Context){
 	c.HTML(http.StatusOK,"admin.html",gin.H{})
 }
 
+func message(c *gin.Context){
+	c.HTML(http.StatusOK,"message.html",gin.H{})
+}
+
 func monitoring(){
 	for{
 		time.Sleep(24 * time.Hour)
@@ -119,6 +123,7 @@ func main(){
 	{
 		admin.Use(LoginMiddleware())
 		admin.GET("/",adminPage)
+		admin.GET("/message",message)
 
 	}
 	router.Run(":8080")

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/codegangsta/negroni"
+	//"github.com/codegangsta/negroni"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 )
@@ -43,22 +43,6 @@ type Token struct {
 	Token string `json:"token"`
 }
 
-func StartServer() {
-
-	http.HandleFunc("/login", LoginHandler)
-
-	http.Handle("/resource", negroni.New(
-		negroni.HandlerFunc(ValidateTokenMiddleware),
-		negroni.Wrap(http.HandlerFunc(ProtectedHandler)),
-	))
-
-	log.Println("Now listening...")
-	http.ListenAndServe(":8080", nil)
-}
-
-func main() {
-	StartServer()
-}
 
 func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
 
