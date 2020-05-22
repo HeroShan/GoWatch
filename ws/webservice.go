@@ -1,4 +1,8 @@
 package ws
+// 1.开启端口监听
+// 2.开启ws服务
+// 3.接受请求数据再发送ws推送
+
 
 import (  
 	"github.com/gin-gonic/gin"  
