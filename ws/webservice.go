@@ -24,8 +24,10 @@ import (
 	if err != nil {  
 	   return  
 	}  
+	var mes []byte
 	defer ws.Close()  
 	for {
+		mes = []byte("123")
 	   if string(mes) != ""{
 		err = ws.WriteMessage(websocket.PingMessage,mes)  
 		if err != nil {  
@@ -36,8 +38,8 @@ import (
 	}  
  }  
  
- func Serve() {  
-	bindAddress := ":8081"  
+ func Serve() { 
+	//bindAddress := ":8081"  
 	r := gin.Default() 
 	 
 	r.GET("/ping", Ping) 
