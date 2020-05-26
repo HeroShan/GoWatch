@@ -7,6 +7,7 @@ import(
 	"time"
 	"GoWatch/auth"
 	"GoWatch/createToken"
+	"GoWatch/ws"
 	cl "GoWatch/current_limiter"	
 )
 
@@ -93,6 +94,15 @@ func message(c *gin.Context){
 	c.HTML(http.StatusOK,"message.html",gin.H{})
 }
 
+func sendMQ(c *gin.Context){
+	message := c.PostForm("message")
+	conn := ws.Conn()
+	result := ws.Send(conn,"wsMessage",[]byte(message))
+	if result{
+		c.String(200,"消息发送成功")
+	}
+}
+
 func monitoring(){
 	for{
 		time.Sleep(24 * time.Hour)
@@ -124,8 +134,10 @@ func main(){
 		admin.Use(LoginMiddleware())
 		admin.GET("/",adminPage)
 		admin.GET("/message",message)
+		admin.POST("/message",sendMQ)
 
 	}
+	go ws.Serve()
 	router.Run(":8080")
 	
 }

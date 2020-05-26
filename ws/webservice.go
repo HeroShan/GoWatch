@@ -5,42 +5,65 @@ package ws
 
 
 import (  
-	"github.com/gin-gonic/gin"  
+	"log" 
 	"github.com/gorilla/websocket" 
 	"net/http"
  )  
  
  
- var upGrader = websocket.Upgrader{  
-	CheckOrigin: func (r *http.Request) bool {  
-	   return true  
-	},  
- }  
+// http升级websocket协议的配置
+var wsUpgrader = websocket.Upgrader{
+	// 允许所有CORS跨域请求
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
  
- //webSocket请求ping 返回pong  
- func Ping(c *gin.Context) {  
-	//升级get请求为webSocket协议
-	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)  
-	if err != nil {  
-	   return  
-	}  
-	var mes []byte
-	defer ws.Close()  
+ func wsHandler(resp http.ResponseWriter, req *http.Request) {
+	// ws建立服务
+	c, err := wsUpgrader.Upgrade(resp, req, nil)
+	if err != nil {
+		return
+	}
+	//rabbitmq读取消息队列
+	conn := Conn()
+	q, MqConnErr := conn.QueueDeclare(	//连接队列消费者模式
+        "wsMessage", //Queue name
+        true, //durable
+        false,
+        false,
+        false,
+        nil,
+	)
+	msgs, _ := conn.Consume(		//获取队列消息
+        q.Name,
+        "",
+        true,  //Auto Ack
+        false,
+        false,
+        false,
+        nil,
+    )
+	if MqConnErr != nil{
+		log.Printf("Mq connect failed:%v\n",MqConnErr)
+	}
+
 	for {
-		mes = []byte("123")
-	   if string(mes) != ""{
-		err = ws.WriteMessage(websocket.PingMessage,mes)  
-		if err != nil {  
-		   break  
+		for msg := range msgs{
+			if len(msg.Body)>0{
+				//把消息广播到正在ws客户端连接
+				err = c.WriteMessage(websocket.TextMessage, msg.Body)
+				if err != nil {
+					log.Println("write:", err)
+					break
+				}
+			}
 		}
-	   } 
-	   //写入ws数据
-	}  
- }  
+		
+	}
+}
  
  func Serve() { 
-	//bindAddress := ":8081"  
-	r := gin.Default() 
-	 
-	r.GET("/ping", Ping) 
+	http.HandleFunc("/ws", wsHandler)
+	http.ListenAndServe(":1997", nil)
  }
