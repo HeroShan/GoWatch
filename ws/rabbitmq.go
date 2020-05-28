@@ -44,7 +44,6 @@ func Send(ch *amqp.Channel,queuename string,body []byte) bool {
 }
 
 func Receive(ch *amqp.Channel,queuename string) {
-    defer ch.Close()
     q, err := ch.QueueDeclare(
         queuename, //Queue name
         true, //durable

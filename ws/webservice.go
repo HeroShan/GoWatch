@@ -1,7 +1,7 @@
 package ws
 // 1.开启端口监听
 // 2.开启ws服务
-// 3.接受请求数据再发送ws推送
+// 3.接受队列数据再发送ws推送
 
 
 import (  
@@ -18,8 +18,9 @@ var wsUpgrader = websocket.Upgrader{
 		return true
 	},
 }
- 
- func wsHandler(resp http.ResponseWriter, req *http.Request) {
+
+//即时消息传递
+func wsHandler(resp http.ResponseWriter, req *http.Request) {
 	// ws建立服务
 	c, err := wsUpgrader.Upgrade(resp, req, nil)
 	if err != nil {
@@ -47,20 +48,24 @@ var wsUpgrader = websocket.Upgrader{
 	if MqConnErr != nil{
 		log.Printf("Mq connect failed:%v\n",MqConnErr)
 	}
+	defer c.Close()
+	
 
-	for {
-		for msg := range msgs{
-			if len(msg.Body)>0{
-				//把消息广播到正在ws客户端连接
-				err = c.WriteMessage(websocket.TextMessage, msg.Body)
-				if err != nil {
-					log.Println("write:", err)
+	for msg := range msgs{
+		if len(msg.Body)>0{
+				for {
+
+					//把消息广播到正在ws客户端连接
+					err = c.WriteMessage(websocket.TextMessage, msg.Body)
+					if err != nil {
+						log.Println("write:", err)
+					}
 					break
 				}
 			}
-		}
-		
 	}
+		
+	
 }
  
  func Serve() { 

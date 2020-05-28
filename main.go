@@ -100,6 +100,8 @@ func sendMQ(c *gin.Context){
 	result := ws.Send(conn,"wsMessage",[]byte(message))
 	if result{
 		c.String(200,"消息发送成功")
+	}else{
+		c.String(200,"消息发送失败")
 	}
 }
 
