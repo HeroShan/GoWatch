@@ -30,7 +30,7 @@ func loginc(c *gin.Context){
 		}
 		if Cauth == true {
 			host := strings.Split(c.Request.Host,":")
-			sToken := createToken.GetToken()
+			sToken := createToken.GetToken(7)
 			c.SetCookie("wisheart",sToken,7*24*60*60,"/",host[0],false,true)
 			c.Redirect(302,"http://"+c.Request.Host+"/admin")
 		}
@@ -67,7 +67,7 @@ func LoginMiddleware() gin.HandlerFunc {
 			if cookie != ""{
 				expire := createToken.IsLogin(cookie)
 						if expire <=0 {
-							sToken := createToken.GetToken()
+							sToken := createToken.GetToken(7)
 							c.SetCookie("wisheart",sToken,0,"/",host[0],false,true)
 							c.Redirect(302,"http://"+c.Request.Host+"/login")
 						}else{
@@ -105,6 +105,12 @@ func sendMQ(c *gin.Context){
 	}
 }
 
+func getmsg(c *gin.Context){
+	token := createToken.GetToken(1)
+	c.HTML(http.StatusOK,"getmsg.html",gin.H{"key":token})
+
+}
+
 func monitoring(){
 	for{
 		time.Sleep(24 * time.Hour)
@@ -117,7 +123,9 @@ func monitoring(){
 }
 
 func main(){
+	go ws.Serve()
 	go monitoring()
+	
 	router := gin.Default()
 	router.Static("/css","./css")
 	router.LoadHTMLGlob("css/html/*")
@@ -128,6 +136,7 @@ func main(){
 		login.POST("/login",loginc)
 		login.GET("/fmsgetip",fmsgetip)
 		login.GET("/error",error)
+		login.GET("/getmsg",getmsg)
 		// v1.Post("/login",login)
 	}
 
@@ -139,7 +148,7 @@ func main(){
 		admin.POST("/message",sendMQ)
 
 	}
-	go ws.Serve()
+	
 	router.Run(":8080")
 	
 }

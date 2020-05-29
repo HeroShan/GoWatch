@@ -48,20 +48,16 @@ func wsHandler(resp http.ResponseWriter, req *http.Request) {
 	if MqConnErr != nil{
 		log.Printf("Mq connect failed:%v\n",MqConnErr)
 	}
-	defer c.Close()
 	
-
+	defer c.Close()
 	for msg := range msgs{
 		if len(msg.Body)>0{
-				for {
-
 					//把消息广播到正在ws客户端连接
 					err = c.WriteMessage(websocket.TextMessage, msg.Body)
 					if err != nil {
 						log.Println("write:", err)
 					}
-					break
-				}
+					
 			}
 	}
 		
@@ -70,5 +66,5 @@ func wsHandler(resp http.ResponseWriter, req *http.Request) {
  
  func Serve() { 
 	http.HandleFunc("/ws", wsHandler)
-	http.ListenAndServe(":1997", nil)
+	log.Print(http.ListenAndServe(":1997", nil))
  }
