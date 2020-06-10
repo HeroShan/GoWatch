@@ -21,12 +21,12 @@ func (t *TestPro) Consumer(dataByte []byte) error {
 }
 
 func TestSend(t *testing.T){
-	c := Conn()
+	c := MqConn()
 	sendrespons := Send(c,"wsMessage",[]byte("this is a test message!"))
-	c1 := Conn()
+	c1 := MqConn()
 	Send(c1,"wsMessage",[]byte("this is a test message!"))
 	fmt.Printf("%v\n",sendrespons)
-	c2 := Conn()
+	c2 := MqConn()
 	Receive(c2,"wsMessage")
 	
 

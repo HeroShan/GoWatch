@@ -96,7 +96,7 @@ func message(c *gin.Context){
 
 func sendMQ(c *gin.Context){
 	message := c.PostForm("message")
-	conn := ws.Conn()
+	conn := ws.MqConn()
 	result := ws.Send(conn,"wsMessage",[]byte(message))
 	if result{
 		c.String(200,"消息发送成功")

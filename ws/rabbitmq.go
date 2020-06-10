@@ -7,7 +7,7 @@ import (
 
 
 
-func Conn()(chh *amqp.Channel){
+func MqConn()(chh *amqp.Channel){
     conn, err := amqp.Dial("amqp://admin:shanhuijie@47.104.225.152:5672")
     ch, err := conn.Channel();if err != nil{
         log.Print(err)
