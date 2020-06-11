@@ -9,6 +9,10 @@ type TestPro struct {
     msgContent   string
 }
 
+func TestServe(t *testing.T){
+	Serve()
+}
+
 // 实现发送者
 func (p *TestPro) MsgContent() string {
     return p.msgContent
