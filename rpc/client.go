@@ -4,14 +4,6 @@ import (
     "log"
     "net/rpc"
 )
-type ZooRes struct{
-	Say string
-}
-
-type Zoo struct{
-	Monkey	string
-	Cow		string
-}
 
 func Client(){
 	conn, err := rpc.DialHTTP("tcp", "47.104.225.152:1997")
