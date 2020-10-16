@@ -1,4 +1,35 @@
 package leetcode
+import(
+	"fmt"
+)
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func inverted(list *ListNode) *ListNode{
+	var node *ListNode
+    head := list
+    for head != nil {
+        head.Next, node, head = node, head, head.Next
+    }
+    return node
+}
+func printList(listNode *ListNode) {
+    for listNode != nil {
+        fmt.Println(listNode.Val)
+        listNode = listNode.Next
+    }
+}
+func AddTwoNumbers(l1 *ListNode) *ListNode  {
+	nl1 := inverted(l1)
+	printList(l1)
+	printList(nl1)
+	return new(ListNode)
+}
 func SearchMatrix(matrix [][]int, target int) bool {
     var(
 		matrixMax int

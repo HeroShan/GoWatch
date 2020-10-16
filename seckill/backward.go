@@ -1,4 +1,4 @@
-package seckill
+package main
 import(
 	"fmt"
 	"time"
@@ -16,7 +16,7 @@ func Backtime(){
 	h,_ := strconv.Atoi(nowarr[0]) 
 	m,_ := strconv.Atoi(nowarr[1]) 
 	s,_ := strconv.Atoi(nowarr[2]) 
-	
+	fmt.Println("崔敏丝我爱你    ")
 	for {
 		s--
 		if s == 0{
@@ -35,6 +35,10 @@ func Backtime(){
 }
 func Split(r rune)bool{
 	return r ==':'
+}
+
+func main(){
+	Backtime()
 }
 
 

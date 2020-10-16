@@ -1,11 +1,7 @@
 package leetcode
 //https://leetcode-cn.com/problems/k-concatenation-maximum-sum/
-import(
-	"fmt"
-)
 
 func KConcatenationMaxSum(arr []int, k int) int {
-	fmt.Println(arr)
 	 if(arr == nil || len(arr)==0){
 		 return 0
 	 }
@@ -27,9 +23,6 @@ func KConcatenationMaxSum(arr []int, k int) int {
 	 }else{
 		newarr = arr
 	 }
-
-
-	 fmt.Println(newarr)
 	 return 1
 	
 

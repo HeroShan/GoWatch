@@ -5,16 +5,15 @@ import (
 	"testing"
 )
 
-func TestRemoveZeroSumSublists(t *testing.T){
-	c := new(ListNode)
-	c.AddHeadList(-2)
-	c.AddHeadList(1)
-	c.AddHeadList(-1)
-	c.AddHeadList(3)
-	c.AddHeadList(6)
-	c.AddHeadList(-6)
-	c = RemoveZeroSumSublists(c)
-	PrintList(c)
+
+func TestAddTwoNumbers(t *testing.T){
+	list := new(ListNode)
+	list = list.Next
+	list.Val = 4
+	list = list.Next 
+	list.Val = 5
+	
+	AddTwoNumbers(list)
 }
 
 func TestKConcatenationMaxSum(t *testing.T){
