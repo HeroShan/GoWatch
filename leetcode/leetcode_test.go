@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+func TestClimbStairs(t *testing.T){
+	ClimbStairs(1000000)
+}
 
 func TestAddTwoNumbers(t *testing.T){
 	list := new(ListNode)
