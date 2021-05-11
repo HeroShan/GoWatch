@@ -79,7 +79,7 @@ func (tree *bst) lastOrder() {
 
 	inner(tree.root)
 }
-func (tree *bst) Treeadd(root string, item string) {
+func (tree *bst) TreeaddBynode(root string, item string) {
 	var inner func(n *node, root string, item string)
 	inner = func(n *node, root string, item string) {
 		if n == nil {
@@ -99,4 +99,45 @@ func (tree *bst) Treeadd(root string, item string) {
 		}
 	}
 	inner(tree.root, root, item)
+}
+
+func (tree *node) TreeAddItem(item string) {
+
+	if tree == nil {
+		return
+	}
+	if tree.Left == nil {
+		add := &node{Item: item}
+		tree.Left = add
+		return
+	} else if tree.Right == nil {
+		add := &node{Item: item}
+		tree.Right = add
+		return
+	} else {
+		tree.Left.TreeAddItem(item)
+	}
+
+	// var inner func(n *node, item string)
+	// inner = func(n *node, item string) {
+	// 	if n == nil {
+	// 		return
+	// 	}
+
+	// 	if n.Left != nil && n.Right == nil {
+	// 		add := &node{Item: item}
+	// 		n.Right = add
+	// 		return
+
+	// 	} else if n.Left == nil && n.Right == nil {
+	// 		add := &node{Item: item}
+	// 		n.Left = add
+	// 		return
+	// 	} else {
+	// 		inner(n.Left, item)
+	// 		inner(n.Right, item)
+	// 	}
+
+	// }
+	// inner(tree.root, item)
 }

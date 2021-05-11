@@ -2,28 +2,24 @@ package leetcode
 
 import (
 	"fmt"
-	"strconv"
 	"testing"
 )
 
-func TestTreeadd(t *testing.T) {
+func TestTreeAddItem(t *testing.T) {
 	tree := &bst{}
 
 	m := &node{Item: "root"}
 	var treeData []string
 	tree.root = m
-	for i := 1; i < 10000; i++ {
-		treeData = append(treeData, "tree->"+strconv.Itoa(i))
-	}
-	for k, v := range treeData {
-		if k == 0 {
-			tree.Treeadd("root", v)
-		} else {
-			tree.Treeadd(treeData[k-1], v)
-		}
+	// for i := 1; i < 6; i++ {
+	// 	treeData = append(treeData, "tree->"+strconv.Itoa(i))
+	// }
+	treeData = []string{"a", "aa", "b", "bb"}
+	for _, v := range treeData {
+		tree.root.TreeAddItem(v)
 	}
 	// tree.inOrder()
-	tree.lastOrder()
+	tree.midOrder()
 }
 
 func TestClimbStairs(t *testing.T) {
