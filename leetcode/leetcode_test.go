@@ -2,56 +2,77 @@ package leetcode
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
-func TestClimbStairs(t *testing.T){
+func TestTreeadd(t *testing.T) {
+	tree := &bst{}
+
+	m := &node{Item: "root"}
+	var treeData []string
+	tree.root = m
+	for i := 1; i < 10000; i++ {
+		treeData = append(treeData, "tree->"+strconv.Itoa(i))
+	}
+	for k, v := range treeData {
+		if k == 0 {
+			tree.Treeadd("root", v)
+		} else {
+			tree.Treeadd(treeData[k-1], v)
+		}
+	}
+	// tree.inOrder()
+	tree.lastOrder()
+}
+
+func TestClimbStairs(t *testing.T) {
 	ClimbStairs(1000000)
 }
 
-func TestAddTwoNumbers(t *testing.T){
+func TestAddTwoNumbers(t *testing.T) {
 	list := new(ListNode)
 	list = list.Next
 	list.Val = 4
-	list = list.Next 
+	list = list.Next
 	list.Val = 5
-	
+
 	AddTwoNumbers(list)
 }
 
-func TestKConcatenationMaxSum(t *testing.T){
-	 var arr []int
-	 arr = append(arr,-1)
-	 arr = append(arr,1)
-	 arr = append(arr,6)
-	 
-	 KConcatenationMaxSum(arr,1)
+func TestKConcatenationMaxSum(t *testing.T) {
+	var arr []int
+	arr = append(arr, -1)
+	arr = append(arr, 1)
+	arr = append(arr, 6)
+
+	KConcatenationMaxSum(arr, 1)
 }
 
-func TestFindMinHeightTrees(t *testing.T){
+func TestFindMinHeightTrees(t *testing.T) {
 	var edges [][]int
-	edges = [][]int{{0,3},{1,3},{2,1},{4,3},{5,3}}
-	c:=FindMinHeightTrees(6,edges)
+	edges = [][]int{{0, 3}, {1, 3}, {2, 1}, {4, 3}, {5, 3}}
+	c := FindMinHeightTrees(6, edges)
 	fmt.Println(c)
 }
 
-func TestSearchMatrix(t *testing.T){
+func TestSearchMatrix(t *testing.T) {
 	var matrix [][]int
-	matrix = [][]int{{1,4,7,11,15},{2,5,9,10,19},{3,6,9,12,22},{22,26,28,29,35},{31,35,41,46,49,53}}
+	matrix = [][]int{{1, 4, 7, 11, 15}, {2, 5, 9, 10, 19}, {3, 6, 9, 12, 22}, {22, 26, 28, 29, 35}, {31, 35, 41, 46, 49, 53}}
 	target := 5
-	result := SearchMatrix(matrix,target)
+	result := SearchMatrix(matrix, target)
 	fmt.Println(result)
 }
 
-func TestNumIslands(t *testing.T){
+func TestNumIslands(t *testing.T) {
 	var grid [][]byte
-	grid = [][]byte{{1,0,1,1},{0,0,0,0},{1,0,1,1},{0,0,1,0}}
+	grid = [][]byte{{1, 0, 1, 1}, {0, 0, 0, 0}, {1, 0, 1, 1}, {0, 0, 1, 0}}
 	c := NumIslands(grid)
-	fmt.Printf("%d\n",c)
+	fmt.Printf("%d\n", c)
 }
 
-func TestCompressString(t *testing.T){
-	c:=CompressString("aabcccccaaa")
+func TestCompressString(t *testing.T) {
+	c := CompressString("aabcccccaaa")
 	fmt.Println(c)
 }
 
