@@ -1,10 +1,8 @@
 package leetcode
 
-import "fmt"
-
-type BTree struct {
+type bTree struct {
 	treeList []*bNode
-	next     *BTree
+	next     *bTree
 }
 
 type bNode struct {
@@ -12,16 +10,18 @@ type bNode struct {
 	next *bNode
 }
 
-func NewBtree() *BTree {
-	return new(BTree)
+func NewBtree() *bTree {
+	return new(bTree)
 }
-func (bt *BTree) Truncate() {
-	*bt = BTree{nil, nil}
+
+//清除整个b树
+func (bt *bTree) Truncate() {
+	*bt = bTree{nil, nil}
 	return
 }
 
 //遍历btree  所有元素
-func (bt *BTree) EachBt() {
+func (bt *bTree) EachBt() {
 	for bk, bn := range bt.treeList {
 		i := 0
 		bn.EachBn(bk, i)
@@ -33,16 +33,33 @@ func (bn *bNode) EachBn(bk int, nk int) {
 	if bn.next == nil {
 		return
 	}
-	fmt.Println("limb is:", bk, "node is:", nk, "data is:", bn.data)
+	//fmt.Println("limb is:", bk, "node is:", nk, "data is:", bn.data)
 	bn = bn.next
 	nk++
 	bn.EachBn(bk, nk)
 }
 
-//根据头进行追加btree 元素
+//is  funny
+//在头部确定数据链的区间前后差值是  前值的二倍 区间插入
+func (bt *bTree) MidInsertBtree(item int) {
+	lenBtList := len(bt.treeList)
+	var next bNode
+	if lenBtList == 0 || lenBtList == 1 {
+		next.data = item
+		next.next = nil
+		bt.treeList = append(bt.treeList, &next)
+	} else {
+		if item > 2*bt.treeList[1].data.(int) {
+
+		}
+	}
+	return
+}
+
+//根据头进行追加b+tree 元素
 //头为空  追加到根
 //头不为空  找到头追加到下一个节点   next顺移到下一个节点
-func (bt *BTree) AddBtree(head interface{}, item interface{}) bool {
+func (bt *bTree) AddBtree(head interface{}, item interface{}) bool {
 	var nilHead, next bNode
 	if head == nil {
 		nilHead.data = item
@@ -68,7 +85,6 @@ func (bt *BTree) AddBtree(head interface{}, item interface{}) bool {
 				}
 				v = v.next
 			}
-
 		}
 	}
 	return false
