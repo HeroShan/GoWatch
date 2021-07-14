@@ -42,6 +42,7 @@ func (bn *bNode) EachBn(bk int, nk int) {
 //is  funny
 //在头部确定数据链的区间前后差值是  前值的二倍 区间插入
 func (bt *bTree) MidInsertBtree(item int) {
+
 	lenBtList := len(bt.treeList)
 	var next bNode
 	if lenBtList == 0 || lenBtList == 1 {
